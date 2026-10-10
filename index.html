@@ -771,7 +771,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
     </div>
   </div>
   <div id="plansOut"></div>
-  <p class="fine" style="margin-top:14px">保費按各計劃保費率表（年繳，每1,000名義金額）計算：宏健守護及宏伴護航（HK 04/25）、活耀人生危疾保PRO（HK 07/23）、守護無間危疾保（HK 07/22）、活耀人生危疾保2系列（HK 07/20），只計基本計劃標準保費，未計附加保障、通脹加保、保費徵費、ManulifeMOVE或其他折扣；年齡按保費率表「AGE」一欄，請用建議書上嘅投保年齡核對。月繳保費會略高於年繳÷12。保障內容摘自各計劃產品單張（2026年4月／7月版本）。一切以建議書及保單條款為準。</p>
+  <p class="fine" style="margin-top:14px">保費按各計劃保費率表（年繳，每1,000名義金額）計算：宏健守護及宏伴護航（HK 04/25）、活耀人生危疾保PRO（HK 07/23）、守護無間危疾保（HK 07/22）、活耀人生危疾保2系列（HK 07/20），港元保費已包括每份保單每年 HK$300（同建議書核對過）；美元保費暫未計呢筆固定費用。只計基本計劃，未計附加保障、通脹加保、保費徵費、ManulifeMOVE或其他折扣；年齡按保費率表「AGE」一欄，請用建議書上嘅投保年齡核對。月繳保費會略高於年繳÷12。保障內容摘自各計劃產品單張（2026年4月／7月版本）。一切以建議書及保單條款為準。</p>
  </div>
 </div>
 
@@ -1188,13 +1188,16 @@ const GLOSS=[
  ['g-tot','總保障上限','首次嚴重危疾加上所有多次賠償，理論上最多可以賠到名義金額嘅幾多倍。'],
 ];
 const nameHTML=n=>esc(n).replace(/(危疾)/,'<span class="nb">$1').replace(/(（)/,'</span><span class="nb">$1')+(/危疾/.test(n)?'</span>':'');
+/* 建議書每年保費 = 保費率 × 保額 ÷ 1,000 ＋ 每份保單固定 HK$300（6份計劃都一樣，經建議書核對）。美元金額未核對，暫時唔加。 */
+const POLICY_FEE={HKD:300,USD:0};
 const TERM_LBL={'10':'10年','20':'20年','25':'25年','A65':'至65歲'};
 function annualPrem(p,cur,term,age,sex,smk,sum){
   const t=R[p.id]&&R[p.id][cur]&&R[p.id][cur][term]; if(!t) return {err:`冇${TERM_LBL[term]}繳費選項`};
   if(age<t.min||age>t.max) return {err:`${TERM_LBL[term]}繳費只接受 ${t.max} 歲或以下投保`};
   const row=t.r[age-t.min]; if(!row) return {err:'冇呢個年齡嘅保費率'};
   const idx=(sex==='女'?2:0)+(smk==='吸煙'?0:1);
-  return {rate:row[idx],annual:row[idx]*sum/1000};
+  const fee=POLICY_FEE[cur]||0;
+  return {rate:row[idx],fee,annual:row[idx]*sum/1000+fee};
 }
 const pOld=$('#pOldSel'); pOld.innerHTML=oldSel.innerHTML;
 const SUMS={HKD:[[100000,'10萬'],[500000,'50萬'],[1000000,'100萬']],USD:[[12500,'US$1.25萬'],[62500,'US$6.25萬'],[125000,'US$12.5萬']]};
@@ -1236,7 +1239,7 @@ function renderPlans(){
   const ageMax=x=>{const t=R[x.id]&&R[x.id][cur]&&R[x.id][cur][term];return t?t.max:'—';};
   const ROWS=[
     ['保費'],
-    ['每年保費',x=>[fx(x.pr.annual,cur),`每月約 ${fx(x.pr.annual/12,cur)}`],T.prem],
+    ['每年保費',x=>[fx(x.pr.annual,cur),x.pr.fee?`保費率 ${x.pr.rate.toFixed(2)}／千 ＋ 保單費 ${fx(x.pr.fee,cur)}`:`保費率 ${x.pr.rate.toFixed(2)}／千（未計保單費）`],T.prem],
     ['總保費（約）',x=>[fx(x.pr.annual*yrs,cur),`${yrs}年，投保時保費率保證不變`],null],
     ['舊單定義升級',x=>[x.up?`${x.up} 項`:'—',x.up?'舊單可用新定義索償':'兩份定義已一致'],T.up,'g-up'],
     ['投保及核保'],
