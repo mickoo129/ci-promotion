@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+
+# 唔俾搜尋器收錄（網站含內部參考資料）
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

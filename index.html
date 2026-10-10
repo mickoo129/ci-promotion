@@ -1,0 +1,1417 @@
+<!doctype html>
+<html lang="zh-Hant-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>危疾定義更新計劃</title>
+<meta name="description" content="宏利危疾定義更新計劃：講解簡報及危疾定義對比工具">
+<meta name="theme-color" content="#00A758">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2300A758'/%3E%3Cpath d='M4 17h6l3-7 4 13 3-6h8' stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --g:#00A758;          /* Manulife green */
+  --g-ink:#00753E;      /* green for small text on white (AA) */
+  --g-deep:#005A30;
+  --g-50:#EEF8F2; --g-100:#D6F0E1; --g-200:#AEE2C4;
+  --ink:#1D2B2A; --ink-2:#3C4A49; --muted:#6B7877; --line:#E3E9E7; --surface:#F6F9F8; --white:#FFFFFF;
+  --amber:#8A5B00; --amber-bg:#FFEBB5;
+  --red:#D93D45; --red-bg:#FDECEC;
+  --sans:"Noto Sans TC",system-ui,-apple-system,"PingFang HK","Microsoft JhengHei",sans-serif;
+  --num:"Manrope","Noto Sans TC",system-ui,sans-serif;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --bar:64px; --navh:64px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+p,li,dd,td,th,.sm,.say,small{text-wrap:pretty}
+h1,h2,h3,h4,h5,.pk-h{text-wrap:balance}
+.nb{display:inline-block}
+.nowrap-tail{white-space:nowrap}
+html,body{margin:0;background:var(--white);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+[hidden]{display:none!important}
+.num{font-family:var(--num);font-feature-settings:"tnum"}
+
+/* ================= TOP BAR ================= */
+.topbar{position:sticky;top:0;z-index:30;height:var(--bar);display:flex;align-items:center;gap:18px;padding:0 24px;background:var(--white);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:12px;font-weight:900;font-size:17px;white-space:nowrap}
+.logo svg{flex:none}
+.logo small{display:block;font-weight:500;font-size:12px;color:var(--muted);line-height:1.2}
+.tabs{margin-left:auto;display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px}
+.tabs button{border:0;background:transparent;padding:7px 18px;border-radius:9px;cursor:pointer;font-weight:700;color:var(--muted);font-size:15px}
+.tabs button[aria-selected="true"]{background:var(--g);color:#fff}
+.who{font-size:13.5px;color:var(--muted);text-align:right;line-height:1.35;white-space:nowrap}
+.who b{color:var(--ink);font-weight:700}
+
+/* ================= DECK ================= */
+#deck{background:#E9EFED;height:calc(100dvh - var(--bar));position:relative;overflow:hidden}
+.viewport{position:absolute;left:0;right:0;top:0;bottom:var(--navh)}
+.stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;margin:-360px 0 0 -640px;transform:scale(var(--s,1));transform-origin:center center}
+.s{position:absolute;inset:0;background:var(--white);border-radius:6px;box-shadow:0 18px 50px rgba(0,60,30,.14);overflow:hidden;opacity:0;visibility:hidden;transition:opacity .35s,visibility 0s .35s}
+.s.on{opacity:1;visibility:visible;transition:opacity .35s}
+.s-body{position:absolute;left:96px;right:96px;top:86px;bottom:84px}
+.s::before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:var(--g)}
+.s-sec{position:absolute;left:96px;top:44px;font-size:15px;font-weight:700;color:var(--g-ink);display:flex;align-items:center;gap:10px}
+.s-sec::before{content:"";width:28px;height:3px;background:var(--g);border-radius:2px}
+.s-foot{position:absolute;left:96px;right:96px;bottom:34px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+.s-foot .pg{font-family:var(--num);font-weight:700;color:var(--ink)}
+.s h2{font-size:46px;line-height:1.22;font-weight:900;margin:0 0 18px;letter-spacing:-.005em}
+.s .lead{font-size:21px;color:var(--ink-2);margin:0 0 28px;max-width:900px;line-height:1.65}
+
+/* cover */
+.s.cover{background:var(--g);color:#fff}
+.s.cover::before{display:none}
+.cover .ecg{position:absolute;left:0;right:0;top:292px;width:100%;height:160px;opacity:.9}
+.cover .ecg path{fill:none;stroke:rgba(255,255,255,.55);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:2400;stroke-dashoffset:2400;animation:draw 2.4s .2s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.cover .c-top{position:absolute;left:96px;top:70px;font-size:17px;font-weight:700;display:flex;gap:14px;align-items:center}
+.cover .c-top span{background:rgba(255,255,255,.18);border-radius:999px;padding:5px 14px;font-weight:500;font-size:15px}
+.cover h1{position:absolute;left:96px;top:118px;margin:0;font-size:76px;line-height:1.16;font-weight:900;letter-spacing:-.01em}
+.cover .clause{position:absolute;left:96px;bottom:126px;width:640px;background:#fff;color:var(--ink);border-radius:10px;padding:24px 30px;box-shadow:0 20px 40px rgba(0,50,25,.25)}
+.cover .clause .lbl{font-size:14px;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between}
+.cover .clause .txt{font-family:var(--serif);font-size:30px;line-height:1.5}
+.cover .c-side{position:absolute;right:96px;bottom:130px;width:380px;font-size:20px;line-height:1.6}
+.cover .c-foot{position:absolute;left:96px;right:96px;bottom:40px;display:flex;justify-content:space-between;font-size:14px;color:rgba(255,255,255,.85);border-top:1px solid rgba(255,255,255,.35);padding-top:14px}
+del.x{text-decoration:none;position:relative;color:var(--red)}
+del.x::after{content:"";position:absolute;left:-3px;right:-3px;top:55%;height:4px;background:var(--red);border-radius:2px;transform:scaleX(0);transform-origin:left;animation:strike .5s 1.6s ease-out forwards}
+ins.y{text-decoration:none;color:var(--g-ink);background:var(--g-100);border-radius:4px;padding:0 6px;font-weight:600;opacity:0;animation:fade .5s 2.1s forwards}
+@keyframes strike{to{transform:scaleX(1)}} @keyframes fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.cover .ecg path{animation:none;stroke-dashoffset:0}del.x::after{animation:none;transform:scaleX(1)}ins.y{animation:none;opacity:1}.s{transition:none}}
+
+/* timeline */
+.tl{position:relative;height:250px;margin-top:20px}
+.tl .axis{position:absolute;left:0;right:0;top:150px;height:4px;background:var(--line);border-radius:2px}
+.tl .span{position:absolute;top:150px;height:4px;background:linear-gradient(90deg,var(--red),var(--g));border-radius:2px}
+.tl .dot{position:absolute;top:144px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:#C9D3D0;border:3px solid #fff}
+.tl .dot.you{background:var(--red);width:30px;height:30px;margin-left:-15px;top:137px}
+.tl .dot.now{background:var(--g);width:30px;height:30px;margin-left:-15px;top:137px}
+.tl .yr{position:absolute;top:176px;transform:translateX(-50%);font-family:var(--num);font-weight:700;color:var(--muted);font-size:15px}
+.tl .flag{position:absolute;bottom:118px;transform:translateX(-50%);text-align:center;white-space:nowrap}
+.tl .flag b{display:block;font-size:20px}
+.tl .flag span{font-size:14px;color:var(--muted)}
+.tl .flag.you b{color:var(--red)} .tl .flag.now b{color:var(--g-ink)}
+.gap-badge{display:inline-flex;align-items:baseline;gap:10px;background:var(--g-50);border-radius:12px;padding:16px 24px;font-size:20px}
+.gap-badge b{font-family:var(--num);font-size:44px;color:var(--g-ink);line-height:1}
+
+/* three numbers */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:6px}
+.metric{border:1px solid var(--line);border-radius:14px;padding:24px 26px;background:#fff;display:flex;flex-direction:column}
+.metric .ic{width:52px;height:52px;border-radius:12px;background:var(--g-50);display:grid;place-items:center;margin-bottom:14px}
+.metric h3{margin:0 0 4px;font-size:22px}
+.metric .unit{font-size:14px;color:var(--muted);margin-bottom:18px}
+.metric .row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line)}
+.metric .row span{font-size:14px;color:var(--muted)}
+.metric .row b{font-family:var(--num);font-size:34px;font-weight:800}
+.metric{padding:28px 30px}.metric .row{padding:16px 0}
+.metric .row.old b{color:#9AA5A3;text-decoration:line-through;text-decoration-thickness:2px}
+.metric .row.new b{color:var(--g-ink)}
+.metric .row.new{border-top:2px solid var(--g)}
+.foot-note{font-size:14px;color:var(--muted);margin-top:16px}
+
+/* flow */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:10px;position:relative}
+.step{padding:0 30px 0 0;position:relative}
+.step .n{width:56px;height:56px;border-radius:50%;background:var(--g);color:#fff;display:grid;place-items:center;font-family:var(--num);font-weight:800;font-size:24px;position:relative;z-index:1}
+.steps::before{content:"";position:absolute;left:28px;right:33%;top:27px;height:3px;background:var(--g-200)}
+.step h3{font-size:24px;margin:22px 0 8px}
+.step p{font-size:17px;color:var(--ink-2);margin:0;line-height:1.65}
+.promise{margin-top:40px;display:flex;align-items:center;gap:24px;background:var(--g-50);border-radius:14px;padding:22px 28px}
+.promise .pill{background:#fff;border:2px solid var(--g);border-radius:12px;padding:10px 18px;font-weight:900;font-size:20px;text-align:center}
+.promise .pill small{display:block;font-weight:500;font-size:13px;color:var(--muted)}
+.promise .arr{flex:1;text-align:center;font-weight:700;color:var(--g-ink)}
+.promise .arr svg{display:block;width:100%;height:16px;margin-top:4px}
+
+/* matrix */
+table.mx{border-collapse:separate;border-spacing:6px;width:100%;font-size:17px}
+.mx th{font-weight:700;padding:6px 10px;vertical-align:bottom;line-height:1.35}
+.mx thead th{color:var(--g-ink);text-align:center;font-size:16px}
+.mx thead th:first-child{text-align:left;color:var(--muted);font-weight:500;font-size:14px}
+.mx tbody th{text-align:left;background:var(--surface);border-radius:8px;padding:12px 16px;font-weight:500}
+.mx td{border-radius:8px;background:var(--surface);text-align:center;height:50px}
+.mx td.y{background:var(--g)} .mx td.y svg{display:block;margin:auto}
+.mx tr.me tbody th, .mx tr.me th{background:#fff;outline:3px solid var(--ink);font-weight:900}
+.mx .me-tag{display:block;font-size:12.5px;color:var(--red);font-weight:700}
+
+/* case */
+.case{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.policy{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.policy .ph{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:var(--surface);font-weight:700;font-size:16px}
+.policy .ph span{font-size:13px;font-weight:500;color:var(--muted)}
+.policy.new .ph{background:var(--g);color:#fff} .policy.new .ph span{color:rgba(255,255,255,.85)}
+.policy .pb{padding:18px 20px;font-family:var(--serif);font-size:20px;line-height:1.7}
+.policy .pv{display:flex;gap:14px;align-items:center;padding:14px 20px;border-top:1px solid var(--line);font-size:16.5px}
+.badge{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:19px}
+.badge.y{background:var(--g)} .badge.n{background:var(--red)} .badge.e{background:#9AA5A3}
+mark.o{background:var(--amber-bg);color:var(--amber);padding:0 3px;border-radius:3px}
+mark.n{background:var(--g-100);color:var(--g-deep);padding:0 3px;border-radius:3px}
+
+.takeaway{margin-top:22px;display:flex;align-items:center;gap:28px;background:var(--g);color:#fff;border-radius:14px;padding:20px 30px}
+.takeaway span{display:block;font-size:14px;opacity:.9}
+.takeaway b{font-family:var(--num);font-size:34px;font-weight:800;line-height:1.2}
+.takeaway p{margin:0 0 0 auto;font-size:17px;opacity:.95}
+/* scenarios */
+.sc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sc .card{border:1px solid var(--line);border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.sc .card.ok{border-color:var(--g-200);background:var(--g-50)}
+.sc .card h4{margin:0;font-size:19px;line-height:1.4}
+.sc .card p{margin:0;color:var(--ink-2);font-size:15.5px;line-height:1.6}
+.sc .hd{display:flex;align-items:center;gap:10px}
+.sc .hd small{font-weight:700;font-size:13px}
+.sc .ok small{color:var(--g-ink)} .sc .no small{color:var(--red)} .sc .eq small{color:var(--muted)}
+
+/* enh */
+.enh{display:grid;grid-template-columns:1fr 1fr;gap:12px 28px}
+.enh .it{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.enh .it b{flex:none;width:130px;font-size:18px}
+.enh .it span{color:var(--ink-2);font-size:16.5px;line-height:1.55}
+
+/* notes */
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.note-c{display:flex;gap:16px;border:1px solid var(--line);border-radius:12px;padding:26px 26px}
+.note-c .k{flex:none;width:40px;height:40px;border-radius:10px;background:var(--g-50);color:var(--g-ink);display:grid;place-items:center;font-family:var(--num);font-weight:800;font-size:18px}
+.note-c h4{margin:0 0 6px;font-size:21px}
+.note-c p{margin:0;color:var(--ink-2);font-size:16.5px}
+
+/* plan slide */
+.plan-g{display:grid;grid-template-columns:1.25fr 1fr;gap:26px}
+.pair{display:flex;align-items:stretch;gap:14px;margin-bottom:18px}
+.pair .pc{flex:1;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.pair .pc span{font-size:13px;color:var(--muted);display:block}
+.pair .pc b{font-size:19px;line-height:1.35;display:block;margin-top:2px}
+.pair .pc.new{border:2px solid var(--g);background:var(--g-50)}
+.pair .ar{align-self:center;color:var(--g)}
+.hl-list{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.hl-list li{display:flex;gap:12px;align-items:baseline;font-size:17px}
+.hl-list li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--g);transform:translateY(-3px)}
+.money{background:var(--g);color:#fff;border-radius:14px;padding:24px 26px}
+.money .big{font-family:var(--num);font-size:52px;font-weight:800;line-height:1.05}
+.money .lbl{font-size:15px;opacity:.9}
+.money .rows{margin-top:16px;display:grid;gap:8px;font-size:15.5px}
+.money .rows div{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.3);padding-top:8px}
+.money .rows b{font-family:var(--num)}
+.money.empty{background:var(--surface);color:var(--muted);display:grid;place-items:center;text-align:center;font-size:16px}
+.dl{display:flex;gap:14px;margin-top:20px}
+.dl div{flex:1;border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.dl b{display:block;font-family:var(--num);font-size:22px}
+.dl span{font-size:13.5px;color:var(--muted)}
+
+
+/* ---------- phone: slides become scrolling pages ---------- */
+#deck.mob .viewport{overflow-y:auto;-webkit-overflow-scrolling:touch;background:#fff}
+#deck.mob .stage{position:static;width:auto;height:auto;margin:0;transform:none}
+#deck.mob .s{position:relative;display:none;border-radius:0;box-shadow:none;opacity:1;visibility:visible;overflow:visible;min-height:100%}
+#deck.mob .s.on{display:block}
+#deck.mob .s::before{width:6px}
+#deck.mob .s-sec{position:static;padding:22px 20px 0 26px;font-size:13.5px}
+#deck.mob .s-body{position:static;padding:12px 20px 18px 26px}
+#deck.mob .s-foot{position:static;margin:0 20px 0 26px;padding:12px 0 20px;flex-wrap:wrap;gap:6px}
+#deck.mob .s h2,#deck.mob .s h2[style]{font-size:26px!important;line-height:1.3;margin-bottom:12px!important}
+#deck.mob .s .lead{font-size:16px!important;margin-bottom:16px}
+#deck.mob .trio,#deck.mob .steps,#deck.mob .case,#deck.mob .sc,#deck.mob .enh,#deck.mob .notes,#deck.mob .plan-g{grid-template-columns:1fr;gap:12px}
+#deck.mob .steps::before{display:none}
+#deck.mob .step{padding:0}
+#deck.mob .step h3{font-size:19px;margin:10px 0 4px}
+#deck.mob .step p,#deck.mob .metric .unit{font-size:15px}
+#deck.mob .metric{padding:18px}
+#deck.mob .metric .row{padding:10px 0}
+#deck.mob .metric .row b{font-size:24px}
+#deck.mob .promise{flex-direction:column;gap:10px;padding:16px;margin-top:18px}
+#deck.mob .promise .arr{width:100%}
+#deck.mob table.mx{font-size:12.5px;border-spacing:3px}
+#deck.mob .mx tbody th{padding:8px}
+#deck.mob .mx td{height:38px}
+#deck.mob .policy .pb{font-size:17px}
+#deck.mob .takeaway{flex-wrap:wrap;gap:12px;padding:16px 18px}
+#deck.mob .takeaway b{font-size:24px}
+#deck.mob .takeaway p{margin:0;width:100%}
+#deck.mob .sc .card{padding:16px}
+#deck.mob .enh .it b{width:104px;font-size:16px}
+#deck.mob .note-c{padding:16px}
+#deck.mob .tl{height:210px;margin-top:6px}
+#deck.mob .tl .axis,#deck.mob .tl .span{top:120px}
+#deck.mob .tl .dot{top:114px}#deck.mob .tl .dot.you,#deck.mob .tl .dot.now{top:107px}
+#deck.mob .tl .yr{top:146px;font-size:11px}
+#deck.mob .tl .flag{bottom:112px}#deck.mob .tl .flag b{font-size:14px}#deck.mob .tl .flag span{font-size:11px}
+#deck.mob .gap-badge{font-size:16px;padding:12px 16px}#deck.mob .gap-badge b{font-size:32px}
+#deck.mob .pair{flex-direction:column}#deck.mob .pair .ar{transform:rotate(90deg);align-self:center}
+#deck.mob .money .big{font-size:40px}
+#deck.mob .dl{flex-direction:column}
+#deck.mob .s.cover{min-height:calc(100dvh - var(--bar) - var(--navh));padding:28px 22px 24px;display:none}
+#deck.mob .s.cover.on{display:flex;flex-direction:column;gap:18px}
+#deck.mob .cover .c-top,#deck.mob .cover h1,#deck.mob .cover .clause,#deck.mob .cover .c-side,#deck.mob .cover .c-foot{position:static;width:auto}
+#deck.mob .cover .c-top{flex-wrap:wrap;font-size:15px}
+#deck.mob .cover h1{font-size:38px}
+#deck.mob .cover .ecg{position:relative;top:auto;height:70px;order:3}
+#deck.mob .cover .clause{order:4;padding:18px}
+#deck.mob .cover .clause .txt{font-size:22px}
+#deck.mob .cover .c-side{order:5;font-size:16.5px}
+#deck.mob .cover .c-foot{order:6;flex-direction:column;gap:4px;font-size:12.5px}
+
+.tag.std{background:#1F4E8C;color:#fff}
+.stdlist{display:grid;gap:10px}
+.stdlist .sr{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center;border-top:1px solid var(--line);padding-top:10px}
+.stdlist .sv{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stdlist .so,.stdlist .sn{border-radius:10px;padding:8px 12px;font-size:14.5px;line-height:1.5}
+.stdlist .so{background:var(--surface);color:var(--ink-2)}
+.stdlist .sn{background:var(--g-50);color:var(--g-deep);font-weight:700}
+.stdlist small{display:block;font-size:12px;color:var(--muted);font-weight:500}
+.dbox .say.std{background:#EAF0F8}
+@media (max-width:640px){.stdlist .sr{grid-template-columns:1fr}.stdlist .sv{grid-template-columns:1fr}}
+/* slide: industry standard */
+.ind{display:grid;grid-template-columns:360px 1fr;gap:26px}
+.ind .qa{border-radius:14px;padding:20px 22px;background:var(--surface)}
+.ind .qa + .qa{margin-top:14px}
+.ind .qa .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--g);color:#fff;font-family:var(--num);font-weight:800;margin-bottom:8px}
+.ind .qa h3{margin:0 0 6px;font-size:20px;line-height:1.35}
+.ind .qa p{margin:0;font-size:15.5px;color:var(--ink-2);line-height:1.6}
+.ind .flow3{display:grid;gap:6px;margin-top:10px;font-size:14.5px}
+.ind .flow3 div{display:flex;justify-content:space-between;background:#fff;border-radius:8px;padding:7px 12px}
+.ind .flow3 b.fy{color:var(--g-ink)} .ind .flow3 b.fn{color:var(--red)}
+table.stdt{width:100%;border-collapse:separate;border-spacing:0;font-size:16px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stdt th,.stdt td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45}
+.stdt thead th{background:var(--surface);font-size:13.5px;color:var(--muted)}
+.stdt thead th:last-child{background:var(--g);color:#fff}
+.stdt td:first-child{font-weight:900;width:100px}
+.stdt td:nth-child(2){color:var(--ink-2)}
+.stdt td:last-child{background:var(--g-50);color:var(--g-deep);font-weight:700}
+.stdt tr:last-child td{border-bottom:0}
+#deck.mob .ind{grid-template-columns:1fr;gap:14px}
+#deck.mob table.stdt{font-size:13.5px}
+#deck.mob .stdt th,#deck.mob .stdt td{padding:8px 9px}
+#deck.mob .stdt td:first-child{width:auto}
+.stdlist .sr{grid-template-columns:120px 1fr}
+.xl{grid-column:1/-1;margin-top:2px}
+.xl summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--g-ink);padding:4px 0}
+.xlc{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+.xlc > div{background:var(--surface);border-radius:10px;padding:12px 14px}
+.xlc > div.mine{background:var(--g-50)}
+.xlc h5{margin:0 0 6px;font-size:14px}
+.xlc ol{margin:0;padding-left:20px;font-size:14px;line-height:1.6;color:var(--ink-2)}
+.xln{font-size:13.5px;color:var(--ink-2);background:#FFF8E6;border-radius:8px;padding:8px 12px;margin:10px 0 0}
+@media (max-width:640px){.xlc{grid-template-columns:1fr}}
+/* modal */
+.modal{position:fixed;inset:0;z-index:80;background:rgba(15,30,25,.45);display:grid;place-items:center;padding:16px}
+.modal .mbox{background:#fff;border-radius:16px;max-width:860px;width:100%;max-height:86dvh;overflow:auto;padding:22px 24px;position:relative}
+.modal .mx-close{position:absolute;right:14px;top:12px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:20px;cursor:pointer}
+.modal h3{margin:0 40px 12px 0;font-size:20px}
+.stdt .more{display:inline-block;margin-top:4px;border:0;background:none;color:var(--g-ink);font-weight:700;font-size:13px;padding:0;cursor:pointer;text-decoration:underline}
+/* pick slide */
+#pickBody .hl-list{gap:8px}#pickBody .hl-list li{font-size:16px}
+#pickBody .pair{margin-bottom:14px}
+.pk-dl{margin-top:14px;font-size:13.5px;opacity:.95;border-top:1px solid rgba(255,255,255,.3);padding-top:10px}
+#sOld{max-width:200px}
+#deck.mob #sOld{max-width:none}
+.pk-h{font-size:34px!important;margin:0 0 12px!important}
+.pk-ctl{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-bottom:14px;font-size:14px;color:var(--ink-2)}
+.pk-ctl .pk-term{display:flex;align-items:center;gap:6px;margin-left:8px;white-space:nowrap}
+.pk-sum{white-space:nowrap}
+.pk-ctl label{display:flex;align-items:center;gap:8px;font-weight:700;white-space:nowrap}
+#deck.mob .pk-ctl label:first-child{width:100%}
+#deck.mob #sOld{flex:1;min-width:0;width:100%}
+.pk-ctl select,.pk-ctl input{height:38px;border:1px solid #CFD8D5;border-radius:9px;padding:0 10px;background:#fff;font-size:15px;font-weight:500}
+.pk-ctl input{width:64px}
+.pk-sum{display:flex;align-items:center;gap:6px;font-weight:700}
+.pk-sum button{border:1px solid #CFD8D5;background:#fff;border-radius:999px;padding:5px 12px;font-weight:700;font-family:var(--num);cursor:pointer;color:var(--ink-2)}
+.pk-sum button.on{background:var(--g);border-color:var(--g);color:#fff}
+.pk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pk-card{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;cursor:pointer;font:inherit;color:inherit;transition:border-color .15s,box-shadow .15s}
+.pk-card:hover,.pk-card:focus-visible{border-color:var(--g);box-shadow:0 6px 18px rgba(0,90,48,.1)}
+.pk-name{font-weight:900;font-size:18px;line-height:1.3}
+.pk-prem{font-family:var(--num);font-weight:800;font-size:26px;color:var(--g-ink)}
+.pk-prem small{font-family:var(--sans);font-size:13px;font-weight:500;color:var(--muted)}
+.pk-up{font-size:13px;font-weight:700;color:var(--g-ink);background:var(--g-50);border-radius:999px;padding:2px 10px}
+.pk-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.pk-tags i{font-style:normal;font-size:13px;background:var(--surface);border-radius:6px;padding:2px 8px;color:var(--ink-2)}
+.pk-tip{font-size:14px;color:var(--muted);margin:12px 0 0}
+.pk-top{margin-bottom:6px}
+.pk-back{border:0;background:none;color:var(--g-ink);font-weight:700;font-size:15px;cursor:pointer;padding:0}
+.pk-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.pk-go{height:42px;border-radius:10px;border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.12);color:#fff;font-weight:700;cursor:pointer}
+.pk-go:hover{background:rgba(255,255,255,.22)}
+#deck.mob .pk-grid{grid-template-columns:1fr}
+#deck.mob .pk-sum{gap:4px}#deck.mob .pk-sum button{padding:4px 8px;font-size:13px}#deck.mob .pk-ctl .pk-term{margin-left:2px}#deck.mob #sTerm{width:78px;padding:0 4px}#deck.mob .pk-ctl{gap:8px 10px}
+#deck.mob .pk-h{font-size:24px!important}
+.pk-switch{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:-4px 0 14px;font-size:13.5px;color:var(--ink-2);font-weight:700}
+.pk-switch button{border:1px solid #CFD8D5;background:#fff;border-radius:999px;padding:5px 12px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--ink-2)}
+.pk-switch button.on{background:var(--g);border-color:var(--g);color:#fff}
+.pk-switch .pk-all{border-style:dashed;color:var(--g-ink)}
+.most{display:inline-block;font-size:12px;font-weight:700;color:var(--g-ink);margin:0 0 6px 6px}
+.ph-pick.on{background:var(--g);color:#fff}
+.ph-link{display:block;margin:6px auto 0;border:0;background:none;color:var(--g-ink);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap}
+.ph-pick{white-space:nowrap}
+/* deck nav */
+.dnav{position:absolute;left:0;right:0;bottom:0;height:var(--navh);display:flex;align-items:center;gap:14px;padding:0 24px calc(env(safe-area-inset-bottom));}
+.dnav .nb{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:grid;place-items:center}
+.dnav .nb:disabled{opacity:.35;cursor:default}
+.prog{flex:1;height:4px;background:#D3DCD9;border-radius:2px;position:relative;overflow:hidden}
+.prog i{position:absolute;left:0;top:0;bottom:0;background:var(--g);border-radius:2px;transition:width .3s}
+.dnav .ct{font-family:var(--num);font-weight:700;font-size:14px;color:var(--ink-2);min-width:64px;text-align:right}
+.dnav select{border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:#fff;font-size:14px;max-width:180px}
+
+/* ================= PLANS ================= */
+#plans .wrap{max-width:1320px}
+#plans{background:var(--surface);min-height:calc(100dvh - var(--bar))}
+.pin{display:grid;grid-template-columns:1.4fr .6fr .7fr .8fr 2.2fr;gap:14px;align-items:end}
+.pin label,.f label{white-space:nowrap}
+.chipset{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.chipset button{border:1px solid #CFD8D5;background:#fff;border-radius:999px;padding:4px 12px;font-size:13.5px;cursor:pointer;font-family:var(--num);font-weight:700;color:var(--ink-2)}
+.chipset button.on{background:var(--g);border-color:var(--g);color:#fff}
+.excl{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;font-size:14px;color:var(--ink-2)}
+.excl span{background:#fff;border:1px dashed #C5CFCC;border-radius:10px;padding:6px 12px}
+.excl b{color:var(--ink)}
+.cmp-wrap{border-radius:16px;border:1px solid var(--line);background:#fff;overflow:hidden}
+table.cmp{border-collapse:separate;border-spacing:0;width:100%;table-layout:fixed}
+.cmp th,.cmp td{padding:12px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left;font-size:14.5px;line-height:1.5;overflow-wrap:anywhere}
+.cmp tbody th{background:#FAFBFB;font-weight:700;color:var(--ink-2);font-size:13.5px}
+.cmp thead th{background:#fff;vertical-align:bottom;border-bottom:2px solid var(--line)}
+.cmp .who-cell{font-weight:900;display:block;margin-bottom:4px}
+.cmp th .sm,.cmp td .sm{display:block;font-size:12.5px;color:var(--muted);font-weight:400}
+.ph-name{font-size:16px;font-weight:900;line-height:1.35;margin-bottom:6px}
+.ph-up{display:inline-block;font-size:12px;font-weight:700;color:var(--g-ink);background:var(--g-50);border-radius:999px;padding:2px 9px;margin-bottom:10px;line-height:1.4}
+.ph-up.zero{color:var(--muted);background:var(--surface)}
+.ph-prem{font-family:var(--num);font-size:24px;font-weight:800;line-height:1.1;color:var(--ink)}
+.ph-prem small{display:block;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--muted);margin-top:4px}
+.ph-pick{margin-top:12px;min-height:40px;border-radius:9px;border:1px solid var(--g);background:#fff;color:var(--g-ink);font-weight:700;padding:0 10px;cursor:pointer;width:100%}
+.ph-pick:hover{background:var(--g-50)}
+th.best-col,td.best-col{background:var(--g-50)}
+.cmp thead th.best-col{background:var(--g-50);box-shadow:inset 0 4px 0 var(--g)}
+.crown{display:inline-block;background:var(--g);color:#fff;border-radius:999px;font-size:12px;font-weight:700;padding:2px 10px;margin-bottom:8px}
+.cmp td .v{font-weight:700}
+.thumb{display:inline-block;margin-left:5px;font-size:16px;line-height:1;vertical-align:-1px}
+.cmp tr.grp th,.cmp tr.grp td{background:var(--surface);font-size:12.5px;font-weight:700;color:var(--muted);padding:7px 12px}
+.cmp ul,.pcard ul{margin:0;padding-left:16px}
+.cmp ul li,.pcard ul li{margin:2px 0}
+.legend2{display:flex;gap:18px;flex-wrap:wrap;font-size:13.5px;color:var(--ink-2);margin:14px 2px 0}
+.pick-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px;font-size:14px;color:var(--ink-2)}
+.pchip{display:inline-flex;align-items:center;gap:6px;border:1px solid #CFD8D5;background:#fff;border-radius:999px;padding:6px 12px;cursor:pointer;font-weight:700;font-size:14px;color:var(--muted)}
+.pchip.on{border-color:var(--g);color:var(--g-ink);background:var(--g-50)}
+.pchip input{width:16px;height:16px;accent-color:var(--g);margin:0}
+.rank .rk{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 4px;border-top:1px solid var(--line);text-decoration:none;color:inherit}
+.rank .rk.best{background:var(--g-50);border-radius:10px;padding:12px 10px}
+.rank .rn{font-weight:700;font-size:15.5px;line-height:1.35}
+.rank .rn small,.rank .rp small{display:block;font-weight:500;font-size:12.5px;color:var(--muted)}
+.rank .rp{text-align:right;font-family:var(--num);font-weight:800;font-size:20px;white-space:nowrap}
+.pcards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;scroll-margin-top:calc(var(--bar) + 12px)}
+.pcard.best{border:2px solid var(--g)}
+.pcard .pc-head{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:6px}
+.pcard dl{margin:0}
+.pcard dl > div{display:grid;grid-template-columns:96px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid var(--surface)}
+.pcard dt{font-size:13px;color:var(--muted);font-weight:700}
+.pcard dd{margin:0;font-size:14.5px;line-height:1.45}
+.pcard dd small{display:block;color:var(--muted);font-size:12.5px}
+@media (max-width:920px){.pin .f-sum{grid-column:span 2}}
+@media (max-width:640px){#pCur{max-width:70px!important;padding:0 6px}#pTerm{max-width:86px!important;padding:0 6px}#pSum{padding:0 8px}.f.inline{gap:6px}.pcards{grid-template-columns:1fr}.pin{grid-template-columns:1fr 1fr}.pin .f:first-child{grid-column:span 2}}
+@media (max-width:920px){.pin{grid-template-columns:1fr 1fr}}
+
+.gq{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--g-100);color:var(--g-ink);font-size:12px;font-weight:900;text-decoration:none;margin-left:3px;vertical-align:1px}
+.gloss dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:4px 28px}
+.gloss dl>div{padding:12px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--bar) + 16px)}
+.gloss dl>div:target{background:var(--amber-bg);border-radius:8px;padding:12px}
+.gloss dt{font-weight:900;margin-bottom:4px}
+.gloss dd{margin:0;color:var(--ink-2);font-size:14.5px;line-height:1.7}
+@media (max-width:760px){.gloss dl{grid-template-columns:1fr}}
+/* ================= TOOL ================= */
+#tool{background:var(--surface);min-height:calc(100dvh - var(--bar))}
+.wrap{max-width:1120px;margin:0 auto;padding:32px 24px 120px}
+.t-head h1{font-size:32px;font-weight:900;margin:0 0 4px}
+.t-head p{margin:0 0 24px;color:var(--muted)}
+.box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin-bottom:20px}
+.box > h2{font-size:20px;font-weight:900;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+.box > h2 .stepn{width:28px;height:28px;border-radius:50%;background:var(--g);color:#fff;font-family:var(--num);font-size:15px;display:grid;place-items:center}
+.box > .sub{margin:0 0 18px;color:var(--muted);font-size:14.5px}
+.grid3{display:grid;grid-template-columns:1.1fr 1.4fr 1.4fr;gap:18px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.f label{display:block;font-size:13.5px;font-weight:700;margin-bottom:6px;color:var(--ink-2)}
+.f input,.f select{width:100%;height:46px;padding:0 12px;border:1px solid #CFD8D5;border-radius:10px;background:#fff;font-size:16px}
+.f input:focus,.f select:focus{border-color:var(--g);outline:none;box-shadow:0 0 0 3px var(--g-100)}
+.f .hint{font-size:12.5px;color:var(--muted);margin-top:5px}
+.f.inline{display:flex;gap:8px}
+.f.inline > div{flex:1;min-width:0}
+.setup .f.inline > div:nth-child(1){flex:.8}.setup .f.inline > div:nth-child(3){flex:1.35}
+.f select{padding-right:4px}
+#pSum{flex:1;min-width:96px}
+.vs-pick{display:grid;grid-template-columns:1fr 40px 1fr;gap:10px;align-items:end}
+.vs-pick .ar{height:46px;display:grid;place-items:center;color:var(--g)}
+.chk{display:flex;gap:8px;align-items:center;font-size:14.5px;margin-top:8px}
+.chk input{width:18px;height:18px;accent-color:var(--g)}
+details.more{margin-top:16px;border-top:1px dashed var(--line);padding-top:12px}
+details.more summary{cursor:pointer;font-weight:700;font-size:14.5px;color:var(--g-ink)}
+details.more .grid4{margin-top:12px}
+
+.verdict{display:flex;gap:18px;align-items:flex-start;border-radius:16px;padding:24px 26px;margin-bottom:20px}
+.verdict.ok{background:var(--g);color:#fff}
+.verdict.no{background:#fff;border:2px solid var(--red)}
+.verdict .vi{flex:none;width:48px;height:48px;border-radius:50%;background:#fff;display:grid;place-items:center}
+.verdict.no .vi{background:var(--red-bg)}
+.verdict h2{margin:0 0 6px;font-size:23px;font-weight:900}
+.verdict p{margin:0;font-size:17px;line-height:1.7}
+.verdict.ok p b{border-bottom:2px solid rgba(255,255,255,.6)}
+
+.ov{display:grid;grid-template-columns:1.6fr 1fr;gap:20px}
+.bar{display:flex;height:46px;border-radius:10px;overflow:hidden;margin:14px 0 12px;background:var(--surface)}
+.bar div{display:flex;align-items:center;padding:0 12px;font-family:var(--num);font-weight:800;color:#fff;font-size:17px;white-space:nowrap;min-width:fit-content}
+.bar .b1{background:var(--g)} .bar .b2{background:#C7D2CF;color:var(--ink)} .bar .b3{background:#8FA4C9}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:14.5px;color:var(--ink-2)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.extra{border-left:1px solid var(--line);padding-left:20px}
+.extra > b{font-family:var(--num);font-size:40px;font-weight:800;color:var(--ink);line-height:1.1;display:block}
+.extra p{margin:4px 0 0;font-size:14.5px;color:var(--ink-2)}
+.plain{background:var(--g-50);border-radius:12px;padding:16px 18px;margin-top:16px;font-size:16.5px;line-height:1.75}
+
+.keys{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.key{border:1px solid var(--line);border-radius:14px;padding:18px 20px;background:#fff}
+.key .kh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.key .kh b{font-size:17.5px}
+.key .kh .tag{margin-left:auto}
+.key .cmp{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:10px}
+.key .cv{border-radius:10px;padding:10px 12px;text-align:center}
+.key .cv small{display:block;font-size:12px;color:var(--muted);margin-bottom:2px}
+.key .cv b{font-size:18px;line-height:1.35;display:block}
+.key .cv.o{background:var(--surface)} .key .cv.o b{color:var(--ink-2)}
+.key .cv.n{background:var(--g-50)} .key .cv.n b{color:var(--g-ink)}
+.key p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.tag{font-size:12.5px;border-radius:999px;padding:3px 10px;white-space:nowrap;font-weight:700}
+.tag.better{background:var(--g);color:#fff}
+.tag.rev{background:var(--g-50);color:var(--g-ink)}
+.tag.jul{background:var(--ink);color:#fff}
+
+.howto{display:flex;gap:18px;flex-wrap:wrap;background:var(--surface);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:14.5px;color:var(--ink-2);align-items:center}
+.howto mark{font-size:13.5px}
+.search{margin-left:auto;height:38px;border:1px solid #CFD8D5;border-radius:999px;padding:0 14px;min-width:200px;background:#fff}
+.list{display:grid;gap:8px}
+details.row{border:1px solid var(--line);border-radius:12px;background:#fff}
+details.row[open]{border-color:var(--g-200);box-shadow:0 4px 18px rgba(0,90,48,.06)}
+details.row summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px 12px;padding:14px 18px;flex-wrap:wrap}
+@media (max-width:640px){details.row summary{position:relative;padding-right:42px}details.row summary .nm{flex-basis:100%}details.row summary .chev{position:absolute;right:14px;top:17px}}
+details.row summary::-webkit-details-marker{display:none}
+details.row summary .nm{font-weight:700;flex:1;font-size:16.5px}
+details.row summary .gist{color:var(--g-ink);font-size:14px;font-weight:500}
+details.row summary .chev{color:var(--muted);transition:transform .2s;flex:none}
+details.row[open] summary .chev{transform:rotate(90deg)}
+.dbox{padding:0 18px 18px}
+.dbox .say{background:var(--g-50);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:15px}
+.dcols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dcols h5{margin:0 0 6px;font-size:13px;color:var(--muted);font-weight:700}
+.dcols .tx{font-family:var(--serif);font-size:15.5px;line-height:1.9;white-space:pre-wrap;border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:#FCFDFC}
+.dcols .new .tx{border-color:var(--g-200)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:14.5px}
+.chips.extra-c span{background:#fff;border-style:dashed}
+.box .why{font-size:14.5px;color:var(--ink-2);margin:0 0 14px}
+.empty{color:var(--muted);font-size:15px;padding:8px 0}
+
+.p-out{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+.p-out div{background:var(--surface);border-radius:12px;padding:14px 16px}
+.p-out div.hi{background:var(--g);color:#fff}
+.p-out span{display:block;font-size:13px;opacity:.85}
+.p-out b{font-family:var(--num);font-size:24px;font-weight:800;line-height:1.3}
+.coupon{margin-top:12px;font-size:14px;color:var(--ink-2)}
+.fine{font-size:13px;color:var(--muted);line-height:1.7}
+
+.actions{position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-top:1px solid var(--line);padding:12px 24px calc(12px + env(safe-area-inset-bottom))}
+.actions .in{max-width:1120px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.actions .sum{font-size:14px;color:var(--ink-2);margin-right:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn{height:44px;border-radius:10px;padding:0 18px;font-weight:700;cursor:pointer;border:1px solid #CFD8D5;background:#fff;white-space:nowrap}
+.btn.pri{background:var(--g);border-color:var(--g);color:#fff}
+.btn.ghost{border-color:var(--g);color:var(--g-ink)}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;font-size:15px;z-index:60}
+.print-only{display:none}
+
+@media (max-width:920px){
+  .grid3{grid-template-columns:1fr}
+  .grid4,.p-out{grid-template-columns:1fr 1fr}
+  .ov{grid-template-columns:1fr} .extra{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:14px}
+  .dcols{grid-template-columns:1fr}
+  .who{display:none}
+  .actions .sum{display:none}
+}
+@media (max-width:560px){
+  .logo span{display:none}
+  .tabs button{padding:6px 8px;font-size:13px;white-space:nowrap}
+  
+  .actions .in{flex-wrap:nowrap;gap:6px} .btn{flex:1;padding:0 8px;font-size:14px} .lgx{display:none}
+  .vs-pick{grid-template-columns:1fr}.vs-pick .ar{display:none}
+  .dnav select{display:none}
+}
+
+/* ================= PRINT ================= */
+@media print{
+  @page{size:A4;margin:13mm}
+  body{font-size:12px;background:#fff}
+  .topbar,#deck,.actions,.toast,.setup,.search,.prem-box .grid4,.prem-box .sub,.prem-box .stepn{display:none!important}
+  #tool{display:block!important;background:#fff}
+  .wrap{padding:0;max-width:none}
+  .t-head{display:none}
+  .print-only{display:block}
+  .phead{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--g);padding-bottom:10px;margin-bottom:16px}
+  .phead h1{margin:0;font-size:22px} .phead p{margin:2px 0 0;color:var(--muted);font-size:12px}
+  .verdict,.key,details.row,.ov,.p-out{break-inside:avoid}
+  .box{border:1px solid var(--line);padding:16px 18px;margin-bottom:12px;break-inside:auto}
+  .box > h2{break-after:avoid}
+  .keys{grid-template-columns:1fr 1fr}
+  .p-out{grid-template-columns:repeat(4,1fr)}
+  body.brief .list{display:none}
+  body.brief .howto{display:none}
+  body.brief .print-names{display:flex}
+  details.row summary .chev{display:none}
+  .dcols{grid-template-columns:1fr 1fr}
+  .dcols .tx{font-size:11px;line-height:1.6;padding:8px 10px}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+.print-names{display:none}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="logo">
+    <svg width="38" height="38" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#00A758"/><path d="M4 17h6l3-7 4 13 3-6h8" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>危疾定義更新計劃<small>宏利　2026年7月1日至12月31日</small></span>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="模式">
+    <button role="tab" id="tabDeck" aria-selected="true">講解簡報</button>
+    <button role="tab" id="tabPlans" aria-selected="false">新計劃比較</button>
+    <button role="tab" id="tabTool" aria-selected="false">舊單定義比較</button>
+  </nav>
+  <div class="who" id="who"></div>
+</header>
+
+<!-- ======================= DECK ======================= -->
+<main id="deck">
+ <div class="viewport" id="vp"><div class="stage" id="stage">
+
+  <section class="s cover" data-t="封面">
+    <svg class="ecg" viewBox="0 0 1280 160" preserveAspectRatio="none" aria-hidden="true"><path d="M0 100 H520 l18 -10 18 10 h30 l14 -70 22 120 16 -70 14 20 h60 l20 -14 20 14 H1280"/></svg>
+    <div class="c-top">危疾定義更新計劃<span id="cvFor">2026年7月1日至12月31日</span></div>
+    <h1>你張危疾單，<br>有冇跟上醫學進步？</h1>
+    <div class="clause">
+      <div class="lbl"><span>突發性心臟病　診斷準則</span><span>舊定義 → 新定義</span></div>
+      <div class="txt">……或肌鈣蛋白 I &gt; <del class="x">2</del> <ins class="y">0.5</ins> 微克/公升</div>
+    </div>
+    <div class="c-side">醫學進步咗，新嘅危疾定義亦寬鬆咗。<br>呢個計劃令你<b>手上嘅舊單</b>，都可以用返新定義索償。</div>
+    <div class="c-foot"><span class="adv"></span><span>只供講解參考，一切以保單條款為準</span></div>
+  </section>
+
+  <section class="s" data-t="定義會過時">
+    <div class="s-sec">點解要講「定義」</div>
+    <div class="s-body">
+      <h2>危疾賠唔賠，睇嘅係<br>簽單嗰年寫落嘅定義</h2>
+      <p class="lead">醫學檢測同治療一直進步，新計劃嘅定義愈來愈貼近現今臨床診斷。但舊保單嘅條文，停留喺簽單嗰一年。</p>
+      <div class="tl" id="tl"></div>
+      <div class="gap-badge" id="gapBadge"></div>
+    </div>
+    <div class="s-foot"><span class="adv"></span><span class="pg"></span></div>
+  </section>
+
+  <section class="s" data-t="三個數字">
+    <div class="s-sec">分別有幾大</div>
+    <div class="s-body">
+      <h2>三個常見病，三個關鍵門檻</h2>
+      <div class="trio" id="trio"></div>
+      <div class="foot-note" id="trioNote"></div>
+    </div>
+    <div class="s-foot"><span class="adv"></span><span class="pg"></span></div>
+  </section>
+
+  <section class="s" data-t="點樣運作">
+    <div class="s-sec">計劃點樣運作</div>
+    <div class="s-body">
+      <h2>買一份新計劃，舊單都用返較寬鬆嘅定義</h2>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h3>你已持有宏利危疾單</h3><p>即「現行計劃」，須喺新計劃簽發日或之前簽發。</p></div>
+        <div class="step"><div class="n">2</div><h3>為同一受保人投保新計劃</h3><p>2026年12月31日前遞交，並於2027年3月31日或之前批核。</p></div>
+        <div class="step"><div class="n">3</div><h3>索償時取較有利嘅定義</h3><p>同一種危疾，新計劃定義較寬鬆，舊單都會按新定義賠償。</p></div>
+      </div>
+      <div class="promise">
+        <div class="pill">新計劃<small>較新、較寬鬆嘅定義</small></div>
+        <div class="arr">更有利嘅危疾定義應用於<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8H286" stroke="#00A758" stroke-width="3"/><path d="M278 2l10 6-10 6" fill="none" stroke="#00A758" stroke-width="3"/></svg></div>
+        <div class="pill">現行計劃<small>你手上嘅舊單</small></div>
+      </div>
+    </div>
+    <div class="s-foot"><span class="adv"></span><span class="pg"></span></div>
+  </section>
+
+  <section class="s" data-t="適用計劃">
+    <div class="s-sec">適用計劃</div>
+    <div class="s-body">
+      <h2 style="font-size:40px;margin-bottom:12px">新計劃愈新，可以升級嘅舊單愈多</h2>
+      <table class="mx" id="mx"></table>
+      <p class="foot-note">「其他現行計劃」包括樂享人生、樂康／樂健／樂活無憂、自在生活、悠然、心愛一家保、活耀人生、安康人生、卓越危疾、活得精彩、一世無憂、早期危疾、重病應急、現金扶危、摯無憂、守護安心、智選癌症、綽慧、綽悅、「我的智愛」及「保寶安心」。</p>
+    </div>
+    <div class="s-foot"><span class="adv"></span><span class="pg"></span></div>
+  </section>
+
+  <section class="s" data-t="個案">
+    <div class="s-sec">真實情境</div>
+    <div class="s-body">
+      <h2 style="font-size:40px">湯先生一條主要冠狀動脈收窄60%，要做通波仔</h2>
+      <div class="case">
+        <div class="policy"><div class="ph">樂享人生危疾保<span>現行計劃</span></div>
+          <div class="pb">……以治療<mark class="o">二條</mark>或以上之主要冠狀動脈縮窄（狹窄程度最少達<mark class="o">60%</mark>）……</div>
+          <div class="pv"><span class="badge n">✕</span><div><b>只持有舊單：冇得賠</b><br><span style="color:var(--ink-2)">只有一條血管收窄，唔符合「二條或以上」</span></div></div></div>
+        <div class="policy new"><div class="ph">宏健守護危疾入息保障<span>新計劃</span></div>
+          <div class="pb">……以治療<mark class="n">一條</mark>或以上之主要冠狀動脈縮窄（狹窄程度最少達<mark class="n">50%</mark>）……</div>
+          <div class="pv"><span class="badge y">✓</span><div><b>參加計劃：兩份都賠</b><br><span style="color:var(--ink-2)">舊單跟新計劃定義，連同新單一齊賠</span></div></div></div>
+      </div>
+      <div class="takeaway"><div><span>同一次通波仔　參加前</span><b>0 份賠償</b></div><svg width="40" height="24" viewBox="0 0 40 24" aria-hidden="true"><path d="M2 12h32M26 4l8 8-8 8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div><span>參加後</span><b>2 份賠償</b></div><p>舊單 ＋ 新單</p></div>
+    </div>
+    <div class="s-foot"><span class="adv"></span><span class="pg"></span></div>
+  </section>
+
+  <section class="s" data-t="適用範圍">
+    <div class="s-sec">咩情況適用</div>
+    <div class="s-body">
+      <h2 style="font-size:40px">六個情境，睇清楚計劃範圍</h2>
+      <div class="sc">
+        <div class="card ok"><div class="hd"><span class="badge y">✓</span><small>適用</small></div><h4>突發性心臟病，肌鈣蛋白 I = 1</h4><p>舊單要求 &gt;2，新計劃只要 &gt;0.5，舊單跟新定義賠。</p></div>
+        <div class="card eq"><div class="hd"><span class="badge e">＝</span><small>照用舊定義</small></div><h4>舊單定義本身較寬鬆</h4><p>舊單照用自己定義，唔會因參加而變差。</p></div>
+        <div class="card no"><div class="hd"><span class="badge n">✕</span><small>不適用</small></div><h4>其他早期危疾</h4><p>例如中度嚴重癱瘓。計劃只包嚴重危疾同通波仔。</p></div>
+        <div class="card no"><div class="hd"><span class="badge n">✕</span><small>不適用</small></div><h4>同一份舊單第二次索償</h4><p>只適用於每份舊單嘅第一次嚴重危疾索償。</p></div>
+        <div class="card no"><div class="hd"><span class="badge n">✕</span><small>不適用</small></div><h4>新計劃有個別不受保項目</h4><p>新計劃唔賠嘅情況，舊單亦唔會升級。</p></div>
+        <div class="card no"><div class="hd"><span class="badge n">✕</span><small>不適用</small></div><h4>病徵喺新計劃等候期內出現</h4><p>新計劃等候期內唔賠，舊單亦唔會升級。</p></div>
+      </div>
+    </div>
+    <div class="s-foot"><span class="adv"></span><span class="pg"></span></div>
+  </section>
+
+  <section class="s" data-t="業界標準">
+    <div class="s-sec">新定義咪即係業界標準？</div>
+    <div class="s-body">
+      <h2 style="font-size:38px;margin-bottom:18px">業界統一咗定義，點解仲要參加？</h2>
+      <div class="ind">
+        <div>
+          <div class="qa"><span class="n">1</span><h3>業界標準唔會改到你張舊單</h3><p>香港保險業聯會（HKFI）嘅標準定義只適用於新推出嘅產品。</p>
+            <div class="flow3"><div><span>新推出嘅危疾產品</span><b class="fy">用新標準</b></div><div><span>你手上嘅舊單</span><b class="fn">照用舊條文</b></div><div><span>參加更新計劃後嘅舊單</span><b class="fy">用宏利新定義</b></div></div></div>
+          <div class="qa"><span class="n">2</span><h3>宏利新定義仲寬鬆過標準</h3><p>表入面係部分例子。</p></div>
+        </div>
+        <table class="stdt">
+          <thead><tr><th>危疾</th><th>業界標準（HKFI）</th><th>宏利新計劃</th></tr></thead>
+          <tbody>
+            <tr><td>心臟病</td><td>肌鈣蛋白 T &gt; 1.0</td><td>肌鈣蛋白 T &gt; 0.6</td></tr>
+            <tr><td>心肌病</td><td>只限4種原發性；第4級；持續180日</td><td>任何病因；第3級或以上；冇時間要求</td></tr>
+            <tr><td>中風<br><button class="more" data-xl="中風">睇清單</button></td><td>7項不保情況，包括「靜默中風」、偏頭痛、意外或感染引致嘅腦損傷</td><td>3項不保情況</td></tr>
+            <tr><td>末期肺病</td><td>要驗動脈血氧，兼要靜止時呼吸困難</td><td>兩樣都唔使</td></tr>
+            <tr><td>癌症<br><button class="more" data-xl="癌症">睇清單</button></td><td>15項不保情況，包括早期胃腸道間質瘤、早期神經內分泌腫瘤（類癌）</td><td>7項不保情況</td></tr>
+            <tr><td>自閉症</td><td>要達第3級；年滿3歲</td><td>冇程度要求；冇年齡限制</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="s-foot"><span class="adv"></span><span class="pg"></span></div>
+  </section>
+
+  <section class="s" data-t="7月優化">
+    <div class="s-sec">2026年7月20日起</div>
+    <div class="s-body">
+      <h2 style="font-size:40px;margin-bottom:8px">新計劃再放寬多項定義，差距再拉闊</h2>
+      <p class="lead" style="font-size:18px;margin-bottom:14px">適用於宏健守護、宏伴護航、活耀人生PRO、守護無間、活耀人生2系列，新舊客戶同享，毋須額外保費。</p>
+      <div class="enh">
+        <div class="it"><b>中風</b><span>刪除「掃描異常但冇明確臨床症狀」嘅不保項目</span></div>
+        <div class="it"><b>良性腦腫瘤</b><span>唔使受損持續6個月；醫療必須嘅開顱切除手術亦保</span></div>
+        <div class="it"><b>末期肺病</b><span>刪除動脈血氧及靜止時呼吸困難嘅要求</span></div>
+        <div class="it"><b>末期肝病</b><span>4項臨床準則符合任何3項即可</span></div>
+        <div class="it"><b>主要器官移植</b><span>部份器官移植不再列為不保</span></div>
+        <div class="it"><b>職業感染HIV</b><span>報告期限由14天延長至30天</span></div>
+        <div class="it"><b>完全及永久傷殘</b><span>新增15歲或以下兒童保障</span></div>
+        <div class="it"><b>通波仔</b><span>唔使心電圖證明，涵蓋其他經動脈手術</span></div>
+      </div>
+    </div>
+    <div class="s-foot"><span class="adv"></span><span class="pg"></span></div>
+  </section>
+
+  <section class="s" data-t="要留意">
+    <div class="s-sec">清楚講明</div>
+    <div class="s-body">
+      <h2 style="font-size:40px">參加之前要知嘅幾件事</h2>
+      <div class="notes">
+        <div class="note-c"><div class="k">1</div><div><h4>只改善定義，唔會加病種</h4><p>舊單冇保嘅病，參加後都唔會保。</p></div></div>
+        <div class="note-c"><div class="k">2</div><div><h4>只限第一次嚴重危疾及通波仔</h4><p>其他早期危疾、兒童疾病、多次賠償唔包。</p></div></div>
+        <div class="note-c"><div class="k">3</div><div><h4>受新計劃條款約束</h4><p>包括新計劃嘅等候期、不保事項及個別不受保項目。</p></div></div>
+        <div class="note-c"><div class="k">4</div><div><h4>新計劃要一直生效</h4><p>新計劃終止，呢個安排亦即時終止。</p></div></div>
+        <div class="note-c"><div class="k">5</div><div><h4>賠償金額照舊單計</h4><p>除定義外，舊單賠償仍按舊單條款。</p></div></div>
+        <div class="note-c"><div class="k">6</div><div><h4>舊單定義較好就照用</h4><p>計劃只會令定義更有利，唔會變差。</p></div></div>
+      </div>
+    </div>
+    <div class="s-foot"><span class="adv"></span><span class="pg"></span></div>
+  </section>
+
+  <section class="s" data-t="揀新計劃">
+    <div class="s-sec">揀適合你嘅新計劃</div>
+    <div class="s-body" id="pickBody"></div>
+    <div class="s-foot"><span class="adv"></span><span class="pg"></span></div>
+  </section>
+
+ </div></div>
+ <div class="dnav">
+   <button class="nb" id="prev" aria-label="上一頁"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+   <button class="nb" id="next" aria-label="下一頁"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+   <div class="prog"><i id="progBar"></i></div>
+   <select id="jump" aria-label="跳到頁面"></select>
+   <span class="ct" id="ct"></span>
+ </div>
+</main>
+
+<!-- ======================= PLANS ======================= -->
+<div id="plans" hidden>
+ <div class="wrap">
+  <div class="t-head"><h1>新計劃比較</h1><p>輸入客戶年齡同保額，即刻睇到可以參加今次計劃嘅新計劃、每年保費同保障分別。👍 代表嗰一項較好。</p></div>
+  <div class="box">
+    <div class="pin">
+      <div class="f"><label for="pOldSel">客戶而家持有嘅計劃</label><select id="pOldSel"></select></div>
+      <div class="f"><label for="pAge">年齡（下次生日）</label><input id="pAge" type="number" min="0" max="65" inputmode="numeric" placeholder="40"></div>
+      <div class="f"><label for="pSex">性別</label><select id="pSex"><option>男</option><option>女</option></select></div>
+      <div class="f"><label for="pSmk">吸煙</label><select id="pSmk"><option>非吸煙</option><option>吸煙</option></select></div>
+      <div class="f f-sum"><label for="pSum">保額及繳費年期</label>
+        <div class="f inline" style="gap:6px"><select id="pCur" style="max-width:84px;flex:0 0 auto"><option value="HKD">港元</option><option value="USD">美元</option></select><input id="pSum" type="number" min="0" inputmode="decimal" placeholder="500000"><select id="pTerm" style="max-width:96px;flex:0 0 auto" aria-label="繳費年期"><option value="10">10年</option><option value="20">20年</option><option value="25">25年</option><option value="A65">至65歲</option></select></div>
+        <div class="chipset" id="sumChips"></div></div>
+    </div>
+  </div>
+  <div id="plansOut"></div>
+  <p class="fine" style="margin-top:14px">保費按各計劃保費率表（年繳，每1,000名義金額）計算：宏健守護及宏伴護航（HK 04/25）、活耀人生危疾保PRO（HK 07/23）、守護無間危疾保（HK 07/22）、活耀人生危疾保2系列（HK 07/20），只計基本計劃標準保費，未計附加保障、通脹加保、ManulifeMOVE或其他折扣。月繳保費會略高於年繳÷12。保障內容摘自各計劃產品單張（2026年4月／7月版本）。一切以建議書及保單條款為準。</p>
+ </div>
+</div>
+
+<!-- ======================= TOOL ======================= -->
+<div id="tool" hidden>
+ <div class="wrap">
+  <div class="print-only phead" id="phead"></div>
+  <div class="t-head"><h1>舊單定義比較</h1><p>揀你手上嘅計劃同打算投保嘅新計劃，即刻睇到參加之後有咩分別。</p></div>
+
+  <div class="box setup">
+    <h2><span class="stepn">1</span>客戶及計劃</h2>
+    <p class="sub">資料只會儲存喺呢部裝置。</p>
+    <div class="grid3">
+      <div>
+        <div class="f"><label for="client">客戶稱呼</label><input id="client" placeholder="例如：陳先生" autocomplete="off"></div>
+        <div class="f inline" style="margin-top:12px">
+          <div><label for="age">年齡</label><input id="age" type="number" min="0" max="80" inputmode="numeric" placeholder="40"></div>
+          <div><label for="sex">性別</label><select id="sex"><option value="">－</option><option>男</option><option>女</option></select></div>
+          <div><label for="smk">吸煙</label><select id="smk"><option value="">－</option><option>非吸煙</option><option>吸煙</option></select></div>
+        </div>
+      </div>
+      <div class="vs-pick" style="grid-column:span 2">
+        <div class="f"><label for="oldSel">客戶而家持有嘅計劃</label><select id="oldSel"></select><div class="hint" id="oldVer"></div></div>
+        <div class="ar"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="f"><label for="newSel">打算投保嘅新計劃</label><select id="newSel"></select><div class="hint" id="newVer"></div></div>
+      </div>
+    </div>
+    <details class="more"><summary>顧問資料（顯示喺簡報頁腳及列印）</summary>
+      <div class="grid4"><div class="f"><label for="advName">顧問姓名</label><input id="advName" placeholder="例如：Michael Koo"></div><div class="f"><label for="advTel">聯絡電話</label><input id="advTel" inputmode="tel" placeholder="例如：9123 4567"></div></div>
+    </details>
+  </div>
+
+  <div id="result" aria-live="polite"></div>
+  <div class="box prem-box">
+    <h2><span class="stepn">2</span>新計劃保費預算（可選）</h2>
+    <p class="sub">請按建議書輸入，網站會幫你計每月、每日同首年實際支出，並顯示喺簡報最後一頁「你的方案」。</p>
+    <div class="grid4">
+      <div class="f"><label for="cur">貨幣</label><select id="cur"><option value="USD">美元 US$</option><option value="HKD">港元 HK$</option></select></div>
+      <div class="f"><label for="sum">保額／名義金額</label><input id="sum" type="number" min="0" inputmode="decimal" placeholder="100000"></div>
+      <div class="f"><label for="prem">年繳保費（建議書）</label><input id="prem" type="number" min="0" inputmode="decimal" placeholder="4824"></div>
+      <div class="f"><label for="yrs">繳費年期</label><input id="yrs" type="number" min="1" max="100" inputmode="numeric" placeholder="25"></div>
+      <div class="f"><label for="inc">客戶月入（港元，可選）</label><input id="inc" type="number" min="0" inputmode="decimal" placeholder="50000"></div>
+      <div class="f"><label for="disc">首年其他折扣 %（可選）</label><input id="disc" type="number" min="0" max="100" inputmode="decimal" placeholder="0"></div>
+      <div class="f" style="grid-column:span 2"><label>&nbsp;</label><label class="chk" style="font-weight:500"><input type="checkbox" id="cpn"> 客戶係特選客戶，有個人專屬保費優惠券</label><div class="hint">優惠券推廣期至2026年10月26日，扣減額按首年年度化保費自動計算。</div></div>
+    </div>
+    <div id="pOut"></div>
+  </div>
+
+ </div>
+ <div class="actions"><div class="in">
+   <span class="sum" id="actSum"></span>
+   <button class="btn pri" id="btnWa"><span class="lgx">複製</span>WhatsApp<span class="lgx">訊息</span></button>
+   <button class="btn ghost" id="btnPrint">列印報告</button>
+   <button class="btn" id="btnPrintFull"><span class="lgx">列印</span>連條文</button>
+ </div></div>
+</div>
+<div class="toast" id="toast" hidden></div>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true"><div class="mbox"><button class="mx-close" id="mClose" aria-label="關閉">✕</button><div id="mBody"></div></div></div>
+
+<script src="data.js"></script>
+<script src="dmp.js"></script>
+<script src="rates.js"></script>
+<script>
+(function(){
+"use strict";
+const D=window.CI_DATA, $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const plan=id=>D.plans.find(p=>p.id===id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store={get(k,d){try{const v=localStorage.getItem('cidr2_'+k);return v===null?d:v;}catch(e){return d;}},set(k,v){try{localStorage.setItem('cidr2_'+k,v);}catch(e){}}};
+const short=n=>n.replace(/（.*?）/g,'');
+
+/* ---------- eligibility (單張 MKTPP119C) ---------- */
+const NEW_IDS=['IG','IS','MBCPRO','MPC','MBC2'];
+const TIER_NEW={IG:'IG',IS:'IG',MBCPRO:'PRO',MPC:'MPC',MBC2:'MBC2'};
+const ALLOWED={IG:['PRO','MPC','MPCBS','MBC2','OTHER'],PRO:['MPC','MPCBS','MBC2','OTHER'],MPC:['MBC2','OTHER'],MBC2:['OTHER']};
+function eligible(nid,oid){
+  const o=plan(oid);
+  if(nid===oid||(nid==='MPC'&&oid==='MPCBS')) return {ok:false,why:'新計劃同現行計劃屬同一系列，唔可以升級自己。'};
+  if(ALLOWED[TIER_NEW[nid]].includes(o.tier)) return {ok:true};
+  const alt=NEW_IDS.filter(id=>id!==nid&&ALLOWED[TIER_NEW[id]].includes(o.tier)).map(id=>short(plan(id).name));
+  return {ok:false,why:`${short(plan(nid).name)}唔可以升級${short(o.name)}，因為佢哋嘅定義屬同一代或者較舊。`+(alt.length?`可以改揀：${alt.join('、')}。`:'')};
+}
+const yearOf=p=>{const m=p.ver.match(/(\d{4})\)?\s*$/)||p.ver.match(/\/(\d{4})/);return m?+m[1]:null;};
+
+/* ---------- compare ---------- */
+const norm=s=>s.replace(/\s+/g,'');
+const loose=s=>s.replace(/\(([a-z]|[ivx]+)\)|\b([a-z]|[ivx]+)[).]/gi,'').replace(/[\s ()（）；;。.,，、:：「」『』\-–—•·]/g,'').replace(/以及/g,'及').replace(/所有|任何/g,'');
+function status(oi,ni){
+  if(ni<0) return null;
+  if(oi===-1) return 'none';
+  if(oi===-2) return 'eng';
+  const a=D.texts[oi],b=D.texts[ni];
+  if(norm(a)===norm(b)) return 'same';
+  const r=diff(a,b); if(!/<mark /.test(r.o+r.n)) return 'same';
+  return 'diff';
+}
+/* 條文對比：用 dmp.js 入面嘅 ClauseDiff（逐句對齊，再標示改咗嘅詞語） */
+const cleanTx=s=>window.ClauseDiff?ClauseDiff.cleanTx(s):s;
+const DIFFC=new Map();
+function diff(a,b){const k=a+'\u0000'+b;if(DIFFC.has(k))return DIFFC.get(k);const r=window.ClauseDiff?ClauseDiff.clauseDiff(a,b):{o:esc(a),n:esc(b)};DIFFC.set(k,r);return r;}
+
+/* ---------- key improvements (plain language) ---------- */
+const ciIdx=name=>D.cis.findIndex(c=>c.name.startsWith(name));
+const KEYS=[
+ {ci:'突發性心臟病',t:'突發性心臟病',g:t=>{const m=t.match(/肌鈣蛋白\s*I\s*>\s*([\d.]+)/);return m?'肌鈣蛋白 I > '+m[1]:null;},say:'驗血指標門檻降低，較輕微嘅心肌梗塞都可以符合。'},
+ {ci:'中風',t:'中風',g:t=>{const w=(t.match(/最少(四|六)個星期/)||[])[1];return w?(/嚴重及永久/.test(t)?'嚴重及永久受損，'+w+'個星期後核實':'神經功能受損，'+w+'個星期後核實'):null;},say:'唔再要求「嚴重及永久」受損，核實時間亦縮短。'},
+ {ci:'中風',t:'中風：掃描異常',g:t=>/沒有明確相關的臨床症狀/.test(t)?'冇明顯症狀不保':'已刪除此不保項目',say:'掃描見到中風但症狀唔明顯，都唔再自動排除。'},
+ {ci:'因冠狀動脈疾病進行血管成形術',t:'通波仔',g:t=>{const v=(t.match(/以治療(一|二)條/)||[])[1],p=(t.match(/最少達\s*(\d+)%/)||[])[1];return v&&p?`${v}條血管收窄 ${p}%`:null;},say:'一條主要冠狀動脈收窄50%，做通波仔已經可以索償。'},
+ {ci:'因冠狀動脈疾病進行血管成形術',t:'通波仔：額外證明',g:t=>{const e=/心電圖/.test(t),s=/限制體能活動/.test(t);return e&&s?'要心電圖＋活動受限':e?'要心電圖證明':'唔使額外證明';},say:'唔使再證明心電圖變化或者日常活動受限。'},
+ {ci:'良性腦腫瘤',t:'良性腦腫瘤',g:t=>/連續六個月/.test(t)?'神經受損持續6個月':/開顱手術/.test(t)?'開顱切除或神經受損':null,say:'唔使等6個月；醫療必須嘅開顱切除手術亦可以索償。'},
+ {ci:'末期肝病',t:'末期肝病',g:t=>/至少三項/.test(t)?'4項準則任何3項':/黃疸病、水腹及腦病/.test(t)?'黃疸、腹水、腦病要齊':null,say:'4項準則係永久性黃疸、食道及胃靜脈曲張、腹水、腦病，符合任何3項就得；舊定義要黃疸、腹水、腦病3樣同時出現。'},
+ {ci:'末期肺病',t:'末期肺病',g:t=>/PaO2|分氧壓/.test(t)?'要驗動脈血氧及呼吸困難':'肺功能＋長期氧氣治療',say:'唔使做入侵性血氧檢查。'},
+ {ci:'完全及永久傷殘',t:'完全及永久傷殘',g:t=>/15歲或以下/.test(t)?'15歲或以下都保':/16歲前/.test(t)?'16歲前不保':null,say:'新增兒童保障。'},
+];
+
+/* ---------- HKFI 業界標準對比（資料：2026年8月危疾工作坊） ---------- */
+const XL_NOTE={中風:'即係業界標準唔保、但宏利新定義冇列做不保嘅情況包括：因意外、感染或血管炎等引致嘅腦損傷、冇明顯症狀嘅「靜默中風」、原有腦部病變內出血、偏頭痛引起嘅症狀，以及腦白質病變。',癌症:'業界標準額外列明唔保嘅，包括早期胃腸道間質瘤（GIST）、早期胸腺腫瘤、可用根除幽門螺旋桿菌治療嘅胃MALT淋巴瘤、早期神經內分泌腫瘤（包括類癌）等；宏利冇將呢啲列做不保，但仍然要符合癌症定義先賠，詳情以保單條款為準。'};
+const HK_LIST={中風:["短暫性腦缺血發作或延長性可逆性缺血性神經功能缺損", "因意外或創傷、感染、血管炎或炎症性疾病所引致的腦損傷", "影響眼睛、視神經或前庭系統的血管疾病", "影像檢查中發現的無症狀「靜默中風」", "預先存在的腦部病變內出血", "偏頭痛引起的腦部症狀", "腦白質病變（Leukoaraiosis）導致的腦影像異常"],癌症:["任何被組織病理學分類為癌前病變、非侵襲性癌或原位癌的腫瘤", "所有級別的異型增生、鱗狀上皮內病變及上皮內腫瘤（例如子宮頸 CIN 1–3、前列腺 PIN 1–3、外陰 VIN 1–3）", "任何被分類為邊界性惡性或潛在低度惡性的腫瘤", "任何第一期或更低期的甲狀腺癌", "任何 T1N0M0 或更低期的前列腺癌", "任何 Tis 或 Ta 的膀胱腫瘤", "無淋巴結或遠端轉移證據、第二期或以上惡性黑色素瘤以外的皮膚癌（包括原發性皮膚淋巴瘤及蕈樣肉芽腫）", "任何低於 RAI 第三期的慢性淋巴性白血病", "任何第一期或 1A 期或更低期的胃腸道間質瘤（GIST）", "任何第一期或更低期的胸腺上皮腫瘤", "可透過幽門螺旋桿菌根除治療的胃黏膜相關淋巴組織淋巴瘤（MALT lymphoma）", "任何第一期或更低期的神經內分泌腫瘤（包括類癌）", "所有腦下垂體腫瘤（轉移性或腦下垂體癌除外）", "任何在 HIV 感染存在下的腫瘤", "任何不需定期輸血、化療、標靶治療、骨髓或造血幹細胞移植或其他重大介入性治療的骨髓惡性腫瘤"]};
+function exclItems(t){const part=(t.split(/定義不包括下列各項：|定義不包括下列各項:|定義不包括：/)[1]||'');return part.split(/\([a-z]\)/).map(s=>s.replace(/[；;。\s]*(及|以及)?[；;。\s]*$/,'').trim()).filter(Boolean);}
+const STD=[
+ {ci:'癌症',t:'癌症',std:'15項不保情況',mine:t=>{const n=((t.split('定義不包括')[1]||'').match(/\([a-z]\)/g)||[]).length;return n&&n<15?`${n}項不保情況`:null;}},
+ {ci:'突發性心臟病',t:'突發性心臟病',std:'肌鈣蛋白 T > 1.0；要有典型缺血性胸痛',mine:t=>{const m=t.match(/肌鈣蛋白\s*T\s*>\s*([\d.]+)/);return m&&+m[1]<1?`肌鈣蛋白 T > ${m[1]}；有胸痛病歷即可`:null;}},
+ {ci:'中風',t:'中風',std:'7項不保情況，包括冇明顯症狀嘅「靜默中風」',mine:t=>/沒有明確相關的臨床症狀/.test(t)?null:'3項不保情況，靜默中風唔再排除'},
+ {ci:'心肌病',t:'心肌病',std:'只限4種原發性心肌病；要達第4級；持續最少180日',mine:t=>/任何病因/.test(t)&&/第三級/.test(t)?'任何病因；第3級或以上；冇持續時間要求':null},
+ {ci:'末期肺病',t:'末期肺病',std:'要驗動脈血氧（PaO2 ≤ 55mmHg），兼要靜止時呼吸困難',mine:t=>/PaO2|分氧壓/.test(t)?null:'兩樣都唔使'},
+ {ci:'末期肝病',t:'末期肝病',std:'4項準則符合3項；須腸胃科或肝病科專科醫生診斷',mine:t=>/至少三項/.test(t)?'4項準則符合3項；冇指定專科':null},
+];
+function stdBetter(n){const out=[];for(const s of STD){const i=ciIdx(s.ci);if(i<0)continue;const ni=n.cells[i];if(ni<0)continue;const v=s.mine(D.texts[ni]);if(v)out.push({...s,i,v,hk:HK_LIST[s.ci]||null,my:HK_LIST[s.ci]?exclItems(D.texts[ni]):null});}return out;}
+function keyImps(o,n){
+  const out=[];
+  for(const k of KEYS){const i=ciIdx(k.ci);if(i<0)continue;const oi=o.cells[i],ni=n.cells[i];if(oi<0||ni<0)continue;
+    const a=k.g(D.texts[oi]),b=k.g(D.texts[ni]);if(a&&b&&a!==b)out.push({...k,i,a,b});}
+  return out;
+}
+
+/* ---------- premium ---------- */
+const COUPON_END=new Date('2026-10-26T23:59:59+08:00');
+const CPN={HKD:[[200000,20000],[50000,5000],[25000,2500],[15000,1300],[6000,500]],USD:[[25000,2500],[6250,625],[3125,312.5],[1875,162.5],[750,62.5]]};
+const fx=(v,c)=>(c==='USD'?'US$':'HK$')+Number(v).toLocaleString('en-US',{maximumFractionDigits:v<1000?2:0,minimumFractionDigits:0});
+function premium(){
+  const c=$('#cur').value,p=+$('#prem').value||0,y=+$('#yrs').value||0,inc=+$('#inc').value||0,d=Math.min(+$('#disc').value||0,100),s=+$('#sum').value||0;
+  if(!p) return null;
+  let cp=0; const live=new Date()<=COUPON_END;
+  if($('#cpn').checked&&live){const r=CPN[c].find(([t])=>p>=t);cp=r?r[1]:0;}
+  const hk=c==='USD'?p*7.8:p;
+  return {c,p,y,s,month:p/12,day:p/365,pct:inc?hk/12/inc*100:null,disc:d,cp,first:p*(1-d/100)-cp,total:y?p*y:null,live,cpnOn:$('#cpn').checked};
+}
+function renderPremium(){
+  const r=premium(),el=$('#pOut');
+  if(!r){el.innerHTML='';return;}
+  el.innerHTML=`<div class="p-out">
+    <div class="hi"><span>每月平均</span><b>${fx(r.month,r.c)}</b></div>
+    <div><span>每日約</span><b>${fx(r.day,r.c)}</b></div>
+    <div><span>${r.pct!==null?'佔月入':'年繳保費'}</span><b>${r.pct!==null?r.pct.toFixed(1)+'%':fx(r.p,r.c)}</b></div>
+    <div><span>首年實際支出</span><b>${fx(r.first,r.c)}</b></div></div>
+    <p class="coupon">${r.cpnOn?(r.live?(r.cp?`保費優惠券可扣減首期保費 <b>${fx(r.cp,r.c)}</b>。`:'年繳保費未達優惠券最低要求，冇扣減。'):'保費優惠券推廣期已於2026年10月26日結束，冇計扣減。'):''}${r.disc?` 已計首年折扣 ${r.disc}%。`:''}${r.total?` 總保費約 ${fx(r.total,r.c)}（${r.y}年，未計折扣）。`:''}${r.c==='USD'&&r.pct!==null?' 以1美元＝7.8港元計。':''}</p>
+    <p class="fine">以建議書為準。優惠券只適用於特選客戶，請先喺ManuTouch確認；保費徵費按扣減前保費計算。</p>`;
+}
+
+/* ---------- selects & state ---------- */
+const oldSel=$('#oldSel'),newSel=$('#newSel');
+const groups=[['宏利較新系列',['MBCPRO','MPC','MPCBS','MBC2']],['其他現行計劃',D.plans.filter(p=>p.tier==='OTHER').map(p=>p.id)]];
+oldSel.innerHTML=groups.map(([g,ids])=>`<optgroup label="${g}">${ids.map(id=>`<option value="${id}">${esc(plan(id).name)}</option>`).join('')}</optgroup>`).join('');
+newSel.innerHTML=NEW_IDS.map(id=>`<option value="${id}">${esc(plan(id).name)}</option>`).join('');
+const FIELDS=['client','age','sex','smk','advName','advTel','cur','sum','prem','yrs','inc','disc'];
+FIELDS.forEach(f=>{const v=store.get(f,null);if(v!==null)$('#'+f).value=v;});
+$('#cpn').checked=store.get('cpn','0')==='1';
+oldSel.value=store.get('old','MTC')||'MTC'; if(!oldSel.value) oldSel.value='MTC';
+newSel.value=store.get('new','IG')||'IG'; if(!newSel.value) newSel.value='IG';
+let query='';
+
+function ctx(){
+  const o=plan(oldSel.value),n=plan(newSel.value),el=eligible(n.id,o.id);
+  const rows=D.cis.map((c,i)=>({c,i,st:status(o.cells[i],n.cells[i])})).filter(r=>r.st);
+  const keys=keyImps(o,n), keySet=new Set(keys.map(k=>k.i)), std=stdBetter(n), stdSet=new Set(std.map(s=>s.i));
+  const by=s=>rows.filter(r=>r.st===s);
+  return {o,n,el,rows,keys,keySet,std,stdSet,diffR:by('diff'),sameR:by('same'),noneR:by('none'),engR:by('eng'),
+    name:$('#client').value.trim(),adv:$('#advName').value.trim(),tel:$('#advTel').value.trim()};
+}
+
+function render(){
+  syncPrem();
+  FIELDS.forEach(f=>store.set(f,$('#'+f).value)); store.set('cpn',$('#cpn').checked?'1':'0');
+  store.set('old',oldSel.value); store.set('new',newSel.value);
+  const C=ctx(),{o,n,el}=C;
+  $('#oldVer').textContent='條款版本 '+o.ver; if(store.get('spick','')==='MBC2P'&&n.id==='MBC2')$('#newVer').dataset.plus='1'; $('#newVer').textContent='條款版本 '+n.ver+(n.enh?'，已包括2026年7月優化':'');
+  const advLine=C.adv?`顧問　${C.adv}${C.tel?'　'+C.tel:''}`:'危疾定義更新計劃';
+  $('#who').innerHTML=C.name?`為 <b>${esc(C.name)}</b> 準備<br>${esc(C.adv||'')}`:esc(C.adv||'');
+  $$('.adv').forEach(e=>e.textContent=advLine);
+  $('#cvFor').textContent=C.name?`為 ${C.name} 準備`:'2026年7月1日至12月31日';
+  renderPremium(); renderSlides(C); renderResult(C);
+  $('#actSum').textContent=`${short(o.name)} → ${short(n.name)}`;
+}
+
+function personLine(){const a=$('#age').value,s=$('#sex').value,k=$('#smk').value;return [a?a+'歲':'',s,k].filter(Boolean).join('・');}
+
+function renderResult(C){
+  const {o,n,el,rows,keys,keySet,diffR,sameR,noneR,engR,name}=C;
+  const who=name||'客戶';
+  const today=new Date().toLocaleDateString('zh-HK',{year:'numeric',month:'long',day:'numeric'});
+  $('#phead').innerHTML=`<div><h1>危疾定義更新計劃：保單比較${name?'　'+esc(name):''}</h1><p>${esc(short(o.name))}（${esc(o.ver)}）→ ${esc(short(n.name))}（${esc(n.ver)}）${personLine()?'　'+esc(personLine()):''}</p></div><p>${C.adv?esc(C.adv)+(C.tel?'　'+esc(C.tel):'')+'<br>':''}${today}</p>`;
+  let h='';
+  // verdict
+  if(el.ok){
+    h+=`<div class="verdict ok"><div class="vi"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#00A758" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h2>符合資格</h2><p>只要喺2026年12月31日前為同一受保人投保<b>${esc(short(n.name))}</b>，${esc(who)}手上嘅<b>${esc(short(o.name))}</b>日後索償時，就可以同新計劃嘅定義比較，用較有利嗰個。</p></div></div>`;
+  } else {
+    h+=`<div class="verdict no"><div class="vi"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#D93D45" stroke-width="3" stroke-linecap="round"/></svg></div><div><h2>呢個組合唔適用</h2><p>${esc(el.why)}</p></div></div>`;
+  }
+  // overview
+  const covered=diffR.length+sameR.length+engR.length, tot=covered||1;
+  let plain;
+  if(engR.length&&!diffR.length&&!sameR.length) plain=`${esc(short(o.name))}只有英文保單條款，未能逐字比較。佢保障嘅 <b>${engR.length}</b> 種危疾，參加後都會同新計劃定義比較，索償時取較有利者。下面列出新計劃嘅中文定義作參考。`;
+  else if(diffR.length===0) plain=`兩份計劃嘅危疾定義<b>已經一樣</b>，所以呢個計劃對${esc(short(o.name))}嘅定義幫助有限。新計劃本身嘅保障，可以按需要另外考慮。`;
+  else plain=`${esc(short(o.name))}保障 <b>${covered}</b> 種嚴重危疾／通波仔。參加計劃後，其中 <b>${diffR.length}</b> 種嘅條文同新計劃唔同，索償時會用較有利嗰個；${sameR.length?`另外 ${sameR.length} 種兩邊定義一樣，冇影響。`:''}`;
+  h+=`<div class="box"><h2>一眼睇晒</h2>
+   <div class="ov"><div>
+     <div class="bar" role="img" aria-label="現行計劃保障嘅危疾分佈">${diffR.length?`<div class="b1" style="flex:${diffR.length}">${diffR.length}</div>`:''}${sameR.length?`<div class="b2" style="flex:${sameR.length}">${sameR.length}</div>`:''}${engR.length?`<div class="b3" style="flex:${engR.length}">${engR.length}</div>`:''}</div>
+     <div class="legend">${diffR.length?`<span><i style="background:var(--g)"></i>條文有分別，參加後受惠</span>`:''}${sameR.length?`<span><i style="background:#C7D2CF"></i>定義一樣</span>`:''}${engR.length?`<span><i style="background:#8FA4C9"></i>只有英文條款</span>`:''}</div>
+   </div>
+   <div class="extra"><b>${noneR.length}</b><p>種危疾新計劃有保、但你張舊單冇保。參加後<b>唔會</b>加落舊單，不過新計劃本身會保。</p></div></div>
+   <div class="plain">${plain}</div></div>`;
+  // keys
+  if(keys.length&&el.ok){
+    h+=`<div class="box"><h2>新定義較寬鬆嘅重點</h2><p class="sub">最常見、最易講明嘅門檻變化</p><div class="keys">${keys.map(k=>`<div class="key"><div class="kh"><b>${k.t}</b><span class="tag better">較寬鬆</span></div><div class="cmp"><div class="cv o"><small>你張舊單</small><b>${esc(k.a)}</b></div><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="#00A758" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="cv n"><small>新計劃定義</small><b>${esc(k.b)}</b></div></div><p>${k.say}</p></div>`).join('')}</div></div>`;
+  }
+  // industry standard
+  if(C.std.length&&el.ok){
+    h+=`<div class="box"><h2>仲寬鬆過業界標準</h2><p class="sub">香港保險業聯會（HKFI）訂立咗危疾標準定義，只適用於新推出嘅產品，<b>唔會改到你手上嘅舊單</b>。${esc(short(n.name))}以下定義仲寬鬆過業界標準，參加計劃後舊單都用得到。</p><div class="stdlist">${C.std.map(s=>`<div class="sr"><b>${s.t}</b><div class="sv"><span class="so"><small>業界標準</small>${esc(s.std)}</span><span class="sn"><small>${esc(short(n.name))}</small>${esc(s.v)}</span></div>${s.hk?`<details class="xl"><summary>睇清楚兩邊嘅不保情況</summary><div class="xlc"><div><h5>業界標準：${s.hk.length}項唔保</h5><ol>${s.hk.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div><div class="mine"><h5>${esc(short(n.name))}：${s.my.length}項唔保</h5><ol>${s.my.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></div>${XL_NOTE[s.ci]?`<p class="xln">${XL_NOTE[s.ci]}</p>`:''}</details>`:''}</div>`).join('')}</div></div>`;
+  }
+  // diff list
+  if(diffR.length){
+    h+=`<div class="box"><h2>條文有分別嘅危疾（${diffR.length}）</h2><p class="sub">撳入去睇兩份計劃嘅條文。索償時會用較有利嗰個。</p>
+     <div class="howto"><span><mark class="o">黃色</mark> 舊單有、但新計劃已改寫或刪除嘅字眼</span><span><mark class="n">綠色</mark> 新計劃新增或改寫嘅字眼</span><input class="search" id="q" placeholder="搜尋危疾名稱" value="${esc(query)}" aria-label="搜尋危疾名稱"></div>
+     <div class="list" id="list"></div>
+     <div class="print-names chips">${diffR.map(r=>`<span>${esc(r.c.name)}</span>`).join('')}</div></div>`;
+  }
+  if(sameR.length) h+=`<div class="box"><h2>定義一樣嘅危疾（${sameR.length}）</h2><p class="why">兩份計劃寫法相同（或者只係標點、排版唔同），參加與否冇分別。</p><div class="chips">${sameR.map(r=>`<span>${esc(r.c.name)}</span>`).join('')}</div></div>`;
+  if(engR.length) h+=`<div class="box"><h2>只有英文條款嘅危疾（${engR.length}）</h2><p class="why">呢份計劃冇中文保單條款。參加後一樣會同新計劃定義比較，詳細請參考英文條款。</p><div class="chips">${engR.map(r=>`<span>${esc(r.c.name)}</span>`).join('')}</div></div>`;
+  if(noneR.length) h+=`<div class="box"><h2>新計劃有、舊單冇嘅危疾（${noneR.length}）</h2><p class="why">呢個計劃只會改善舊單<b>本身已保</b>嘅病嘅定義，唔會新增病種。以下呢啲病，只有新計劃會保。</p><div class="chips extra-c">${noneR.map(r=>`<span>${esc(r.c.name)}</span>`).join('')}</div></div>`;
+  h+=`<p class="fine">只比較嚴重危疾及「因冠狀動脈疾病進行血管成形術」（即計劃適用範圍）。資料來源：危疾定義更新計劃單張（MKTPP119C 07/2026）、ManuTouch危疾定義比較表、IFP NewsFlash（2026年7月14日）。本頁只供講解參考，一切以保單條款為準。</p>`;
+  $('#result').innerHTML=h;
+  if(diffR.length){ renderList(C); const q=$('#q'); q.oninput=()=>{query=q.value;renderList(C);}; }
+}
+function renderList(C){
+  const {diffR,keySet,keys,n}=C, q=query.trim();
+  const sel=diffR.filter(r=>!q||r.c.name.includes(q)).sort((a,b)=>(keySet.has(b.i)-keySet.has(a.i)));
+  const L=$('#list');
+  if(!sel.length){L.innerHTML=`<div class="empty">搵唔到「${esc(q)}」，試吓其他字眼，例如「心臟」或「癌」。</div>`;return;}
+  L.innerHTML=sel.map(r=>{const k=keys.find(k=>k.i===r.i);return `<details class="row" data-i="${r.i}"><summary><span class="nm">${esc(r.c.name)}</span>${k?`<span class="gist">${esc(k.a)} → ${esc(k.b)}</span><span class="tag better">較寬鬆</span>`:'<span class="tag rev">條文有分別</span>'}${C.stdSet.has(r.i)?'<span class="tag std">優於業界標準</span>':''}${r.c.enh&&n.enh?'<span class="tag jul">7月優化</span>':''}<svg class="chev" width="18" height="18" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></summary><div class="dbox"></div></details>`;}).join('');
+  $$('#list details').forEach(d=>d.addEventListener('toggle',()=>{if(d.open)fill(d,C);}));
+}
+function fill(d,C){
+  const box=d.querySelector('.dbox');if(box.dataset.done)return;box.dataset.done=1;
+  const i=+d.dataset.i,{o,n,keys}=C,r=diff(D.texts[o.cells[i]],D.texts[n.cells[i]]);
+  const ks=keys.filter(k=>k.i===i);
+  const sd=C.std.find(s=>s.i===i);
+  box.innerHTML=(ks.length?`<div class="say">${ks.map(k=>'<b>重點：</b>'+k.say).join('<br>')}</div>`:'')+(sd?`<div class="say std"><b>業界標準：</b>${esc(sd.std)}　→　<b>新計劃：</b>${esc(sd.v)}</div>`:'')+`<div class="dcols"><div><h5>你張舊單：${esc(short(o.name))}</h5><div class="tx">${r.o}</div></div><div class="new"><h5>新計劃：${esc(short(n.name))}</h5><div class="tx">${r.n}</div></div></div>`;
+}
+
+/* ---------- slides that depend on selection ---------- */
+const ICON={heart:'<svg width="28" height="28" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" stroke="#00A758" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M5 11h3l1.5-2.5L12 14l1.5-3H19" stroke="#00A758" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ brain:'<svg width="28" height="28" viewBox="0 0 24 24"><path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 6 1V5a3 3 0 0 0-3-1zM15 4a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-6 1" stroke="#00A758" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ vessel:'<svg width="28" height="28" viewBox="0 0 24 24"><path d="M3 8h18M3 16h18" stroke="#00A758" stroke-width="2" stroke-linecap="round"/><path d="M7 8c2 2.5 2 5.5 0 8M17 8c-2 2.5-2 5.5 0 8" stroke="#00A758" stroke-width="2" fill="none"/><path d="M10 12h4" stroke="#00A758" stroke-width="2" stroke-dasharray="1.5 1.5"/></svg>'};
+function trioData(o,n){
+  const get=(name,re,fmt)=>{const i=ciIdx(name);if(i<0)return null;const a=o.cells[i]>=0?D.texts[o.cells[i]]:null,b=n.cells[i]>=0?D.texts[n.cells[i]]:null;if(!a||!b)return null;const x=fmt(a),y=fmt(b);return x&&y&&x!==y?[x,y]:null;};
+  return [
+   ['heart','突發性心臟病','肌鈣蛋白 I 門檻（微克/公升）',get('突發性心臟病',null,t=>{const m=t.match(/肌鈣蛋白\s*I\s*>\s*([\d.]+)/);return m?'> '+m[1]:null;})],
+   ['brain','中風','專科醫生核實所需時間',get('中風',null,t=>{const w=(t.match(/最少(四|六)個星期/)||[])[1];return w?(w==='四'?'4':'6')+' 星期':null;})],
+   ['vessel','通波仔','需要治療嘅主要冠狀動脈',get('因冠狀動脈疾病進行血管成形術',null,t=>{const v=(t.match(/以治療(一|二)條/)||[])[1],p=(t.match(/最少達\s*(\d+)%/)||[])[1];return v&&p?(v==='一'?'1':'2')+' 條・'+p+'%':null;})]];
+}
+function renderSlides(C){
+  const {o,n}=C;
+  // timeline
+  const y0=1993,y1=2028,pos=y=>((y-y0)/(y1-y0)*100).toFixed(2)+'%',oy=yearOf(o);
+  let t='<div class="axis"></div>';
+  if(oy) t+=`<div class="span" style="left:${pos(oy)};right:${(100-parseFloat(pos(2026.5))).toFixed(2)}%"></div>`;
+  [...new Set(D.plans.map(yearOf).filter(Boolean))].forEach(y=>t+=`<div class="dot" style="left:${pos(y)}"></div>`);
+  [1995,2002,2008,2017,2020,2026].forEach(y=>t+=`<div class="yr" style="left:${pos(y)}">${y}</div>`);
+  if(oy) t+=`<div class="dot you" style="left:${pos(oy)}"></div><div class="flag you" style="left:${pos(Math.min(Math.max(oy,1999),2016))}"><b>${esc(short(o.name))}</b><span>條款 ${esc(o.ver)}</span></div>`;
+  t+=`<div class="dot now" style="left:${pos(2026.5)}"></div><div class="flag now" style="left:${pos(2024.6)}"><b>最新定義</b><span>2026年7月</span></div>`;
+  $('#tl').innerHTML=t;
+  $('#gapBadge').innerHTML=oy&&2026-oy>0?`<span>${esc(short(o.name))}嘅條文已經寫咗</span><b>${2026-oy}</b><span>年</span>`:'<span>每一點代表一份宏利危疾計劃嘅條款年份</span>';
+  // trio: use client's pair, fallback to example
+  let td=trioData(o,n), note='';
+  if(td.filter(x=>x[3]).length<2){td=trioData(plan('MTC'),plan('IG'));note='例子：樂享人生危疾保 對比 宏健守護危疾入息保障';}
+  else note=`${short(o.name)} 對比 ${short(n.name)}`;
+  $('#trio').innerHTML=td.map(([ic,h,u,v])=>`<div class="metric"><div class="ic">${ICON[ic]}</div><h3>${h}</h3><div class="unit">${u}</div>${v?`<div class="row old"><span>舊定義</span><b>${esc(v[0])}</b></div><div class="row new"><span>新定義</span><b>${esc(v[1])}</b></div>`:'<div class="row"><span>兩份計劃此項相同</span><b>—</b></div>'}</div>`).join('');
+  $('#trioNote').textContent=note+'。完整條文請參閱保單條款。';
+  // matrix
+  const cols=[['IG','宏健守護／<br>宏伴護航'],['PRO','活耀人生<br>危疾保PRO'],['MPC','守護無間<br>危疾保'],['MBC2','活耀人生<br>危疾保2系列']];
+  const rws=[['PRO','活耀人生危疾保PRO'],['MPC','守護無間危疾保'],['MPCBS','守護無間危疾保（保寶未來）'],['MBC2','活耀人生危疾保2／（加強版）'],['OTHER','其他現行計劃']];
+  const tick='<svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  $('#mx').innerHTML='<thead><tr><th>現行計劃 ＼ 新計劃</th>'+cols.map(c=>`<th>${c[1]}</th>`).join('')+'</tr></thead><tbody>'+rws.map(([tr,l])=>`<tr class="${o.tier===tr?'me':''}"><th>${l}${o.tier===tr?'<span class="me-tag">你嘅計劃屬於呢一類</span>':''}</th>${cols.map(c=>ALLOWED[c[0]].includes(tr)?`<td class="y" aria-label="適用">${tick}</td>`:'<td aria-label="不適用"></td>').join('')}</tr>`).join('')+'</tbody>';
+  renderPick();
+}
+
+/* ---------- WhatsApp / print ---------- */
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2200);}
+$('#btnWa').onclick=async()=>{
+  const C=ctx(),{o,n,el,keys,diffR,name}=C,r=premium();
+  let m=`${name?name+'你好！':'你好！'}想同你分享宏利嘅「危疾定義更新計劃」。\n\n`;
+  if(el.ok){
+    m+=`你而家持有嘅【${short(o.name)}】，只要喺2026年12月31日前為同一受保人投保【${short(n.name)}】，舊單日後索償時，就可以用新計劃較寬鬆嘅危疾定義。\n\n`;
+    if(keys.length) m+=`幾個重點：\n${keys.slice(0,4).map(k=>`✅ ${k.t}：${k.a} → ${k.b}`).join('\n')}\n\n`;
+    if(diffR.length) m+=`兩份計劃合共有 ${diffR.length} 種危疾嘅條文有分別。\n\n`;
+    if(C.std.length) m+=`另外，${short(n.name)}嘅危疾定義，部分仲寬鬆過香港保險業聯會嘅業界標準（例如${C.std.slice(0,2).map(s=>s.t).join('、')}）。業界標準只適用於新產品，唔會改到你手上嘅舊單，參加呢個計劃先可以令舊單受惠。\n\n`;
+    if(r) m+=`新計劃保費每月平均約 ${fx(r.month,r.c)}（每日約 ${fx(r.day,r.c)}）。\n\n`;
+  } else m+=`醫學進步咗，新危疾計劃嘅定義亦寬鬆咗唔少。投保指定新計劃之後，舊單索償都可以跟新定義。\n\n`;
+  m+=`想約個時間同你逐項睇清楚，你邊日方便？`;
+  if(C.adv) m+=`\n\n${C.adv}${C.tel?'　'+C.tel:''}`;
+  try{await navigator.clipboard.writeText(m);toast('已複製，可以直接貼落WhatsApp');}
+  catch(e){const ta=document.createElement('textarea');ta.value=m;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('已複製，可以直接貼落WhatsApp');}catch(_){toast('複製唔到，請再試一次');}ta.remove();}
+};
+function doPrint(full){
+  if(full){query='';render();const C=ctx();$$('#list details').forEach(d=>{d.open=true;fill(d,C);});}
+  document.body.classList.toggle('brief',!full);
+  setTimeout(()=>window.print(),80);
+}
+$('#btnPrint').onclick=()=>doPrint(false);
+$('#btnPrintFull').onclick=()=>doPrint(true);
+[...FIELDS.map(f=>'#'+f),'#cpn'].forEach(s=>$(s).addEventListener('input',render));
+[oldSel,newSel,$('#cur'),$('#sex'),$('#smk')].forEach(s=>s.addEventListener('change',render));
+newSel.addEventListener('change',()=>{const cur=store.get('spick','');const id=newSel.value==='MBC2'&&cur==='MBC2P'?'MBC2P':newSel.value;setPick(id);});
+['#cur','#sum','#prem','#yrs'].forEach(s=>$(s).addEventListener('input',()=>store.set('autoPrem','0')));
+
+/* ================= PLANS (新計劃比較) ================= */
+const R=window.CI_RATES||{};
+const P2=[
+ {tags:['首10年額外賠100%','癌症最高賠800%'],id:'IG',def:'IG',name:'宏健守護危疾入息保障',ver:'2026年4月',dis:121,sev:60,early:44,child:17,
+  uw:'正常核保',uwV:0,
+  earlyT:'44種，每次名義金額20%',earlyS:'總額上限80%',
+  f10:'危疾加護保障 +100%',f10s:'首10年：額外賠已付嚴重危疾賠償嘅100%（早期／兒童疾病亦另加100%）',f10v:100,
+  canc:'癌症確診保障＋癌症的持續治療保障',cancS:'每次最高名義金額100%，可快至每年賠，合共最高800%',cancV:800,cancGap:'每次相隔1年',cancGapV:2,
+  hs:'持續守護保障＋持續治療保障',hsS:'新一次心臟病／中風，或要做複雜／大型手術，每次最高100%，合共最高400%',hsV:400,
+  oth:'—',othV:0, term:'—',termV:0,
+  icu:'—',icuS:'',icuV:0, life:'—',lifeV:0, tcm:'中醫癌症治療保障',tcmS:'中藥、針灸、推拿實報實銷，每次650港元，最多60次',tcmV:1,
+  tot:1000,
+  waiver:'嚴重危疾後豁免所有保費',waiverS:'早期危疾／兒童疾病後再豁免12個月保費',waiverV:2,
+  death:'首10年：已繳保費220%或名義金額200%',deathS:'取較高者；10年後為110%／100%',deathV:3,
+  mat:'已繳保費110%或名義金額100%',matS:'100歲時，取較高者',matV:2},
+ {tags:['簡易核保：只答3條健康問題','專注癌症、心臟病、中風'],id:'IS',def:'IS',name:'宏伴護航危疾入息保障',ver:'2026年4月',dis:13,sev:10,early:3,child:0,
+  uw:'簡易核保',uwS:'只需答3條健康問題，主要問過去2年',uwV:1,
+  earlyT:'3種早期癌症，每次20%',earlyS:'原位癌、早期惡性腫瘤、早期甲狀腺癌',
+  f10:'—',f10s:'',f10v:0,
+  canc:'癌症確診保障＋癌症的持續治療保障',cancS:'每次最高100%，合共最高400%',cancV:400,cancGap:'每次相隔1年',cancGapV:2,
+  hs:'持續守護保障＋持續治療保障',hsS:'每次最高100%，合共最高400%',hsV:400,
+  oth:'—',othV:0, term:'末期癌症預支保障',termS:'末期癌症即付名義金額100%（會扣減持續治療保障上限）',termV:1,
+  icu:'—',icuS:'',icuV:0, life:'—',lifeV:0, tcm:'—',tcmV:0,
+  tot:500,
+  waiver:'嚴重危疾後豁免所有保費',waiverS:'',waiverV:1,
+  death:'已繳保費110%',deathS:'扣除已付賠償',deathV:1,
+  mat:'已繳保費110%',matS:'100歲時',matV:1},
+ {tags:['123種疾病，兒童保障最全','末期癌症境外治療保障'],id:'MBCPRO',def:'MBCPRO',name:'活耀人生危疾保PRO',ver:'2026年7月',dis:123,sev:60,early:44,child:19,
+  uw:'正常核保',uwV:0,
+  earlyT:'44種，每次名義金額20%',earlyS:'總額上限80%',
+  f10:'額外賠償 +50%',f10s:'首10年嚴重危疾索償，額外賠名義金額50%',f10v:50,
+  canc:'持續守護保障：癌症2次',cancS:'每次名義金額100%',cancV:200,cancGap:'癌症之間相隔3年',cancGapV:1,
+  hs:'持續守護保障：心臟病／中風2次',hsS:'每次名義金額100%',hsV:200,
+  oth:'—',othV:0, term:'末期癌症治療保障',termS:'境外治療／手術、非適應症或臨床試驗癌症藥物，合共最高20%',termV:1,
+  icu:'級別一＋級別二',icuS:'級別一：20%｜級別二：100%',icuV:2, life:'—',lifeV:0, tcm:'—',tcmV:0,
+  tot:500,
+  waiver:'嚴重危疾後豁免所有保費',waiverS:'另有父母恩恤保費豁免：保單持有人（父母）身故，豁免至子女25歲',waiverV:2,
+  death:'名義金額100%',deathS:'扣除已付賠償',deathV:2,
+  mat:'名義金額100%',matS:'100歲時',matV:1},
+ {tags:['癌症最多賠5次','認知障礙／柏金遜額外保障'],id:'MPC',def:'MPC',name:'守護無間危疾保',ver:'2026年7月',dis:121,sev:60,early:44,child:17,
+  uw:'正常核保',uwV:0,
+  earlyT:'44種，每次名義金額20%',earlyS:'總額上限80%',
+  f10:'額外賠償 +50%',f10s:'首10年嚴重危疾索償，額外賠名義金額50%',f10v:50,
+  canc:'持續守護保障：癌症5次',cancS:'每次名義金額100%；或改揀持續癌症現金保障選項（每月5%，最高500%）',cancV:500,cancGap:'癌症之間相隔3年',cancGapV:1,
+  hs:'持續守護保障：心臟病／中風2次',hsS:'每次名義金額100%',hsV:200,
+  oth:'認知障礙／柏金遜病 1次',othS:'名義金額100%',othV:1, term:'末期癌症靈活選',termS:'第3期即付75%、第4期即付100%，保單隨即終止',termV:1,
+  icu:'級別一＋級別二',icuS:'級別一：20%｜級別二：100%',icuV:2, life:'生活守護保障',lifeS:'名義金額100%（16–65歲）',lifeV:1, tcm:'—',tcmV:0,
+  tot:1000,
+  waiver:'嚴重危疾後豁免所有保費',waiverS:'級別二深切治療後亦豁免',waiverV:1,
+  death:'名義金額100%',deathS:'扣除已付賠償',deathV:2,
+  mat:'名義金額100%',matS:'100歲時',matV:1},
+ {tags:['生活守護保障','可揀繳費至65歲'],id:'MBC2',def:'MBC2',name:'活耀人生危疾保2',ver:'2026年7月',dis:112,sev:60,early:44,child:8,
+  uw:'正常核保',uwV:0,
+  earlyT:'44種，每次名義金額20%',earlyS:'總額上限80%',
+  f10:'額外賠償 +50%',f10s:'首10年嚴重危疾索償，額外賠名義金額50%',f10v:50,
+  canc:'持續守護保障：癌症2次',cancS:'每次名義金額100%',cancV:200,cancGap:'癌症之間相隔3年',cancGapV:1,
+  hs:'持續守護保障：心臟病／中風2次',hsS:'每次名義金額100%',hsV:200,
+  oth:'—',othV:0, term:'—',termV:0,
+  icu:'深切治療保障（一種）',icuS:'入住深切治療部連續3日或以上：20%',icuV:1, life:'生活守護保障',lifeS:'名義金額100%（16–65歲）',lifeV:1, tcm:'—',tcmV:0,
+  tot:500,
+  waiver:'嚴重危疾後豁免所有保費',waiverS:'',waiverV:1,
+  death:'名義金額100%',deathS:'扣除已付賠償',deathV:2,
+  mat:'名義金額100%',matS:'100歲時',matV:1},
+ {tags:['癌症治療加強保障','生活守護保障'],id:'MBC2P',def:'MBC2',name:'活耀人生危疾保2（加強版）',ver:'2026年7月',dis:112,sev:60,early:44,child:8,
+  uw:'正常核保',uwV:0,
+  earlyT:'44種，每次名義金額20%',earlyS:'總額上限80%',
+  f10:'額外賠償 +50%',f10s:'首10年嚴重危疾索償，額外賠名義金額50%',f10v:50,
+  canc:'持續守護保障：癌症2次＋癌症治療加強保障',cancS:'持續守護每次100%；仲做緊癌症治療，每次再賠30%（最多6次），癌症保障合共最高480%',cancV:380,cancGap:'癌症之間相隔3年',cancGapV:1,
+  hs:'持續守護保障：心臟病／中風2次',hsS:'每次名義金額100%',hsV:200,
+  oth:'—',othV:0, term:'—',termV:0,
+  icu:'深切治療保障（一種）',icuS:'入住深切治療部連續3日或以上：20%',icuV:1, life:'生活守護保障',lifeS:'名義金額100%（16–65歲）',lifeV:1, tcm:'—',tcmV:0,
+  tot:500,
+  waiver:'嚴重危疾後豁免所有保費',waiverS:'',waiverV:1,
+  death:'名義金額100%',deathS:'扣除已付賠償',deathV:2,
+  mat:'名義金額100%',matS:'100歲時',matV:1},
+];
+const GLOSS=[
+ ['g-sa','名義金額','即保額。下面嘅百分比，例如「20%」「100%」，都係以名義金額計。例如保額100萬，20%＝20萬。'],
+ ['g-up','舊單定義升級','參加今次計劃後，客戶張舊單有幾多種危疾可以用返新計劃較寬鬆嘅定義索償（只計嚴重危疾及通波仔）。'],
+ ['g-f10','危疾加護保障／首10年額外賠償','宏健守護叫「危疾加護保障」：首10個保單年度內確診，除咗正常賠償，再多賠一筆相等於已付賠償嘅100%。其他計劃係首10年嚴重危疾索償，額外賠名義金額50%。'],
+ ['g-canc','持續守護保障','第一次嚴重危疾賠咗之後，保單唔會完，之後再患癌症（新確診、復發、擴散或持續）、心臟病或中風，仲可以再賠，每次名義金額100%，保障至85歲。癌症之間一般要相隔3年，其他相隔1年。'],
+ ['g-cont','癌症的持續治療保障（宏健守護、宏伴護航）','癌症賠咗之後，如果仲要接受積極治療（例如化療、電療、標靶藥）或晚期護理，可以再申請賠償，每次相隔1年，即係最快每年賠一次。'],
+ ['g-boost','癌症治療加強保障（活耀人生2加強版）','每次因癌症獲賠後，如果喺確診後第2年同第3年內仲患癌並接受積極治療或晚期護理，每年各再賠名義金額30%。每次癌症索償最多2次，總共最多6次。'],
+ ['g-cash','持續癌症現金保障選項（守護無間）','首次癌症賠償後，可以揀唔要「癌症持續守護」，改為只要仍在接受積極治療或晚期護理，每月收名義金額5%，最高500%。'],
+ ['g-term','末期癌症相關保障','宏伴護航「末期癌症預支保障」：確診末期癌症即預支100%。守護無間「末期癌症靈活選」：第3期即付75%、第4期即付100%，但保單隨即終止。活耀人生PRO「末期癌症治療保障」：末期癌症去境外治療、做境外手術，或用非適應症／臨床試驗癌症藥物，最高賠名義金額20%。'],
+ ['g-icu','深切治療保障','唔使係指定危疾都賠，只要因病或受傷入深切治療部（ICU）。<br>• <b>級別一</b>（守護無間、活耀人生PRO）：同一醫院ICU連續住3日或以上，賠名義金額20%。<br>• <b>級別二</b>（守護無間、活耀人生PRO）：較嚴重。ICU連續住5日或以上，同時用侵入性維生支持（例如呼吸機），並且做咗複雜手術，賠名義金額100%（扣除已付賠償），之後豁免保費。<br>• 活耀人生2／2加強版：只有一種，ICU連續住3日或以上，賠20%。'],
+ ['g-life','生活守護保障','16至65歲期間，因傷殘連續180日無法自己完成6項日常生活活動中嘅2項（例如洗澡、穿衣、進食），額外賠名義金額100%。'],
+ ['g-uw','簡易核保','宏伴護航只需回答3條健康問題，主要集中過去2年健康狀況，適合有少少病歷、擔心正常核保唔批嘅客戶。'],
+ ['g-tot','總保障上限','首次嚴重危疾加上所有多次賠償，理論上最多可以賠到名義金額嘅幾多倍。'],
+];
+const nameHTML=n=>esc(n).replace(/(危疾)/,'<span class="nb">$1').replace(/(（)/,'</span><span class="nb">$1')+(/危疾/.test(n)?'</span>':'');
+const TERM_LBL={'10':'10年','20':'20年','25':'25年','A65':'至65歲'};
+function annualPrem(p,cur,term,age,sex,smk,sum){
+  const t=R[p.id]&&R[p.id][cur]&&R[p.id][cur][term]; if(!t) return {err:`冇${TERM_LBL[term]}繳費選項`};
+  if(age<t.min||age>t.max) return {err:`${TERM_LBL[term]}繳費只接受 ${t.max} 歲或以下投保`};
+  const row=t.r[age-t.min]; if(!row) return {err:'冇呢個年齡嘅保費率'};
+  const idx=(sex==='女'?2:0)+(smk==='吸煙'?0:1);
+  return {rate:row[idx],annual:row[idx]*sum/1000};
+}
+const pOld=$('#pOldSel'); pOld.innerHTML=oldSel.innerHTML;
+const SUMS={HKD:[[100000,'10萬'],[500000,'50萬'],[1000000,'100萬']],USD:[[12500,'US$1.25萬'],[62500,'US$6.25萬'],[125000,'US$12.5萬']]};
+function sumChips(){const c=$('#pCur').value,v=+$('#pSum').value;$('#sumChips').innerHTML=SUMS[c].map(([x,l])=>`<button type="button" data-v="${x}" class="${v===x?'on':''}">${l}</button>`).join('');
+  $$('#sumChips button').forEach(b=>b.onclick=()=>{$('#pSum').value=b.dataset.v;renderPlans();});}
+function loadPlanInputs(){
+  pOld.value=oldSel.value; $('#pAge').value=$('#age').value||store.get('pAge','40'); $('#pSex').value=$('#sex').value||'男'; $('#pSmk').value=$('#smk').value||'非吸煙';
+  $('#pCur').value=store.get('pCur','HKD'); $('#pSum').value=store.get('pSum','500000'); $('#pTerm').value=store.get('pTerm','25');
+}
+let hidden=new Set((store.get('pHide','')||'').split(',').filter(Boolean));
+function renderPlans(){
+  oldSel.value=pOld.value; $('#age').value=$('#pAge').value; $('#sex').value=$('#pSex').value; $('#smk').value=$('#pSmk').value;
+  ['pAge','pCur','pSum','pTerm'].forEach(k=>store.set(k,$('#'+k).value)); render(); sumChips();
+  const cur=$('#pCur').value,sum=+$('#pSum').value||0,age=parseInt($('#pAge').value,10),term=$('#pTerm').value,sex=$('#pSex').value,smk=$('#pSmk').value,o=plan(pOld.value);
+  const out=$('#plansOut');
+  if(isNaN(age)){out.innerHTML='<div class="empty box">輸入客戶年齡，就會顯示可以揀嘅計劃同保費。</div>';return;}
+  const minSum=cur==='HKD'?100000:12500, all=[],bad=[];
+  P2.forEach(p=>{
+    const el=eligible(p.def,o.id);
+    if(!el.ok){bad.push([p,'唔可以升級'+short(o.name)]);return;}
+    const pr=annualPrem(p,cur,term,age,sex,smk,sum);
+    if(pr.err){bad.push([p,pr.err]);return;}
+    const n=plan(p.def), up=D.cis.filter((c,i)=>status(o.cells[i],n.cells[i])==='diff').length;
+    all.push({...p,pr,up});
+  });
+  let h='';
+  if(sum&&sum<minSum) h+=`<div class="verdict no" style="margin-bottom:14px"><div><h2>保額低於最低要求</h2><p>各計劃最低名義金額為100,000港元／12,500美元。</p></div></div>`;
+  if(bad.length) h+=`<div class="excl"><b style="align-self:center">唔適用：</b>${bad.map(([p,w])=>`<span><b>${esc(short(p.name))}</b>　${esc(w)}</span>`).join('')}</div>`;
+  if(!all.length){out.innerHTML=h+'<div class="box empty">冇計劃符合呢啲條件，試吓改繳費年期或者年齡。</div>';return;}
+  // which plans to compare
+  h+=`<div class="pick-row"><span>比較：</span>${all.map(x=>`<label class="pchip${hidden.has(x.id)?'':' on'}"><input type="checkbox" data-tog="${x.id}" ${hidden.has(x.id)?'':'checked'}>${esc(({IG:'宏健守護',IS:'宏伴護航',MBCPRO:'活耀人生PRO',MPC:'守護無間',MBC2:'活耀人生2',MBC2P:'活耀人生2加強版'})[x.id])}</label>`).join('')}</div>`;
+  let ok=all.filter(x=>!hidden.has(x.id)); if(!ok.length) ok=all;
+  const best=(key,dir)=>{if(ok.length<2)return new Set();const vals=ok.map(key);const b=dir==='min'?Math.min(...vals):Math.max(...vals);if(vals.every(v=>v===b))return new Set();return new Set(ok.filter(x=>key(x)===b).map(x=>x.id));};
+  const T={prem:best(x=>x.pr.annual,'min'),up:best(x=>x.up,'max'),dis:best(x=>x.dis,'max'),child:best(x=>x.child,'max'),early:best(x=>x.early,'max'),f10:best(x=>x.f10v,'max'),tot:best(x=>x.tot,'max'),canc:best(x=>x.cancV,'max'),gap:best(x=>x.cancGapV,'max'),hs:best(x=>x.hsV,'max'),oth:best(x=>x.othV,'max'),icu:best(x=>x.icuV,'max'),life:best(x=>x.lifeV,'max'),waiver:best(x=>x.waiverV,'max'),death:best(x=>x.deathV,'max'),uw:best(x=>x.uwV,'max')};
+  const score={};ok.forEach(x=>score[x.id]=Object.values(T).filter(s=>s.has(x.id)).length);
+  const top=Math.max(...Object.values(score)); const topIds=ok.filter(x=>score[x.id]===top&&top>0).map(x=>x.id);
+  const yrs=term==='A65'?Math.max(65-age,1):+term;
+  const th=(set,id)=>set&&set.has(id)?'<span class="thumb" title="呢項較好">👍</span>':'';
+  const ageMax=x=>{const t=R[x.id]&&R[x.id][cur]&&R[x.id][cur][term];return t?t.max:'—';};
+  const ROWS=[
+    ['保費'],
+    ['每年保費',x=>[fx(x.pr.annual,cur),`每月約 ${fx(x.pr.annual/12,cur)}`],T.prem],
+    ['總保費（約）',x=>[fx(x.pr.annual*yrs,cur),`${yrs}年，投保時保費率保證不變`],null],
+    ['舊單定義升級',x=>[x.up?`${x.up} 項`:'—',x.up?'舊單可用新定義索償':'兩份定義已一致'],T.up,'g-up'],
+    ['投保及核保'],
+    ['投保年齡',x=>[`15日至${ageMax(x)}歲`,`${TERM_LBL[term]}繳費`],null],
+    ['繳費年期選擇',x=>[x.id.startsWith('MBC2')?'10／20／25年／至65歲':'10／20／25年',''],null],
+    ['核保',x=>[x.uw,x.uwS||''],T.uw,'g-uw'],
+    ['保障範圍'],
+    ['涵蓋危疾',x=>[`${x.dis} 種`,`嚴重${x.sev}・早期${x.early}・兒童${x.child}`],T.dis],
+    ['嚴重危疾',x=>[`${x.sev}種，名義金額100%`,'保障至100歲'],null,'g-sa'],
+    ['早期危疾',x=>[x.earlyT,x.earlyS],T.early],
+    ['兒童疾病',x=>[x.child?`${x.child} 種，每次最高20%`:'—',x.child?'16歲前投保，保至18歲':''],T.child],
+    ['首10年額外賠償',x=>[x.f10,x.f10s],T.f10,'g-f10'],
+    ['總保障上限',x=>[`名義金額 ${x.tot.toLocaleString()}%`,''],T.tot,'g-tot'],
+    ['多次賠償（首次賠償後，至85歲）'],
+    ['癌症',x=>[x.canc,x.cancS],T.canc,'g-canc'],
+    ['癌症索償相隔',x=>[x.cancGap,''],T.gap],
+    ['心臟病／中風',x=>[x.hs,x.hsS],T.hs,'g-canc'],
+    ['認知障礙／柏金遜',x=>[x.oth,x.othS||''],T.oth],
+    ['末期癌症',x=>[x.term,x.termS||''],null,'g-term'],
+    ['其他保障'],
+    ['深切治療（ICU）',x=>[x.icu,x.icuS||''],T.icu,'g-icu'],
+    ['生活守護保障',x=>[x.life,x.lifeS||''],T.life,'g-life'],
+    ['中醫治療',x=>[x.tcm,x.tcmS||''],null],
+    ['保費豁免',x=>[x.waiver,x.waiverS||''],T.waiver],
+    ['身故賠償',x=>[x.death,x.deathS],T.death],
+    ['期滿利益',x=>[x.mat,x.matS],null],
+  ];
+  const lbl=r=>`${r[0]}${r[3]?` <a class="gq" href="#${r[3]}" aria-label="${r[0]}解釋">?</a>`:''}`;
+  const pickBtn=x=>x.id===store.get('spick','')?`<button class="ph-pick on" data-pick="${x.id}" title="再撳一次去舊單定義比較">✓ 已揀</button><button class="ph-link" data-go2="tool">睇條文對比 ›</button>`:`<button class="ph-pick" data-pick="${x.id}">揀呢個方案</button>`;
+  const head=x=>`${x.id===store.get('spick','')?'<span class="crown">✓ 客人揀咗</span>':''}${topIds.includes(x.id)?`<span class="most">👍 最多（${score[x.id]}項）</span>`:''}<div class="ph-name">${nameHTML(x.name)}</div><span class="ph-up${x.up?'':' zero'}">${x.up?`改善舊單 ${x.up} 項定義`:'舊單定義已一致'}</span><div class="ph-prem">${fx(x.pr.annual,cur)}<small>每年・每月約 ${fx(x.pr.annual/12,cur)}</small></div>`;
+  const W=$('#plans .wrap').clientWidth||window.innerWidth;
+  const tableMode = W>=960 || (W>=700&&ok.length<=3);
+  if(tableMode){
+    const pickId=store.get('spick','');const cls=id=>id===pickId?' class="best-col"':'';
+    h+=`<div class="cmp-wrap"><table class="cmp"><colgroup><col style="width:${W>=1100?132:112}px">${ok.map(()=>'<col>').join('')}</colgroup><thead><tr><th><span class="who-cell">${esc(age)}歲・${esc(sex)}<br>${esc(smk)}</span><span class="sm">保額 ${fx(sum,cur)}<br>繳費 ${TERM_LBL[term]}</span></th>${ok.map(x=>`<th${cls(x.id)}>${head(x)}${pickBtn(x)}</th>`).join('')}</tr></thead><tbody>`;
+    ROWS.filter(r=>r.length===1||ok.some(x=>r[1](x)[0]!=='—')).forEach(r=>{
+      if(r.length===1){h+=`<tr class="grp"><th>${r[0]}</th>${ok.map(x=>`<td${cls(x.id)}></td>`).join('')}</tr>`;return;}
+      h+=`<tr><th scope="row">${lbl(r)}</th>${ok.map(x=>{const [v,s]=r[1](x);return `<td${cls(x.id)}><span class="v">${v}</span>${th(r[2],x.id)}${s?`<span class="sm">${s}</span>`:''}</td>`;}).join('')}</tr>`;
+    });
+    h+=`</tbody></table></div>`;
+  } else {
+    // compact premium ranking + one card per plan (no sideways scrolling)
+    const byPrem=[...ok].sort((a,b)=>a.pr.annual-b.pr.annual);
+    h+=`<div class="rank box"><h2 style="font-size:17px;margin:0 0 4px">保費一覽</h2><p class="sub" style="margin:0 0 8px">${esc(age)}歲・${esc(sex)}・${esc(smk)}，保額 ${fx(sum,cur)}，繳費 ${TERM_LBL[term]}</p>${byPrem.map(x=>`<a class="rk${x.id===store.get('spick','')?' best':''}" href="#card-${x.id}"><span class="rn">${nameHTML(x.name)}${score[x.id]?`<small>👍 ${score[x.id]}項・改善舊單 ${x.up} 項定義</small>`:`<small>改善舊單 ${x.up} 項定義</small>`}</span><span class="rp">${fx(x.pr.annual,cur)}${th(T.prem,x.id)}<small>每月約 ${fx(x.pr.annual/12,cur)}</small></span></a>`).join('')}</div>`;
+    h+=`<div class="pcards">${byPrem.map(x=>`<section class="pcard${x.id===store.get('spick','')?' best':''}" id="card-${x.id}"><div class="pc-head">${head(x)}</div><dl>${ROWS.filter(r=>r.length>1&&r[0]!=='每年保費'&&r[1](x)[0]!=='—').map(r=>{const [v,s]=r[1](x);return `<div><dt>${lbl(r)}</dt><dd><b>${v}</b>${th(r[2],x.id)}${s?`<small>${s}</small>`:''}</dd></div>`;}).join('')}</dl>${pickBtn(x)}</section>`).join('')}</div>`;
+  }
+  h+=`<div class="legend2"><span>👍 該項較好（並列時一齊有）</span><span><i style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--g-50);border:1px solid var(--g-200);vertical-align:-1px;margin-right:6px"></i>綠底＝客人揀咗嘅計劃（👍最多唔代表一定最啱，要睇客戶需要同預算）</span></div>`;
+  h+=`<div class="box gloss" id="gloss"><h2>名詞解釋</h2><p class="sub">用字跟產品單張。表入面標住「?」嘅項目，撳一下就會跳嚟呢度。</p><dl>${GLOSS.map(([id,t,d])=>`<div id="${id}"><dt>${t}</dt><dd>${d}</dd></div>`).join('')}</dl></div>`;
+  out.innerHTML=h;
+  $$('[data-tog]').forEach(c=>c.onchange=()=>{c.checked?hidden.delete(c.dataset.tog):hidden.add(c.dataset.tog);store.set('pHide',[...hidden].join(','));renderPlans();});
+  $$('[data-go2]').forEach(b=>b.onclick=()=>setMode(b.dataset.go2));
+  $$('[data-pick]').forEach(b=>b.onclick=()=>{
+    const x=all.find(y=>y.id===b.dataset.pick); const again=store.get('spick','')===x.id;
+    setPick(x.id); if(again){setMode('tool');} else {renderPlans(); toast(`已揀 ${short(x.name)}，簡報同條文對比已同步`);}
+  });
+}
+['#pAge','#pSum'].forEach(s=>$(s).addEventListener('input',renderPlans));
+['#pOldSel','#pSex','#pSmk','#pCur','#pTerm'].forEach(s=>$(s).addEventListener('change',renderPlans));
+let rzT; window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(!$('#plans').hidden)renderPlans();},200);});
+
+
+
+/* ---------- 客人揀嘅新計劃：全網站同一個 ---------- */
+function setPick(id){
+  const x=P2.find(p=>p.id===id); if(!x) return;
+  store.set('spick',x.id); store.set('pickName',x.name); store.set('autoPrem','1'); newSel.value=x.def; render();
+}
+function syncPrem(){
+  const id=store.get('spick',''); if(!id||store.get('autoPrem','0')!=='1') return;
+  const x=P2.find(p=>p.id===id), I=pickInputs(); if(!x||isNaN(I.age)) return;
+  const pr=annualPrem(x,I.cur,I.term,I.age,I.sex,I.smk,I.sum); if(pr.err) return;
+  $('#cur').value=I.cur; $('#sum').value=I.sum; $('#prem').value=pr.annual.toFixed(2); $('#yrs').value=I.term==='A65'?Math.max(65-I.age,1):+I.term;
+}
+/* ---------- 簡報最後一頁：由客人即場揀新計劃 ---------- */
+function pickInputs(){return {cur:store.get('pCur','HKD'),sum:+store.get('pSum','500000')||500000,term:store.get('pTerm','25'),age:parseInt($('#age').value,10),sex:$('#sex').value||'男',smk:$('#smk').value||'非吸煙'};}
+function renderPick(){
+  const box=$('#pickBody'); if(!box) return;
+  const o=plan(oldSel.value), I=pickInputs(), name=$('#client').value.trim();
+  const sel=store.get('spick','');
+  const list=P2.map(p=>{const el=eligible(p.def,o.id);if(!el.ok)return null;const pr=isNaN(I.age)?null:annualPrem(p,I.cur,I.term,I.age,I.sex,I.smk,I.sum);if(pr&&pr.err)return null;const n=plan(p.def);const up=D.cis.filter((c,i)=>status(o.cells[i],n.cells[i])==='diff').length;return {...p,pr,up};}).filter(Boolean);
+  const chosen=list.find(x=>x.id===sel);
+  const oldOpts=oldSel.innerHTML;
+  const ctl=`<div class="pk-ctl"><label>客戶舊單<select id="sOld">${oldOpts}</select></label><label>性別<select id="sSex"><option ${I.sex==='男'?'selected':''}>男</option><option ${I.sex==='女'?'selected':''}>女</option></select></label><label>吸煙<select id="sSmk"><option ${I.smk==='非吸煙'?'selected':''}>非吸煙</option><option ${I.smk==='吸煙'?'selected':''}>吸煙</option></select></label><label>年齡<input id="sAge" type="number" inputmode="numeric" min="0" max="65" value="${isNaN(I.age)?'':I.age}" placeholder="例如 40"></label><span class="pk-sum">保額${(I.cur==='HKD'?[[100000,'10萬'],[500000,'50萬'],[1000000,'100萬']]:[[12500,'US$1.25萬'],[62500,'US$6.25萬'],[125000,'US$12.5萬']]).map(([v,l])=>`<button type="button" data-ssum="${v}" class="${I.sum===v?'on':''}">${l}</button>`).join('')}<span class="pk-term">繳費<select id="sTerm">${['10','20','25','A65'].map(t=>`<option value="${t}" ${I.term===t?'selected':''}>${TERM_LBL[t]}</option>`).join('')}</select></span></span></div>`;
+  if(!chosen){
+    box.innerHTML=`<h2 class="pk-h">${name?esc(name)+'，':''}你張<span class="nb">《${esc(short(o.name))}》</span>可以配以下新計劃</h2>${ctl}
+      ${list.length?`<div class="pk-grid">${list.map(x=>`<button class="pk-card" data-spick="${x.id}"><span class="pk-name">${nameHTML(x.name)}</span><span class="pk-prem">${x.pr?fx(x.pr.annual,I.cur)+'<small> / 年</small>':'<small>輸入年齡顯示保費</small>'}</span><span class="pk-up">${x.up?`改善舊單 ${x.up} 項定義`:'舊單定義已一致'}</span><span class="pk-tags">${x.tags.map(t=>`<i>${esc(t)}</i>`).join('')}</span></button>`).join('')}</div><p class="pk-tip">撳任何一個計劃，睇吓你嘅升級方案。</p>`:`<p class="pk-tip">呢個年齡或者繳費年期冇合資格計劃，試吓改繳費年期。</p>`}`;
+  } else {
+    const n=plan(chosen.def), keys=keyImps(o,n), std=stdBetter(n), pr=chosen.pr;
+    const yrs=I.term==='A65'?Math.max(65-(I.age||0),1):+I.term;
+    let cp=0; if($('#cpn').checked&&new Date()<=COUPON_END&&pr){const r=CPN[I.cur].find(([t])=>pr.annual>=t);cp=r?r[1]:0;}
+    const hl=[`<b>${chosen.up}</b> 種危疾條文有分別，舊單索償時取較有利嗰個`].concat(keys.slice(0,3).map(k=>`${k.t}：${esc(k.a)} → <b>${esc(k.b)}</b>`));
+    if(std.length) hl.push(`${std.slice(0,3).map(s=>s.t).join('、')}等定義仲寬鬆過業界標準`);
+    box.innerHTML=`<h2 class="pk-h">${name?esc(name)+'嘅':'你嘅'}升級方案</h2>${ctl}<div class="pk-switch"><span>轉計劃：</span>${list.map(x=>`<button type="button" data-spick="${x.id}" class="${x.id===chosen.id?'on':''}">${esc(({IG:'宏健守護',IS:'宏伴護航',MBCPRO:'活耀人生PRO',MPC:'守護無間',MBC2:'活耀人生2',MBC2P:'活耀人生2加強版'})[x.id])}</button>`).join('')}<button type="button" class="pk-all" id="pkBack">睇晒全部計劃</button></div>
+      <div class="plan-g"><div>
+        <div class="pair"><div class="pc"><span>你手上嘅計劃</span><b>${esc(short(o.name))}</b></div><svg class="ar" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="pc new"><span>你揀嘅新計劃</span><b>${esc(chosen.name)}</b></div></div>
+        <ul class="hl-list">${hl.map(x=>`<li><span>${x}</span></li>`).join('')}</ul>
+      </div>
+      <div class="money">${pr?`<div class="lbl">每年保費（保額 ${fx(I.sum,I.cur)}，${TERM_LBL[I.term]}）</div><div class="big">${fx(pr.annual,I.cur)}</div><div class="lbl">每月約 ${fx(pr.annual/12,I.cur)}・每日約 ${fx(pr.annual/365,I.cur)}</div><div class="rows"><div><span>總保費（約）</span><b>${fx(pr.annual*yrs,I.cur)}</b></div>${cp?`<div><span>保費優惠券扣減</span><b>－${fx(cp,I.cur)}</b></div><div><span>首年實際支出</span><b>${fx(pr.annual-cp,I.cur)}</b></div>`:''}</div>`:'<div class="lbl">輸入年齡就會顯示保費</div>'}
+        <div class="pk-dl">遞交申請限期 <b>2026年12月31日</b>・批核限期 <b>2027年3月31日</b></div><div class="pk-btns"><button class="pk-go" data-go="plans">同其他計劃比較</button><button class="pk-go" data-go="tool">逐項睇條文</button></div></div>
+      </div>`;
+  }
+  // wire
+  const sOld=$('#sOld'); if(sOld){sOld.value=o.id; sOld.onchange=()=>{oldSel.value=sOld.value;store.set('spick','');render();};}
+  const sSex=$('#sSex'); if(sSex) sSex.onchange=()=>{$('#sex').value=sSex.value;render();};
+  const sSmk=$('#sSmk'); if(sSmk) sSmk.onchange=()=>{$('#smk').value=sSmk.value;render();};
+  const sAge=$('#sAge'); if(sAge){sAge.onchange=()=>{$('#age').value=sAge.value;render();};}
+  const sTerm=$('#sTerm'); if(sTerm){sTerm.onchange=()=>{store.set('pTerm',sTerm.value);render();};}
+  $$('[data-ssum]').forEach(b=>b.onclick=()=>{store.set('pSum',b.dataset.ssum);render();});
+  $$('[data-spick]').forEach(b=>b.onclick=()=>{
+    setPick(b.dataset.spick); if($('#deck').classList.contains('mob'))$('#vp').scrollTop=0;
+  });
+  const back=$('#pkBack'); if(back) back.onclick=()=>{store.set('spick','');render();};
+  $$('[data-go]').forEach(b=>b.onclick=()=>setMode(b.dataset.go));
+}
+/* ---------- modes ---------- */
+function setMode(m){
+  if(!['deck','plans','tool'].includes(m)) m='deck';
+  $('#deck').hidden=m!=='deck';$('#tool').hidden=m!=='tool';$('#plans').hidden=m!=='plans';
+  $('#tabDeck').setAttribute('aria-selected',m==='deck');$('#tabTool').setAttribute('aria-selected',m==='tool');$('#tabPlans').setAttribute('aria-selected',m==='plans');
+  store.set('mode',m);window.scrollTo(0,0);
+  if(m==='deck')fit(); if(m==='plans'){loadPlanInputs();renderPlans();}
+}
+$('#tabDeck').onclick=()=>setMode('deck');$('#tabTool').onclick=()=>setMode('tool');$('#tabPlans').onclick=()=>setMode('plans');
+
+/* ---------- deck ---------- */
+const slides=$$('.s');let cur=0;
+$('#jump').innerHTML=slides.map((s,i)=>`<option value="${i}">${i+1}. ${s.dataset.t}</option>`).join('');
+slides.forEach((s,i)=>{const pg=s.querySelector('.pg');if(pg)pg.textContent=String(i+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');});
+function fit(){const mob=window.innerWidth<700;$('#deck').classList.toggle('mob',mob);if(mob){$('#stage').style.setProperty('--s',1);return;}const vp=$('#vp');const s=Math.min(vp.clientWidth/1340,vp.clientHeight/770);$('#stage').style.setProperty('--s',Math.max(.2,s));}
+window.addEventListener('resize',fit);
+function go(i){
+  if($('#deck').classList.contains('mob'))$('#vp').scrollTop=0;
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((s,k)=>{s.classList.toggle('on',k===cur);s.setAttribute('aria-hidden',k!==cur);});
+  $('#prev').disabled=cur===0;$('#next').disabled=cur===slides.length-1;
+  $('#progBar').style.width=((cur+1)/slides.length*100)+'%';$('#ct').textContent=`${cur+1} / ${slides.length}`;$('#jump').value=cur;
+}
+$('#prev').onclick=()=>go(cur-1);$('#next').onclick=()=>go(cur+1);$('#jump').onchange=e=>go(+e.target.value);
+document.addEventListener('keydown',e=>{if(!$('#modal').hidden||$('#deck').hidden||/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1);} if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1);}});
+let tx=null,ty=null;
+$('#vp').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+$('#vp').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.4)go(cur+(dx<0?1:-1));tx=null;},{passive:true});
+
+
+/* ---------- 不保情況清單（簡報用） ---------- */
+function openXL(key){
+  const i=ciIdx(key), my=exclItems(D.texts[plan('IG').cells[i]]), hk=HK_LIST[key];
+  $('#mBody').innerHTML=`<h3>${key}：不保情況對比</h3><div class="xlc"><div><h5>業界標準（HKFI）：${hk.length}項唔保</h5><ol>${hk.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div><div class="mine"><h5>宏利新計劃（以宏健守護為例）：${my.length}項唔保</h5><ol>${my.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></div><p class="xln">${XL_NOTE[key]}</p>`;
+  $('#modal').hidden=false; $('#mClose').focus();
+}
+function closeXL(){$('#modal').hidden=true;}
+$$('[data-xl]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openXL(b.dataset.xl);}));
+$('#mClose').onclick=closeXL; $('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeXL();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#modal').hidden)closeXL();});
+
+/* ---------- 排版：避免最後一行得一兩隻字 ---------- */
+(function(){
+  const SEL='p,li,dd,td,h2,h3,h4,.sm,.say,.pk-tags i,.lead,.foot-note,.sub,.why';
+  const CJK=/[　-鿿＀-￯]/;
+  function fix(el){
+    if(el.dataset.nw) return; el.dataset.nw='1';
+    const w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null);let last=null,n;
+    while((n=w.nextNode())){if(n.nodeValue.trim())last=n;}
+    if(!last||last.parentElement.closest('.nowrap-tail,mark,ins,del,button,select,option')) return;
+    const t=last.nodeValue.replace(/\s+$/,''); if(t.length<6||!CJK.test(t.slice(-1))) return;
+    const k=t.length-4; const span=document.createElement('span'); span.className='nowrap-tail'; span.textContent=t.slice(k);
+    last.nodeValue=t.slice(0,k); last.parentNode.insertBefore(span,last.nextSibling);
+  }
+  function run(root){(root.matches&&root.matches(SEL)?[root]:[]).concat([...(root.querySelectorAll?root.querySelectorAll(SEL):[])]).forEach(fix);}
+  let q=null; const mo=new MutationObserver(ms=>{if(q)return;q=requestAnimationFrame(()=>{q=null;run(document.body);});});
+  run(document.body); mo.observe(document.body,{childList:true,subtree:true});
+})();
+render();go(0);setMode(store.get('mode','deck'));fit();
+})();
+</script>
+</body>
+</html>
