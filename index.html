@@ -762,7 +762,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
   <div class="box">
     <div class="pin">
       <div class="f"><label for="pOldSel">客戶而家持有嘅計劃</label><select id="pOldSel"></select></div>
-      <div class="f"><label for="pAge">年齡（下次生日）</label><input id="pAge" type="number" min="0" max="65" inputmode="numeric" placeholder="40"></div>
+      <div class="f"><label for="pAge">年齡</label><input id="pAge" type="number" min="0" max="65" inputmode="numeric" placeholder="40"></div>
       <div class="f"><label for="pSex">性別</label><select id="pSex"><option>男</option><option>女</option></select></div>
       <div class="f"><label for="pSmk">吸煙</label><select id="pSmk"><option>非吸煙</option><option>吸煙</option></select></div>
       <div class="f f-sum"><label for="pSum">保額及繳費年期</label>
@@ -771,7 +771,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
     </div>
   </div>
   <div id="plansOut"></div>
-  <p class="fine" style="margin-top:14px">保費按各計劃保費率表（年繳，每1,000名義金額）計算：宏健守護及宏伴護航（HK 04/25）、活耀人生危疾保PRO（HK 07/23）、守護無間危疾保（HK 07/22）、活耀人生危疾保2系列（HK 07/20），只計基本計劃標準保費，未計附加保障、通脹加保、ManulifeMOVE或其他折扣。月繳保費會略高於年繳÷12。保障內容摘自各計劃產品單張（2026年4月／7月版本）。一切以建議書及保單條款為準。</p>
+  <p class="fine" style="margin-top:14px">保費按各計劃保費率表（年繳，每1,000名義金額）計算：宏健守護及宏伴護航（HK 04/25）、活耀人生危疾保PRO（HK 07/23）、守護無間危疾保（HK 07/22）、活耀人生危疾保2系列（HK 07/20），只計基本計劃標準保費，未計附加保障、通脹加保、保費徵費、ManulifeMOVE或其他折扣；年齡按保費率表「AGE」一欄，請用建議書上嘅投保年齡核對。月繳保費會略高於年繳÷12。保障內容摘自各計劃產品單張（2026年4月／7月版本）。一切以建議書及保單條款為準。</p>
  </div>
 </div>
 
@@ -1294,7 +1294,13 @@ function renderPlans(){
   });
 }
 ['#pAge','#pSum'].forEach(s=>$(s).addEventListener('input',renderPlans));
-['#pOldSel','#pSex','#pSmk','#pCur','#pTerm'].forEach(s=>$(s).addEventListener('change',renderPlans));
+['#pOldSel','#pSex','#pSmk','#pTerm'].forEach(s=>$(s).addEventListener('change',renderPlans));
+/* 轉貨幣時，保額跟住換算（港元 8 : 1 美元，同快捷掣一致），唔會變成 US$500,000 */
+let lastCur=null;
+$('#pCur').addEventListener('focus',()=>{lastCur=$('#pCur').value;});
+$('#pCur').addEventListener('change',()=>{const to=$('#pCur').value,from=lastCur||(to==='USD'?'HKD':'USD');const v=+$('#pSum').value||0;
+  if(v&&from!==to){const fs=SUMS[from].map(x=>x[0]),i=fs.indexOf(v);$('#pSum').value=i>=0?SUMS[to][i][0]:Math.round(to==='USD'?v/8:v*8);}
+  lastCur=to;renderPlans();});
 let rzT; window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(!$('#plans').hidden)renderPlans();},200);});
 
 
