@@ -415,6 +415,12 @@ th.best-col,td.best-col{background:var(--g-50)}
 .gloss dt{font-weight:900;margin-bottom:4px}
 .gloss dd{margin:0;color:var(--ink-2);font-size:14.5px;line-height:1.7}
 @media (max-width:760px){.gloss dl{grid-template-columns:1fr}}
+.final-note{margin:14px 2px 0;font-size:15px;color:var(--ink);background:#FFF8E6;border-radius:10px;padding:10px 14px}
+.site-foot{text-align:center;font-size:13px;color:var(--muted);padding:28px 16px 8px}
+.tool-foot{max-width:1120px;margin:0 auto;padding-bottom:110px}
+#tool .wrap{padding-bottom:0}
+.dk-copy{font-size:12px;color:var(--muted);white-space:nowrap}
+@media (max-width:560px){.dk-copy{display:none}}
 /* ================= TOOL ================= */
 #tool{background:var(--surface);min-height:calc(100dvh - var(--bar))}
 .wrap{max-width:1120px;margin:0 auto;padding:32px 24px 120px}
@@ -751,6 +757,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
    <button class="nb" id="next" aria-label="下一頁"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
    <div class="prog"><i id="progBar"></i></div>
    <select id="jump" aria-label="跳到頁面"></select>
+   <span class="dk-copy">© <span class="cy"></span> MKPA</span>
    <span class="ct" id="ct"></span>
  </div>
 </main>
@@ -771,7 +778,9 @@ details.row[open] summary .chev{transform:rotate(90deg)}
     </div>
   </div>
   <div id="plansOut"></div>
-  <p class="fine" style="margin-top:14px">保費按各計劃保費率表（年繳，每1,000名義金額）計算：宏健守護及宏伴護航（HK 04/25）、活耀人生危疾保PRO（HK 07/23）、守護無間危疾保（HK 07/22）、活耀人生危疾保2系列（HK 07/20），港元保費已加每份保單每年固定 HK$300，同建議書一致；美元保費未計呢筆固定金額。只計基本計劃，未計附加保障、通脹加保、保費徵費、ManulifeMOVE或其他折扣；年齡按保費率表「AGE」一欄，請用建議書上嘅投保年齡核對。月繳保費會略高於年繳÷12。保障內容摘自各計劃產品單張（2026年4月／7月版本）。一切以建議書及保單條款為準。</p>
+  <p class="final-note">以上保費按保費率表計算，只供參考；<b>最終保費以建議書為準</b>。</p>
+  <p class="fine" style="margin-top:6px">保費按各計劃保費率表（年繳，每1,000名義金額）計算：宏健守護及宏伴護航（HK 04/25）、活耀人生危疾保PRO（HK 07/23）、守護無間危疾保（HK 07/22）、活耀人生危疾保2系列（HK 07/20）。只計基本計劃，未計附加保障、通脹加保、保費徵費、ManulifeMOVE或其他折扣；年齡按保費率表「AGE」一欄，請用建議書上嘅投保年齡核對。月繳保費會略高於年繳÷12。保障內容摘自各計劃產品單張（2026年4月／7月版本）。一切以建議書及保單條款為準。</p>
+  <footer class="site-foot">© <span class="cy"></span> Michael Koo Protection Alliance (MKPA). 版權所有。</footer>
  </div>
 </div>
 
@@ -821,6 +830,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
   </div>
 
  </div>
+ <footer class="site-foot tool-foot">© <span class="cy"></span> Michael Koo Protection Alliance (MKPA). 版權所有。</footer>
  <div class="actions"><div class="in">
    <span class="sum" id="actSum"></span>
    <button class="btn pri" id="btnWa"><span class="lgx">複製</span>WhatsApp<span class="lgx">訊息</span></button>
@@ -1188,8 +1198,8 @@ const GLOSS=[
  ['g-tot','總保障上限','首次嚴重危疾加上所有多次賠償，理論上最多可以賠到名義金額嘅幾多倍。'],
 ];
 const nameHTML=n=>esc(n).replace(/(危疾)/,'<span class="nb">$1').replace(/(（)/,'</span><span class="nb">$1')+(/危疾/.test(n)?'</span>':'');
-/* 建議書每年保費 = 保費率 × 保額 ÷ 1,000 ＋ 每份保單固定 HK$300（10萬同50萬保額、6份計劃都核對過）。美元金額未核對。 */
-const POLICY_FEE={HKD:300,USD:0};
+/* 只按保費率表計（保費率 × 保額 ÷ 1,000），最終保費以建議書為準。 */
+const POLICY_FEE={HKD:0,USD:0};
 const TERM_LBL={'10':'10年','20':'20年','25':'25年','A65':'至65歲'};
 function annualPrem(p,cur,term,age,sex,smk,sum){
   const t=R[p.id]&&R[p.id][cur]&&R[p.id][cur][term]; if(!t) return {err:`冇${TERM_LBL[term]}繳費選項`};
@@ -1344,7 +1354,7 @@ function renderPick(){
         <ul class="hl-list">${hl.map(x=>`<li><span>${x}</span></li>`).join('')}</ul>
       </div>
       <div class="money">${pr?`<div class="lbl">每年保費（保額 ${fx(I.sum,I.cur)}，${TERM_LBL[I.term]}）</div><div class="big">${fx(pr.annual,I.cur)}</div><div class="lbl">每月約 ${fx(pr.annual/12,I.cur)}・每日約 ${fx(pr.annual/365,I.cur)}</div><div class="rows"><div><span>總保費（約）</span><b>${fx(pr.annual*yrs,I.cur)}</b></div>${cp?`<div><span>保費優惠券扣減</span><b>－${fx(cp,I.cur)}</b></div><div><span>首年實際支出</span><b>${fx(pr.annual-cp,I.cur)}</b></div>`:''}</div>`:'<div class="lbl">輸入年齡就會顯示保費</div>'}
-        <div class="pk-dl">遞交申請限期 <b>2026年12月31日</b>・批核限期 <b>2027年3月31日</b></div><div class="pk-btns"><button class="pk-go" data-go="plans">同其他計劃比較</button><button class="pk-go" data-go="tool">逐項睇條文</button></div></div>
+        <div class="pk-dl">保費按保費率表計算，最終以建議書為準<br>遞交申請限期 <b>2026年12月31日</b>・批核限期 <b>2027年3月31日</b></div><div class="pk-btns"><button class="pk-go" data-go="plans">同其他計劃比較</button><button class="pk-go" data-go="tool">逐項睇條文</button></div></div>
       </div>`;
   }
   // wire
@@ -1419,6 +1429,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#modal').hidden
   let q=null; const mo=new MutationObserver(ms=>{if(q)return;q=requestAnimationFrame(()=>{q=null;run(document.body);});});
   run(document.body); mo.observe(document.body,{childList:true,subtree:true});
 })();
+$$('.cy').forEach(e=>e.textContent=new Date().getFullYear());
 render();go(0);setMode(store.get('mode','deck'));fit();
 })();
 </script>
