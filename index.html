@@ -149,10 +149,14 @@ table.mx{border-collapse:separate;border-spacing:6px;width:100%;font-size:17px}
 mark.o{background:var(--amber-bg);color:var(--amber);padding:0 3px;border-radius:3px}
 mark.n{background:var(--g-100);color:var(--g-deep);padding:0 3px;border-radius:3px}
 
+.yours{margin-top:16px;display:flex;gap:14px;align-items:flex-start;background:var(--g-50,#E8F6EE);border-left:5px solid var(--g);border-radius:10px;padding:12px 18px;font-size:16.5px;line-height:1.55;text-wrap:pretty}
+.yours .tag{flex:none;background:var(--g);color:#fff;font-size:13px;font-weight:700;border-radius:999px;padding:3px 10px;margin-top:2px}
+.yours[hidden]{display:none}
+.case-you .takeaway{margin-top:14px}
 .takeaway{margin-top:22px;display:flex;align-items:center;gap:28px;background:var(--g);color:#fff;border-radius:14px;padding:20px 30px}
-.takeaway span{display:block;font-size:14px;opacity:.9}
+.takeaway div>span{display:block;font-size:14px;opacity:.9}
 .takeaway b{font-family:var(--num);font-size:34px;font-weight:800;line-height:1.2}
-.takeaway p{margin:0 0 0 auto;font-size:17px;opacity:.95}
+.takeaway p{margin:0 0 0 auto;font-size:17px;opacity:.95;white-space:nowrap;flex:none}
 /* scenarios */
 .sc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .sc .card{border:1px solid var(--line);border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
@@ -228,6 +232,8 @@ mark.n{background:var(--g-100);color:var(--g-deep);padding:0 3px;border-radius:3
 #deck.mob .takeaway{flex-wrap:wrap;gap:12px;padding:16px 18px}
 #deck.mob .takeaway b{font-size:24px}
 #deck.mob .takeaway p{margin:0;width:100%}
+#deck.mob .yours{flex-direction:column;gap:8px;padding:12px 16px;font-size:15.5px}
+#deck.mob .yours .tag{align-self:flex-start}
 #deck.mob .sc .card{padding:16px}
 #deck.mob .enh .it b{width:104px;font-size:16px}
 #deck.mob .note-c{padding:16px}
@@ -663,6 +669,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
           <div class="pb">……以治療<mark class="n">一條</mark>或以上之主要冠狀動脈縮窄（狹窄程度最少達<mark class="n">50%</mark>）……</div>
           <div class="pv"><span class="badge y">✓</span><div><b>參加計劃：兩份都賠</b><br><span style="color:var(--ink-2)">舊單跟新計劃定義，連同新單一齊賠</span></div></div></div>
       </div>
+      <div class="yours" id="caseYou" hidden></div>
       <div class="takeaway"><div><span>同一次通波仔　參加前</span><b>0 份賠償</b></div><svg width="40" height="24" viewBox="0 0 40 24" aria-hidden="true"><path d="M2 12h32M26 4l8 8-8 8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div><span>參加後</span><b>2 份賠償</b></div><p>舊單 ＋ 新單</p></div>
     </div>
     <div class="s-foot"><span class="adv"></span><span class="pg"></span></div>
@@ -1052,6 +1059,25 @@ function trioData(o,n){
    ['brain','中風','專科醫生核實所需時間',get('中風',null,t=>{const w=(t.match(/最少(四|六)個星期/)||[])[1];return w?(w==='四'?'4':'6')+' 星期':null;})],
    ['vessel','通波仔','需要治療嘅主要冠狀動脈',get('因冠狀動脈疾病進行血管成形術',null,t=>{const v=(t.match(/以治療(一|二)條/)||[])[1],p=(t.match(/最少達\s*(\d+)%/)||[])[1];return v&&p?(v==='一'?'1':'2')+' 條・'+p+'%':null;})]];
 }
+function angioInfo(p){
+  const i=ciIdx('因冠狀動脈疾病進行血管成形術'); if(i<0||p.cells[i]<0) return null;
+  const t=D.texts[p.cells[i]], v=(t.match(/以治療(一|二)條/)||[])[1], pc=(t.match(/最少達\s*(\d+)%/)||[])[1];
+  if(!v||!pc) return null;
+  return {two:v==='二',pc,ecg:/心電圖/.test(t),act:/限制體能活動/.test(t)};
+}
+function renderCaseYou(o,n){
+  const box=$('#caseYou'); if(!box) return;
+  const a=angioInfo(o), b=angioInfo(n), sec=box.closest('section');
+  let h='';
+  if(a&&b&&(a.two!==b.two||a.pc!==b.pc||(a.ecg&&!b.ecg)||(a.act&&!b.act))){
+    const nm=`《${esc(short(o.name))}》`, ex=[a.ecg&&!b.ecg?'心電圖變化':'',a.act&&!b.act?'須限制體能活動':''].filter(Boolean).join('同');
+    if(o.id==='MTC') h=`<b>你持有嘅${nm}，正正係湯先生嗰份計劃。</b>同樣情況下，未參加前一樣賠唔到。`;
+    else if(a.two) h=`<b>你張${nm}要求同湯先生張舊單一樣：</b>要治療${a.two?'二條或以上':'一條或以上'}主要冠狀動脈、收窄最少 ${a.pc}%${ex?`，另外仲要有${ex}嘅證明`:''}。同樣情況下，未參加前一樣賠唔到。`;
+    else h=`<b>你張${nm}血管要求已經係一條・${a.pc}%，</b>但仲要有${ex}嘅證明。新計劃唔使；參加後，舊單第一次索償都跟新定義。`;
+  }
+  box.innerHTML=h?`<span class="tag">你張單</span><div>${h}</div>`:''; box.hidden=!h;
+  if(sec) sec.classList.toggle('case-you',!!h);
+}
 function renderSlides(C){
   const {o,n}=C;
   // timeline
@@ -1070,6 +1096,8 @@ function renderSlides(C){
   else note=`${short(o.name)} 對比 ${short(n.name)}`;
   $('#trio').innerHTML=td.map(([ic,h,u,v])=>`<div class="metric"><div class="ic">${ICON[ic]}</div><h3>${h}</h3><div class="unit">${u}</div>${v?`<div class="row old"><span>舊定義</span><b>${esc(v[0])}</b></div><div class="row new"><span>新定義</span><b>${esc(v[1])}</b></div>`:'<div class="row"><span>兩份計劃此項相同</span><b>—</b></div>'}</div>`).join('');
   $('#trioNote').textContent=note+'。完整條文請參閱保單條款。';
+  // slide 6: client's own angioplasty definition (only when stricter than new plan)
+  renderCaseYou(o,n);
   // matrix
   const cols=[['IG','宏健守護／<br>宏伴護航'],['PRO','活耀人生<br>危疾保PRO'],['MPC','守護無間<br>危疾保'],['MBC2','活耀人生<br>危疾保2系列']];
   const rws=[['PRO','活耀人生危疾保PRO'],['MPC','守護無間危疾保'],['MPCBS','守護無間危疾保（保寶未來）'],['MBC2','活耀人生危疾保2／（加強版）'],['OTHER','其他現行計劃']];
