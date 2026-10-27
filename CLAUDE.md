@@ -23,4 +23,4 @@ MKPA 工具之一。呢個 repo 只放呢一個工具，獨立部署去 Netlify�
 ## 呢個工具嘅特別嘢
 
 - 單一檔案 `index.html`，唔使 build；`netlify.toml` 設定咗唔俾搜尋器收錄，唔好刪。
-- 顧問自用，repo 保持私人。
+- 顧問自用。Repo 係公開嘅（2026 年 10 月轉），任何人都睇到代碼，唔好放未公開或敏感資料；`netlify.toml` 嘅 noindex 只係阻止搜尋器收錄。
