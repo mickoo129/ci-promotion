@@ -8,8 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Noto+Sans+HK:wght@400;500;700;900&display=swap" rel="stylesheet">
 <meta name="description" content="宏利危疾定義更新計劃：講解簡報及危疾定義對比工具">
-<meta name="theme-color" content="#00A758">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2300A758'/%3E%3Cpath d='M4 17h6l3-7 4 13 3-6h8' stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#0E5E57">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <style>
 :root{
   --g:#00A758;          /* Manulife green */
@@ -36,9 +39,9 @@ button,select,input{font:inherit;color:inherit}
 .num{font-family:var(--num);font-feature-settings:"tnum"}
 
 /* ================= TOP BAR ================= */
-.topbar{position:sticky;top:0;z-index:30;height:var(--bar);display:flex;align-items:center;gap:18px;padding:0 24px;background:var(--white);border-bottom:1px solid var(--line)}
+.topbar{position:sticky;top:0;z-index:30;height:var(--bar);display:flex;align-items:center;gap:18px;padding:0 var(--mk-gutter);background:var(--white);border-bottom:1px solid var(--line)}
 .logo{display:flex;align-items:center;gap:12px;font-weight:900;font-size:17px;white-space:nowrap}
-.logo svg{flex:none}
+.logo .mk-logo{width:38px;height:38px}
 .logo small{display:block;font-weight:500;font-size:12px;color:var(--muted);line-height:1.2}
 .tabs{margin-left:auto;display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px}
 .tabs button{border:0;background:transparent;padding:7px 18px;border-radius:9px;cursor:pointer;font-weight:700;color:var(--muted);font-size:15px}
@@ -358,7 +361,7 @@ table.stdt{width:100%;border-collapse:separate;border-spacing:0;font-size:16px;b
 .dnav select{border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:#fff;font-size:14px;max-width:180px}
 
 /* ================= PLANS ================= */
-#plans .wrap{max-width:1320px}
+#plans .wrap{max-width:calc(1320px + 2 * var(--mk-gutter))}
 #plans{background:var(--surface);min-height:calc(100dvh - var(--bar))}
 .pin{display:grid;grid-template-columns:1.4fr .6fr .7fr .8fr 2.2fr;gap:14px;align-items:end}
 .pin label,.f label{white-space:nowrap}
@@ -423,13 +426,13 @@ th.best-col,td.best-col{background:var(--g-50)}
 .final-note{margin:14px 2px 0;font-size:15px;color:var(--ink);background:#FFF8E6;border-radius:10px;padding:10px 14px}
 .site-foot{text-align:center;font-size:13px;color:var(--muted);padding:28px 16px 8px}
 .site-foot .mk-copy{margin:0}
-.tool-foot{max-width:1120px;margin:0 auto;padding-bottom:110px}
+.tool-foot{max-width:calc(1320px + 2 * var(--mk-gutter));margin:0 auto;padding-bottom:110px}
 #tool .wrap{padding-bottom:0}
 .dk-copy{font-size:12px;color:var(--muted);white-space:nowrap}
 @media (max-width:560px){.dk-copy{display:none}}
 /* ================= TOOL ================= */
 #tool{background:var(--surface);min-height:calc(100dvh - var(--bar))}
-.wrap{max-width:1120px;margin:0 auto;padding:32px 24px 120px}
+.wrap{max-width:calc(1320px + 2 * var(--mk-gutter));margin:0 auto;padding:32px var(--mk-gutter) 120px}
 .t-head h1{font-size:32px;font-weight:900;margin:0 0 4px}
 .t-head p{margin:0 0 24px;color:var(--muted)}
 .box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin-bottom:20px}
@@ -525,8 +528,8 @@ details.row[open] summary .chev{transform:rotate(90deg)}
 .coupon{margin-top:12px;font-size:14px;color:var(--ink-2)}
 .fine{font-size:13px;color:var(--muted);line-height:1.7}
 
-.actions{position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-top:1px solid var(--line);padding:12px 24px calc(12px + env(safe-area-inset-bottom))}
-.actions .in{max-width:1120px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.actions{position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-top:1px solid var(--line);padding:12px var(--mk-gutter) calc(12px + env(safe-area-inset-bottom))}
+.actions .in{max-width:1320px;margin:0 auto;display:flex;gap:10px;align-items:center}
 .actions .sum{font-size:14px;color:var(--ink-2);margin-right:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .btn{height:44px;border-radius:10px;padding:0 18px;font-weight:700;cursor:pointer;border:1px solid #CFD8D5;background:#fff;white-space:nowrap}
 .btn.pri{background:var(--g);border-color:var(--g);color:#fff}
@@ -585,7 +588,13 @@ details.row[open] summary .chev{transform:rotate(90deg)}
   --mk-warn:#8A5B00; --mk-warn-soft:#FFF5DC; --mk-danger:#C62828; --mk-danger-soft:#FDECEC;
   --mk-sans:"Noto Sans HK","PingFang HK","Microsoft JhengHei",system-ui,sans-serif;
   --mk-num:"Barlow","Noto Sans HK",system-ui,sans-serif;
+  --mk-max:1320px;                        /* 內容最闊 */
+  --mk-gutter:clamp(16px,3vw,32px);       /* 兩邊留白：手機 16px → 桌面 32px */
 }
+/* 版面外框：工具可以用自己嘅 class，但數值要一樣 */
+.mk-wrap{width:100%;max-width:calc(var(--mk-max) + 2 * var(--mk-gutter));margin:0 auto;padding-left:var(--mk-gutter);padding-right:var(--mk-gutter);box-sizing:border-box}
+/* 標題旁 icon */
+.mk-logo{width:32px;height:32px;flex:none;display:block}
 .mk-ecard{display:flex;align-items:center;gap:16px 24px;flex-wrap:wrap;margin:28px 0 0;padding:20px 22px;border-radius:14px;border:1px solid var(--mk-brand-line);background:var(--mk-brand-soft);font-family:var(--mk-sans);color:var(--mk-ink);text-align:left}
 .mk-ecard-txt{flex:1;min-width:200px}
 .mk-ecard-txt b{display:block;font-size:17px;font-weight:700;margin-bottom:2px;color:var(--mk-ink)}
@@ -614,7 +623,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
 <body>
 <header class="topbar">
   <div class="logo">
-    <svg width="38" height="38" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#00A758"/><path d="M4 17h6l3-7 4 13 3-6h8" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <img class="mk-logo" src="favicon.svg" alt="" width="38" height="38">
     <span>危疾定義更新計劃<small>宏利　2026年7月1日至12月31日</small></span>
   </div>
   <nav class="tabs" role="tablist" aria-label="模式">
