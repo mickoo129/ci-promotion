@@ -435,6 +435,7 @@ th.best-col,td.best-col{background:var(--g-50)}
 .wrap{max-width:calc(1320px + 2 * var(--mk-gutter));margin:0 auto;padding:32px var(--mk-gutter) 120px}
 .t-head h1{font-size:32px;font-weight:900;margin:0 0 4px}
 .t-head p{margin:0 0 24px;color:var(--muted)}
+.t-head .t-period{margin:0 0 8px;font-size:14px;font-weight:700;color:var(--g-ink)}
 .box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin-bottom:20px}
 .box > h2{font-size:20px;font-weight:900;margin:0 0 4px;display:flex;align-items:center;gap:10px}
 .box > h2 .stepn{width:28px;height:28px;border-radius:50%;background:var(--g);color:#fff;font-family:var(--num);font-size:15px;display:grid;place-items:center}
@@ -546,7 +547,13 @@ details.row[open] summary .chev{transform:rotate(90deg)}
   .actions .sum{display:none}
 }
 @media (max-width:560px){
-  .logo span{display:none}
+  :root{--bar:104px}
+  .topbar{flex-wrap:wrap;align-content:center;row-gap:8px;column-gap:10px}
+  .logo{flex:1;min-width:0}
+  .logo span{overflow:hidden;text-overflow:ellipsis}
+  .logo .mk-logo{width:30px;height:30px}
+  .tabs{order:3;margin-left:0;width:100%}
+  .tabs button{flex:1}
   .tabs button{padding:6px 8px;font-size:13px;white-space:nowrap}
   
   .actions .in{flex-wrap:nowrap;gap:6px} .btn{flex:1;padding:0 8px;font-size:14px} .lgx{display:none}
@@ -608,7 +615,8 @@ details.row[open] summary .chev{transform:rotate(90deg)}
 .mk-print-head{display:none}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .mk-no-print,.mk-print-btn,.mk-ecard-btn{display:none!important}
+  .mk-no-print,.mk-print-btn,.mk-share-btn,.mk-toast,.mk-ecard-btn{display:none!important}
+  .mk-header{position:static}
   .mk-ecard{break-inside:avoid;padding:10px 14px;margin-top:14px}
   .mk-ecard-qr{display:block}
   .mk-ecard-qr svg{width:22mm;height:22mm;display:block}
@@ -616,15 +624,29 @@ details.row[open] summary .chev{transform:rotate(90deg)}
   .mk-print-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:2px solid var(--mk-brand);padding:0 0 5px;margin:0 0 10px;font-family:var(--mk-sans);color:var(--mk-muted);font-size:9pt}
   .mk-print-head b{color:var(--mk-deep);font-size:11pt}
 }
+/* 頁頭：統一鎖住喺頂；第一行 icon + 工具名 + 按鈕 */
+.mk-header{position:sticky;top:0;z-index:50}
+.mk-bar{display:flex;align-items:center;gap:12px;min-height:56px}
+.mk-title{display:flex;align-items:center;gap:10px;min-width:0;font-family:var(--mk-sans);font-weight:900;font-size:17px;white-space:nowrap}
+.mk-title span{overflow:hidden;text-overflow:ellipsis}
+.mk-actions{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
+/* 分享呢個方案（同列印按鈕一樣樣式） */
+.mk-share-btn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--mk-brand);background:var(--mk-surface);color:var(--mk-brand-ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+.mk-share-btn:hover{background:var(--mk-brand-soft)}
+.mk-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:999;background:var(--mk-ink);color:#fff;font:600 14px/1.4 var(--mk-sans);padding:10px 16px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:calc(100vw - 32px)}
+.mk-share-btn>.mk-long{margin-left:-6px} /* 抵銷 gap，令「分享呢個方案」連埋 */
+.mk-print-btn>.mk-long{margin-left:-2px} /* 「列印 / 存 PDF」保留一個空格 */
+/* 手機：按鈕字縮短（「分享」「列印」） */
+@media (max-width:480px){.mk-long{display:none}.mk-print-btn,.mk-share-btn{padding:0 10px}}
 /* ===== MKPA 統一標準 完 ===== */
 
 </style>
 </head>
 <body>
-<header class="topbar">
+<header class="topbar mk-header">
   <div class="logo">
     <img class="mk-logo" src="favicon.svg" alt="" width="38" height="38">
-    <span>危疾定義更新計劃<small>宏利　2026年7月1日至12月31日</small></span>
+    <span>危疾定義更新計劃</span>
   </div>
   <nav class="tabs" role="tablist" aria-label="模式">
     <button role="tab" id="tabDeck" aria-selected="true">講解簡報</button>
@@ -632,6 +654,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
     <button role="tab" id="tabTool" aria-selected="false">舊單定義比較</button>
   </nav>
   <div class="who" id="who"></div>
+  <button type="button" class="mk-share-btn" id="btnShare">分享<span class="mk-long">呢個方案</span></button>
 </header>
 
 <!-- ======================= DECK ======================= -->
@@ -814,7 +837,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
 <!-- ======================= PLANS ======================= -->
 <div id="plans" hidden>
  <div class="wrap">
-  <div class="t-head"><h1>新計劃比較</h1><p>輸入客戶年齡同保額，即刻睇到可以參加今次計劃嘅新計劃、每年保費同保障分別。👍 代表嗰一項較好。</p></div>
+  <div class="t-head"><h1>新計劃比較</h1><p class="t-period">宏利危疾定義更新計劃・2026年7月1日至12月31日</p><p>輸入客戶年齡同保額，即刻睇到可以參加今次計劃嘅新計劃、每年保費同保障分別。👍 代表嗰一項較好。</p></div>
   <div class="box">
     <div class="pin">
       <div class="f"><label for="pOldSel">客戶而家持有嘅計劃</label><select id="pOldSel"></select></div>
@@ -842,7 +865,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
 <div id="tool" hidden>
  <div class="wrap">
   <div class="print-only phead" id="phead"></div>
-  <div class="t-head"><h1>舊單定義比較</h1><p>揀你手上嘅計劃同打算投保嘅新計劃，即刻睇到參加之後有咩分別。</p></div>
+  <div class="t-head"><h1>舊單定義比較</h1><p class="t-period">宏利危疾定義更新計劃・2026年7月1日至12月31日</p><p>揀你手上嘅計劃同打算投保嘅新計劃，即刻睇到參加之後有咩分別。</p></div>
 
   <div class="box setup">
     <h2><span class="stepn">1</span>客戶及計劃</h2>
@@ -907,6 +930,15 @@ const D=window.CI_DATA, $=s=>document.querySelector(s), $$=s=>[...document.query
 const plan=id=>D.plans.find(p=>p.id===id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const store={get(k,d){try{const v=localStorage.getItem('cidr2_'+k);return v===null?d:v;}catch(e){return d;}},set(k,v){try{localStorage.setItem('cidr2_'+k,v);}catch(e){}}};
+/* 分享連結：#mode=tool&old=...  撳開時寫入設定（唔包括客人稱呼同月入），之後清走網址 */
+const SHARE_KEYS=['mode','old','new','spick','autoPrem','age','sex','smk','cur','sum','prem','yrs','disc','cpn','pAge','pCur','pSum','pTerm'];
+(function(){const s=location.hash.slice(1);if(s.indexOf('=')<0)return;const q=new URLSearchParams(s);
+  SHARE_KEYS.forEach(k=>{if(q.has(k))store.set(k,q.get(k));});store.set('client','');
+  try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}})();
+function ciShareUrl(){const q=new URLSearchParams();
+  const val=k=>{const e=document.getElementById(k);return e?(e.type==='checkbox'?(e.checked?'1':'0'):e.value):null;};
+  SHARE_KEYS.forEach(k=>{let v;if(k==='old')v=oldSel.value;else if(k==='new')v=newSel.value;else if(['mode','spick','autoPrem'].includes(k))v=store.get(k,'');else v=val(k);if(v)q.set(k,v);});
+  return location.origin+location.pathname+'#'+q.toString();}
 const short=n=>n.replace(/（.*?）/g,'');
 
 /* ---------- eligibility (單張 MKTPP119C) ---------- */
@@ -1454,6 +1486,7 @@ function setMode(m){
   store.set('mode',m);window.scrollTo(0,0);
   if(m==='deck')fit(); if(m==='plans'){loadPlanInputs();renderPlans();}
 }
+$('#btnShare').onclick=()=>mkShare(ciShareUrl());
 $('#tabDeck').onclick=()=>setMode('deck');$('#tabTool').onclick=()=>setMode('tool');$('#tabPlans').onclick=()=>setMode('plans');
 
 /* ---------- deck ---------- */
@@ -1507,6 +1540,18 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#modal').hidden
 })();
 render();go(0);setMode(store.get('mode','deck'));fit();
 })();
+</script>
+<script>
+/* 分享呢個方案：手機彈出分享選單（WhatsApp 等），電腦複製連結。
+   url 要包括客人揀嘅設定（例如放喺 # 後面），但唔可以包括客人姓名。 */
+function mkShare(url){
+  url=url||location.href;
+  if(navigator.share&&matchMedia('(pointer:coarse)').matches){navigator.share({title:document.title,url:url}).catch(function(){});return;}
+  (navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(
+    function(){mkToast('已複製連結，客人撳開會見到同一個方案');},
+    function(){window.prompt('複製呢條連結：',url);});
+}
+function mkToast(msg){var t=document.createElement('div');t.className='mk-toast';t.setAttribute('role','status');t.textContent=msg;(document.querySelector('dialog[open]')||document.body).appendChild(t);setTimeout(function(){t.remove();},2400);}
 </script>
 <script>
 (function(){var d=new Date();
