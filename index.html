@@ -1550,7 +1550,7 @@ function mkShare(url){
     function(){mkToast('已複製連結，客人撳開會見到同一個方案');},
     function(){window.prompt('複製呢條連結：',url);});
 }
-function mkToast(msg){var t=document.createElement('div');t.className='mk-toast';t.setAttribute('role','status');t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.remove();},2400);}
+function mkToast(msg){var t=document.createElement('div');t.className='mk-toast';t.setAttribute('role','status');t.textContent=msg;(document.querySelector('dialog[open]')||document.body).appendChild(t);setTimeout(function(){t.remove();},2400);}
 </script>
 <script>
 (function(){var d=new Date();
