@@ -677,11 +677,43 @@ body[data-mode="tool"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
 .tabs button[aria-selected="true"]{background:var(--ti);color:#fff}
 .tabs button[aria-selected="true"]::before{background:#fff;box-shadow:none}
 @media print{#deck,#plans,#tool{background:#fff!important;--surface:#F6F9F8}.topbar{box-shadow:none}}
+@media (min-width:1024px){.topbar .mk-actions{margin-left:0}}
+/* 平板直向：頁頭分兩行（工具名＋按鈕／分頁） */
+@media (min-width:561px) and (max-width:1023px){
+  :root{--bar:108px}
+  .topbar{flex-wrap:wrap;align-content:center;row-gap:6px}
+  .logo{flex:1;min-width:0}
+  .tabs{order:3;margin-left:0;width:100%}
+  .tabs button{flex:1;white-space:nowrap}
+}
+/* 列印：只印而家睇緊嗰個分頁 */
+@page deckp{size:A4 landscape;margin:10mm}
+@media print{
+  body[data-mode="plans"] #tool,body[data-mode="tool"] #plans,body[data-mode="deck"] #tool,body[data-mode="deck"] #plans{display:none!important}
+  body[data-mode="plans"] #plans{display:block!important}
+  body[data-mode="deck"] .mk-print-head,body[data-mode="deck"] #deck{page:deckp}
+  body[data-mode="deck"] #deck{display:block!important;height:auto;overflow:visible}
+  body[data-mode="deck"] #deck .viewport{position:static}
+  body[data-mode="deck"] #deck .stage{position:static;width:1280px;height:auto;margin:0 auto;transform:none;zoom:.78}
+  body[data-mode="deck"] #deck .s{position:relative;inset:auto;width:1280px;height:720px;opacity:1;visibility:visible;transition:none;box-shadow:none;border:1px solid var(--line);break-inside:avoid;break-after:page}
+  body[data-mode="deck"] #deck .s:last-child{break-after:auto}
+  body[data-mode="deck"] #deck .dnav{display:none!important}
+  body[data-mode="deck"] #deck *{animation:none!important}
+  body[data-mode="deck"] .cover .ecg path{stroke-dashoffset:0}
+  body[data-mode="deck"] del.x::after{animation:none!important;transform:scaleX(1)}
+  body[data-mode="deck"] ins.y{opacity:1}
+  .deck-pfoot .mk-ecard{margin-top:10px}
+  body[data-mode="plans"] .mk-print-head,body[data-mode="plans"] #plans{page:plansp}
+  #plans [data-pick],#plans [data-go2]{display:none!important}
+  #plans .ph-prem{font-size:19px;white-space:nowrap}
+}
+@page plansp{size:A4 landscape;margin:10mm}
 
 
 </style>
 </head>
 <body>
+<div class="mk-print-head"><b>MKPA · 危疾定義更新計劃</b><span>列印日期：<span class="mk-print-date"></span></span></div>
 <header class="topbar mk-header">
   <div class="logo">
     <img class="mk-logo" src="favicon.svg" alt="" width="38" height="38">
@@ -693,7 +725,10 @@ body[data-mode="tool"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
     <button role="tab" id="tabTool" aria-selected="false">舊單定義比較</button>
   </nav>
   <div class="who" id="who"></div>
-  <button type="button" class="mk-share-btn" id="btnShare">分享<span class="mk-long">呢個方案</span></button>
+  <div class="mk-actions">
+    <button type="button" class="mk-share-btn" id="btnShare">分享<span class="mk-long">呢個方案</span></button>
+    <button type="button" class="mk-print-btn" id="btnPrintTop">列印<span class="mk-long"> / 存 PDF</span></button>
+  </div>
 </header>
 
 <!-- ======================= DECK ======================= -->
@@ -871,6 +906,7 @@ body[data-mode="tool"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
    <span class="dk-copy">© <span class="cy"></span> MKPA</span>
    <span class="ct" id="ct"></span>
  </div>
+ <div class="print-only deck-pfoot" id="deckPFoot"></div>
 </main>
 
 <!-- ======================= PLANS ======================= -->
@@ -1108,7 +1144,7 @@ function renderResult(C){
   const {o,n,el,rows,keys,keySet,diffR,sameR,noneR,engR,name}=C;
   const who=name||'客戶';
   const today=new Date().toLocaleDateString('zh-HK',{year:'numeric',month:'long',day:'numeric'});
-  $('#phead').innerHTML=`<div><h1>危疾定義更新計劃：保單比較${name?'　'+esc(name):''}</h1><p>${esc(short(o.name))}（${esc(o.ver)}）→ ${esc(short(n.name))}（${esc(n.ver)}）${personLine()?'　'+esc(personLine()):''}</p></div><p>MKPA<br>列印日期：${today}</p>`;
+  $('#phead').innerHTML=`<div><h1>危疾定義更新計劃：保單比較${name?'　'+esc(name):''}</h1><p>${esc(short(o.name))}（${esc(o.ver)}）→ ${esc(short(n.name))}（${esc(n.ver)}）${personLine()?'　'+esc(personLine()):''}</p></div>`;
   let h='';
   // verdict
   if(el.ok){
@@ -1527,6 +1563,12 @@ function setMode(m){
   if(m==='deck')fit(); if(m==='plans'){loadPlanInputs();renderPlans();}
 }
 $('#btnShare').onclick=()=>mkShare(ciShareUrl());
+/* 頁頭「列印 / 存 PDF」：印而家睇緊嗰個分頁（舊單定義比較用精簡版） */
+$('#btnPrintTop').onclick=()=>{if(document.body.dataset.mode==='tool')doPrint(false);else window.print();};
+/* 簡報列印：每頁一張簡報（A4 橫向），最後加電子名片同版權 */
+(function(){const f=$('#deckPFoot'),e=$('#plans .mk-ecard'),c=$('#plans .mk-copy');if(f&&e){f.append(e.cloneNode(true));if(c)f.append(c.cloneNode(true));}})();
+window.addEventListener('beforeprint',()=>{if(document.body.dataset.mode==='deck')$('#deck').classList.remove('mob');});
+window.addEventListener('afterprint',()=>{if(document.body.dataset.mode==='deck')fit();});
 $('#tabDeck').onclick=()=>setMode('deck');$('#tabTool').onclick=()=>setMode('tool');$('#tabPlans').onclick=()=>setMode('plans');
 
 /* ---------- deck ---------- */
