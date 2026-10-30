@@ -544,12 +544,10 @@ details.row[open] summary .chev{transform:rotate(90deg)}
   .actions .sum{display:none}
 }
 @media (max-width:560px){
-  :root{--bar:104px}
-  .topbar{flex-wrap:wrap;align-content:center;row-gap:8px;column-gap:10px}
+  :root{--bar:94px}
   .logo{flex:1;min-width:0}
   .logo span{overflow:hidden;text-overflow:ellipsis}
   .logo .mk-logo{width:30px;height:30px}
-  .topbar>.tabs{order:3;flex:none;width:100%}
   
   .actions .in{flex-wrap:nowrap;gap:6px} .btn{flex:1;padding:0 8px;font-size:14px} .lgx{display:none}
   .vs-pick{grid-template-columns:1fr}.vs-pick .ar{display:none}
@@ -664,7 +662,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
 .mk-tab.on,.mk-tab.active,.mk-tab[aria-selected="true"],.mk-tab[aria-pressed="true"],.mk-tab[aria-current="page"]{background:#fff;color:var(--c-ink);font-weight:700}
 .mk-tab.on::before,.mk-tab.active::before,.mk-tab[aria-selected="true"]::before,.mk-tab[aria-pressed="true"]::before,.mk-tab[aria-current="page"]::before{box-shadow:none}
 /* 平板同手機（≤1023px）：分頁掣落第二行，一行過左右捲 */
-@media (max-width:1023px){.mk-bar{flex-wrap:wrap;row-gap:0;column-gap:10px;padding-top:8px}.mk-bar>.mk-title{flex:1}.mk-bar>.mk-tabs{order:3;flex:none;width:100%;margin:2px 0 6px}}
+@media (max-width:1023px){.mk-header .mk-bar,.mk-header.mk-bar{flex-wrap:wrap;height:auto;min-height:0;align-content:flex-start;row-gap:8px;column-gap:10px;padding-top:10px;padding-bottom:8px}.mk-bar>.mk-title{flex:1}.mk-header .mk-bar>.mk-tabs,.mk-header.mk-bar>.mk-tabs{order:3;flex:none;width:100%;margin:0}}
 .mk-actions{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
 /* 分享呢個方案（同列印按鈕一樣樣式） */
 .mk-share-btn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--mk-brand);background:var(--mk-surface);color:var(--mk-brand-ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
@@ -688,10 +686,8 @@ body[data-mode="tool"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
 @media (min-width:1024px){.topbar .mk-actions{margin-left:0}}
 /* 平板直向：頁頭分兩行（工具名＋按鈕／分頁） */
 @media (min-width:561px) and (max-width:1023px){
-  :root{--bar:108px}
-  .topbar{flex-wrap:wrap;align-content:center;row-gap:6px}
+  :root{--bar:96px}
   .logo{flex:1;min-width:0}
-  .topbar>.tabs{order:3;flex:none;width:100%}
 }
 /* 列印：只印而家睇緊嗰個分頁 */
 @page deckp{size:A4 landscape;margin:10mm}
@@ -721,7 +717,7 @@ body[data-mode="tool"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
 </head>
 <body>
 <div class="mk-print-head"><b>MKPA · 危疾定義更新計劃</b><span>列印日期：<span class="mk-print-date"></span></span></div>
-<header class="topbar mk-header">
+<header class="topbar mk-header mk-bar">
   <div class="logo">
     <img class="mk-logo" src="favicon.svg" alt="" width="38" height="38">
     <span class="mk-name">危疾定義更新計劃<small class="mk-sub">宏利舊單升級新危疾定義</small></span>
