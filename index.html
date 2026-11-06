@@ -364,6 +364,36 @@ table.stdt{width:100%;border-collapse:separate;border-spacing:0;font-size:16px;b
 .pk-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
 .pk-go{height:42px;border-radius:10px;border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.12);color:#fff;font-weight:700;cursor:pointer}
 .pk-go:hover{background:rgba(255,255,255,.22)}
+.pk-btns.three{grid-template-columns:1.1fr 1fr 1fr;gap:6px}
+.pk-btns.three .pk-go{padding:0 6px;font-size:14px;white-space:nowrap}
+.pk-go.pk-1p{background:#fff;color:var(--g-ink);border-color:#fff}
+.pk-go.pk-1p:hover{background:#F2FBF6}
+/* 一頁總結（只喺列印時出現） */
+.sum-page{display:none}
+.sum-page .sp-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;border-bottom:3px solid var(--g);padding-bottom:10px;margin-bottom:16px}
+.sum-page h1{margin:0;font-size:26px;color:var(--mk-deep,#0E5E57)}
+.sum-page .sp-head p{margin:0;color:var(--ink-2);font-size:14px;text-align:right}
+.sum-page .sp-pair{display:grid;grid-template-columns:1fr 40px 1fr;align-items:center;gap:8px;margin-bottom:12px}
+.sum-page .sp-pair > div{border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.sum-page .sp-pair > div.new{border-color:var(--g);background:var(--g-50)}
+.sum-page .sp-pair span{display:block;font-size:12.5px;color:var(--muted)}
+.sum-page .sp-pair b{display:block;font-size:18px;margin:2px 0}
+.sum-page .sp-pair small{font-size:12px;color:var(--muted)}
+.sum-page .sp-pair .ar{text-align:center;font-size:24px;color:var(--g);border:0;padding:0}
+.sum-page .sp-lead{margin:0 0 14px;font-size:14.5px;line-height:1.6}
+.sum-page .sp-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:12px;margin-bottom:12px}
+.sum-page .sp-box{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:12px;break-inside:avoid}
+.sum-page .sp-grid .sp-box{margin-bottom:0}
+.sum-page h2{margin:0 0 8px;font-size:16px;color:var(--mk-deep,#0E5E57)}
+.sum-page ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.6}
+.sum-page li{margin:2px 0}
+.sum-page .sm{margin:8px 0 0;font-size:12.5px;color:var(--ink-2)}
+.sum-page .big{font-family:var(--num);font-size:30px;font-weight:800;color:var(--g-ink);line-height:1.2}
+.sum-page .rows div{display:flex;justify-content:space-between;font-size:13.5px;padding:3px 0;border-bottom:1px dashed var(--line)}
+.sum-page .rows b{font-family:var(--num)}
+.sum-page .sp-dl{background:#FFF4D6;color:#7A4B00;border-radius:10px;padding:10px 14px;font-weight:700;font-size:14px;margin-bottom:12px}
+.sum-page .sp-fine{font-size:11.5px;color:var(--muted);margin:8px 0 0}
+.sum-page .mk-ecard{margin-top:10px}
 #deck.mob .pk-grid{grid-template-columns:1fr}
 #deck.mob .pk-sum{gap:4px}#deck.mob .pk-sum button{padding:4px 8px;font-size:13px}#deck.mob .pk-ctl .pk-term{margin-left:2px}#deck.mob #sTerm{width:78px;padding:0 4px}#deck.mob .pk-ctl{gap:8px 10px}
 #deck.mob .pk-h{font-size:24px!important}
@@ -387,7 +417,7 @@ table.stdt{width:100%;border-collapse:separate;border-spacing:0;font-size:16px;b
 /* ================= PLANS ================= */
 #plans .wrap{max-width:calc(1320px + 2 * var(--mk-gutter))}
 #plans{background:var(--surface);min-height:calc(100dvh - var(--bar))}
-.pin{display:grid;grid-template-columns:1.4fr .6fr .7fr .8fr 2.2fr;gap:14px;align-items:start}
+.pin{display:grid;grid-template-columns:1.4fr .55fr .65fr .75fr .95fr 2.2fr;gap:14px;align-items:start}
 .pin label,.f label{white-space:nowrap}
 .chipset{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
 .chipset button{border:1px solid #CFD8D5;background:#fff;border-radius:999px;padding:4px 12px;font-size:13.5px;cursor:pointer;font-family:var(--num);font-weight:700;color:var(--ink-2)}
@@ -564,12 +594,6 @@ details.row[open] summary .chev{transform:rotate(90deg)}
 .box .why{font-size:14.5px;color:var(--ink-2);margin:0 0 14px}
 .empty{color:var(--muted);font-size:15px;padding:8px 0}
 
-.p-out{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
-.p-out div{background:var(--surface);border-radius:12px;padding:14px 16px}
-.p-out div.hi{background:var(--g);color:#fff}
-.p-out span{display:block;font-size:13px;opacity:.85}
-.p-out b{font-family:var(--num);font-size:24px;font-weight:800;line-height:1.3}
-.coupon{margin-top:12px;font-size:14px;color:var(--ink-2)}
 .fine{font-size:13px;color:var(--muted);line-height:1.7}
 
 .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
@@ -760,6 +784,11 @@ body[data-mode="plans"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
   #plans .ph-prem{font-size:19px;white-space:nowrap}
 }
 @page plansp{size:A4 landscape;margin:10mm}
+@media print{
+  body.sum-print > :not(#sumPage):not(.mk-print-head){display:none!important}
+  body.sum-print #sumPage{display:block!important}
+  body.sum-print .mk-print-head{page:auto}
+}
 
 
 </style>
@@ -970,6 +999,7 @@ body[data-mode="plans"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
       <div class="f"><label for="pAge">年齡</label><input id="pAge" type="number" min="0" max="65" inputmode="numeric" placeholder="40"></div>
       <div class="f"><label for="pSex">性別</label><select id="pSex"><option>男</option><option>女</option></select></div>
       <div class="f"><label for="pSmk">吸煙</label><select id="pSmk"><option>非吸煙</option><option>吸煙</option></select></div>
+      <div class="f"><label for="pInc">月入（港元，可選）</label><input id="pInc" type="number" min="0" inputmode="decimal" placeholder="例如 50000"></div>
       <div class="f f-sum"><label for="pSum">保額及繳費年期</label>
         <div class="f inline" style="gap:6px"><select id="pCur" style="max-width:84px;flex:0 0 auto"><option value="HKD">港元</option><option value="USD">美元</option></select><input id="pSum" type="number" min="0" inputmode="decimal" placeholder="500000"><select id="pTerm" style="max-width:96px;flex:0 0 auto" aria-label="繳費年期"><option value="10">10年</option><option value="20">20年</option><option value="25">25年</option><option value="A65">至65歲</option></select></div>
         <div class="chipset" id="sumChips"></div></div>
@@ -994,12 +1024,12 @@ body[data-mode="plans"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
   <div class="t-head"><h1>舊單定義比較</h1><p class="t-period">宏利危疾定義更新計劃・2026年7月1日至12月31日</p><p>揀你手上嘅計劃同打算投保嘅新計劃，即刻睇到參加之後有咩分別。</p></div>
 
   <div class="box setup">
-    <h2><span class="stepn">1</span>客戶及計劃</h2>
+    <h2>客戶及計劃</h2>
     <p class="sub">資料只會儲存喺呢部裝置。</p>
     <div class="grid3">
       <div>
-        <div class="f"><label for="client">客戶稱呼</label><input id="client" placeholder="例如：陳先生" autocomplete="off"></div>
-        <div class="f inline" style="margin-top:12px">
+        <input type="hidden" id="client">
+        <div class="f inline">
           <div><label for="age">年齡</label><input id="age" type="number" min="0" max="80" inputmode="numeric" placeholder="40"></div>
           <div><label for="sex">性別</label><select id="sex"><option value="">－</option><option>男</option><option>女</option></select></div>
           <div><label for="smk">吸煙</label><select id="smk"><option value="">－</option><option>非吸煙</option><option>吸煙</option></select></div>
@@ -1014,20 +1044,6 @@ body[data-mode="plans"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
   </div>
 
   <div id="result" aria-live="polite"></div>
-  <div class="box prem-box">
-    <h2><span class="stepn">2</span>新計劃保費預算（可選）</h2>
-    <p class="sub">請按建議書輸入，網站會幫你計每月、每日同首年實際支出，並顯示喺簡報最後一頁「你的方案」。</p>
-    <div class="grid4">
-      <div class="f"><label for="cur">貨幣</label><select id="cur"><option value="HKD">港元 HK$</option><option value="USD">美元 US$</option></select></div>
-      <div class="f"><label for="sum">保額／名義金額</label><input id="sum" type="number" min="0" inputmode="decimal" placeholder="例如 500000"></div>
-      <div class="f"><label for="prem">年繳保費（建議書）</label><input id="prem" type="number" min="0" inputmode="decimal" placeholder="按建議書輸入"></div>
-      <div class="f"><label for="yrs">繳費年期</label><input id="yrs" type="number" min="1" max="100" inputmode="numeric" placeholder="例如 25"></div>
-      <div class="f"><label for="inc">客戶月入（港元，可選）</label><input id="inc" type="number" min="0" inputmode="decimal" placeholder="50000"></div>
-      <div class="f"><label for="disc">首年其他折扣 %（可選）</label><input id="disc" type="number" min="0" max="100" inputmode="decimal" placeholder="0"></div>
-      <div class="f" style="grid-column:span 2"><label>&nbsp;</label><label class="chk" style="font-weight:500"><input type="checkbox" id="cpn"> 客戶係特選客戶，有個人專屬保費優惠券</label><div class="hint">優惠券推廣期至2026年10月26日，扣減額按首年年度化保費自動計算。</div></div>
-    </div>
-    <div id="pOut"></div>
-  </div>
 
   <div class="mk-ecard">
     <div class="mk-ecard-txt"><b>想進一步了解或有疑問？</b><span>歡迎查看我的電子名片，可直接 WhatsApp、加 IG 或儲存聯絡資料。</span></div>
@@ -1038,9 +1054,11 @@ body[data-mode="plans"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
  <footer class="site-foot tool-foot"><p class="mk-home-link"><a href="https://mkpa.netlify.app/" target="_blank" rel="noopener">MKPA 工具箱：睇其他實用工具 ↗</a></p><p class="mk-copy">© <span class="mk-year">2026</span> Michael Koo Protection Alliance (MKPA). 版權所有。</p></footer>
  <div class="actions" id="toolActs">
    <button class="btn pri" id="btnWa">複製 WhatsApp 訊息</button>
+   <button class="btn ghost" id="btnSum">一頁總結 PDF</button>
    <button class="btn ghost" id="btnPrintFull">列印連條文</button>
  </div>
 </div>
+<section class="sum-page" id="sumPage" aria-hidden="true"></section>
 <div class="toast" id="toast" hidden></div>
 <div class="modal" id="modal" hidden role="dialog" aria-modal="true"><div class="mbox"><button class="mx-close" id="mClose" aria-label="關閉">✕</button><div id="mBody"></div></div></div>
 
@@ -1055,13 +1073,13 @@ const plan=id=>D.plans.find(p=>p.id===id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const store={get(k,d){try{const v=localStorage.getItem('cidr2_'+k);return v===null?d:v;}catch(e){return d;}},set(k,v){try{localStorage.setItem('cidr2_'+k,v);}catch(e){}}};
 /* 分享連結：#mode=tool&old=...  撳開時寫入設定（唔包括客人稱呼同月入），之後清走網址 */
-const SHARE_KEYS=['mode','old','new','spick','autoPrem','age','sex','smk','cur','sum','prem','yrs','disc','cpn','pAge','pCur','pSum','pTerm'];
+const SHARE_KEYS=['mode','old','new','spick','age','sex','smk','pAge','pCur','pSum','pTerm'];
 (function(){const s=location.hash.slice(1);if(s.indexOf('=')<0)return;const q=new URLSearchParams(s);
   SHARE_KEYS.forEach(k=>{if(q.has(k))store.set(k,q.get(k));});store.set('client','');if(q.has('old'))store.set('oldSet','1');
   try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}})();
 function ciShareUrl(){const q=new URLSearchParams();
   const val=k=>{const e=document.getElementById(k);return e?(e.type==='checkbox'?(e.checked?'1':'0'):e.value):null;};
-  SHARE_KEYS.forEach(k=>{let v;if(k==='old')v=oldSel.value;else if(k==='new')v=newSel.value;else if(['mode','spick','autoPrem'].includes(k))v=store.get(k,'');else v=val(k);if(v)q.set(k,v);});
+  SHARE_KEYS.forEach(k=>{let v;if(k==='old')v=oldSel.value;else if(k==='new')v=newSel.value;else if(['mode','spick'].includes(k))v=store.get(k,'');else v=val(k);if(v)q.set(k,v);});
   return location.origin+location.pathname+'#'+q.toString();}
 const short=n=>n.replace(/（.*?）/g,'');
 
@@ -1130,41 +1148,18 @@ function keyImps(o,n){
 }
 
 /* ---------- premium ---------- */
-const COUPON_END=new Date('2026-10-26T23:59:59+08:00');
-const CPN={HKD:[[200000,20000],[50000,5000],[25000,2500],[15000,1300],[6000,500]],USD:[[25000,2500],[6250,625],[3125,312.5],[1875,162.5],[750,62.5]]};
+
 const fx=(v,c)=>(c==='USD'?'US$':'HK$')+Number(v).toLocaleString('en-US',{maximumFractionDigits:v<1000?2:0,minimumFractionDigits:0});
-function premium(){
-  const c=$('#cur').value,p=+$('#prem').value||0,y=+$('#yrs').value||0,inc=+$('#inc').value||0,d=Math.min(+$('#disc').value||0,100),s=+$('#sum').value||0;
-  if(!p) return null;
-  let cp=0; const live=new Date()<=COUPON_END;
-  if($('#cpn').checked&&live){const r=CPN[c].find(([t])=>p>=t);cp=r?r[1]:0;}
-  const hk=c==='USD'?p*7.8:p;
-  return {c,p,y,s,month:p/12,day:p/365,pct:inc?hk/12/inc*100:null,disc:d,cp,first:p*(1-d/100)-cp,total:y?p*y:null,live,cpnOn:$('#cpn').checked};
-}
-function renderPremium(){
-  const r=premium(),el=$('#pOut');
-  if(!r){el.innerHTML='';return;}
-  el.innerHTML=`<div class="p-out">
-    <div class="hi"><span>每月平均</span><b>${fx(r.month,r.c)}</b></div>
-    <div><span>每日約</span><b>${fx(r.day,r.c)}</b></div>
-    <div><span>${r.pct!==null?'佔月入':'年繳保費'}</span><b>${r.pct!==null?r.pct.toFixed(1)+'%':fx(r.p,r.c)}</b></div>
-    <div><span>首年實際支出</span><b>${fx(r.first,r.c)}</b></div></div>
-    <p class="coupon">${r.cpnOn?(r.live?(r.cp?`保費優惠券可扣減首期保費 <b>${fx(r.cp,r.c)}</b>。`:'年繳保費未達優惠券最低要求，冇扣減。'):'保費優惠券推廣期已於2026年10月26日結束，冇計扣減。'):''}${r.disc?` 已計首年折扣 ${r.disc}%。`:''}${r.total?` 總保費約 ${fx(r.total,r.c)}（${r.y}年，未計折扣）。`:''}${r.c==='USD'&&r.pct!==null?' 以1美元＝7.8港元計。':''}</p>
-    <p class="fine">以建議書為準。${r.live?'優惠券只適用於特選客戶，請先喺ManuTouch確認；':''}保費徵費按扣減前保費計算。</p>`;
-}
 
 /* ---------- selects & state ---------- */
 const oldSel=$('#oldSel'),newSel=$('#newSel');
 const groups=[['宏利較新系列',['MBCPRO','MPC','MPCBS','MBC2']],['其他現行計劃',D.plans.filter(p=>p.tier==='OTHER').map(p=>p.id)]];
 oldSel.innerHTML=groups.map(([g,ids])=>`<optgroup label="${g}">${ids.map(id=>`<option value="${id}">${esc(plan(id).name)}</option>`).join('')}</optgroup>`).join('');
 newSel.innerHTML=NEW_IDS.map(id=>`<option value="${id}">${esc(plan(id).name)}</option>`).join('');
-const FIELDS=['client','age','sex','smk','cur','sum','prem','yrs','inc','disc'];
+const FIELDS=['client','age','sex','smk'];
 FIELDS.forEach(f=>{const v=store.get(f,null);if(v!==null)$('#'+f).value=v;});
-if(store.get('cur',null)===null) $('#cur').value=store.get('pCur','HKD');
 /* 年齡：三個分頁共用，預設 40 歲（同新計劃比較一致） */
 if(!$('#age').value) $('#age').value=store.get('pAge','40')||'40';
-$('#cpn').checked=store.get('cpn','0')==='1';
-if(new Date()>COUPON_END){$('#cpn').checked=false;store.set('cpn','0');$('#cpn').closest('.f').style.display='none';}
 oldSel.value=store.get('old','MTC')||'MTC'; if(!oldSel.value) oldSel.value='MTC';
 newSel.value=store.get('new','IG')||'IG'; if(!newSel.value) newSel.value='IG';
 let query='';
@@ -1179,15 +1174,14 @@ function ctx(){
 }
 
 function render(){
-  syncPrem();
-  FIELDS.forEach(f=>store.set(f,$('#'+f).value)); store.set('cpn',$('#cpn').checked?'1':'0');
+  FIELDS.forEach(f=>store.set(f,$('#'+f).value));
   store.set('old',oldSel.value); store.set('new',newSel.value);
   const C=ctx(),{o,n,el}=C;
   $('#oldVer').textContent='條款版本 '+o.ver; if(store.get('spick','')==='MBC2P'&&n.id==='MBC2')$('#newVer').dataset.plus='1'; $('#newVer').textContent='條款版本 '+n.ver+(n.enh?'，已包括最新放寬':'');
   $('#who').innerHTML=C.name?`為 <b>${esc(C.name)}</b> 準備`:'';
   $$('.adv').forEach(e=>e.textContent='MKPA · 危疾定義更新計劃');
   $('#cvFor').textContent=C.name?`為 ${C.name} 準備`:'2026年7月1日至12月31日';
-  renderPremium(); renderSlides(C); renderResult(C); renderCover();
+  renderSlides(C); renderResult(C); renderCover();
 }
 
 function personLine(){const a=$('#age').value,s=$('#sex').value,k=$('#smk').value;return [a?a+'歲':'',s,k].filter(Boolean).join('・');}
@@ -1323,14 +1317,15 @@ function renderSlides(C){
 /* ---------- WhatsApp / print ---------- */
 function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2200);}
 $('#btnWa').onclick=async()=>{
-  const C=ctx(),{o,n,el,keys,diffR,name}=C,r=premium();
+  const C=ctx(),{o,n,el,keys,diffR,name}=C;
+  const px=P2.find(p=>p.id===store.get('spick','')), I=pickInputs(), pr=px&&px.def===n.id&&!isNaN(I.age)?annualPrem(px,I.cur,I.term,I.age,I.sex,I.smk,I.sum):null;
   let m=`${name?name+'你好！':'你好！'}想同你分享宏利嘅「危疾定義更新計劃」。\n\n`;
   if(el.ok){
     m+=`你而家持有嘅【${short(o.name)}】，只要喺2026年12月31日前為同一受保人投保【${short(n.name)}】，舊單日後索償時，就可以用新計劃較寬鬆嘅危疾定義。\n\n`;
     if(keys.length) m+=`幾個重點：\n${keys.slice(0,4).map(k=>`✅ ${k.t}：${k.a} → ${k.b}`).join('\n')}\n\n`;
     if(diffR.length) m+=`兩份計劃合共有 ${diffR.length} 種危疾嘅條文有分別。\n\n`;
     if(C.std.length) m+=`另外，${short(n.name)}嘅危疾定義，部分仲寬鬆過香港保險業聯會嘅業界標準（例如${C.std.slice(0,2).map(s=>s.t).join('、')}）。業界標準只適用於新產品，唔會改到你手上嘅舊單，參加呢個計劃先可以令舊單受惠。\n\n`;
-    if(r) m+=`新計劃保費每月平均約 ${fx(r.month,r.c)}（每日約 ${fx(r.day,r.c)}）。\n\n`;
+    if(pr&&!pr.err) m+=`以保額 ${fx(I.sum,I.cur)} 計，${short(n.name)}每年保費約 ${fx(pr.annual,I.cur)}（每月約 ${fx(pr.annual/12,I.cur)}），最終以建議書為準。\n\n`;
   } else m+=`醫學進步咗，新危疾計劃嘅定義亦寬鬆咗唔少。投保指定新計劃之後，舊單索償都可以跟新定義。\n\n`;
   m+=`想約個時間同你逐項睇清楚，你邊日方便？`;
   m+=`\n\n想了解更多，可以睇吓我嘅電子名片：\nhttps://api.portfoplus.com/api/v1/adviser/5e41564ab3b1bc00153394db?m=link&r=adviser`;
@@ -1343,10 +1338,31 @@ function doPrint(full){
   setTimeout(()=>window.print(),80);
 }
 $('#btnPrintFull').onclick=()=>doPrint(true);
-[...FIELDS.map(f=>'#'+f),'#cpn'].forEach(s=>$(s).addEventListener('input',render));
-[oldSel,newSel,$('#cur'),$('#sex'),$('#smk')].forEach(s=>s.addEventListener('change',render));
+/* ---------- 一頁總結（俾客人帶走） ---------- */
+function buildSummary(){
+  const C=ctx(),{o,n,el,keys,diffR,std,name}=C;
+  if(!el.ok){toast('呢個舊單同新計劃組合唔符合資格');return false;}
+  const sp=store.get('spick',''), x=P2.find(p=>p.id===sp&&p.def===n.id)||P2.find(p=>p.def===n.id);
+  const I=pickInputs(), pr=x&&!isNaN(I.age)?annualPrem(x,I.cur,I.term,I.age,I.sex,I.smk,I.sum):null, ok=pr&&!pr.err;
+  const yrs=I.term==='A65'?Math.max(65-(I.age||0),1):+I.term, nm=x?x.name:n.name;
+  const li=[`<li><b>${diffR.length}</b> 種危疾條文同新計劃唔同，索償時取較有利嗰個</li>`].concat(keys.slice(0,5).map(k=>`<li>${esc(k.t)}：${esc(k.a)} → <b>${esc(k.b)}</b></li>`)).join('');
+  const f=$('#plans .mk-ecard'), cp=$('#plans .mk-copy');
+  $('#sumPage').innerHTML=`<div class="sp-head"><h1>你嘅危疾定義升級方案</h1><p>${name?'為 '+esc(name)+' 準備<br>':''}${esc(personLine())}</p></div>
+   <div class="sp-pair"><div><span>你手上嘅計劃</span><b>${esc(o.name)}</b><small>條款版本 ${esc(o.ver)}</small></div><div class="ar">→</div><div class="new"><span>建議新計劃</span><b>${esc(nm)}</b><small>條款版本 ${esc(n.ver)}</small></div></div>
+   <p class="sp-lead">只要喺 2026 年 12 月 31 日前為同一受保人投保新計劃，舊單日後第一次嚴重危疾（或通波仔）索償時，就可以同新計劃嘅定義比較，用較有利嗰個。</p>
+   <div class="sp-grid"><div class="sp-box"><h2>參加後嘅分別</h2><ul>${li}</ul>${std.length?`<p class="sm">${std.slice(0,3).map(s=>esc(s.t)).join('、')}等定義，仲寬鬆過香港保險業聯會（HKFI）嘅業界標準。</p>`:''}</div>
+    <div class="sp-box"><h2>新計劃保費（參考）</h2>${ok?`<div class="big">${fx(pr.annual,I.cur)}<small style="font-size:14px;color:var(--muted)"> / 年</small></div><div class="rows"><div><span>每月約</span><b>${fx(pr.annual/12,I.cur)}</b></div><div><span>保額</span><b>${fx(I.sum,I.cur)}</b></div><div><span>繳費年期</span><b>${TERM_LBL[I.term]}</b></div><div><span>總保費（約）</span><b>${fx(pr.annual*yrs,I.cur)}</b></div></div>`:'<p class="sm">輸入年齡後顯示保費。</p>'}<p class="sp-fine">按保費率表計算，只供參考；最終保費以建議書為準。</p></div></div>
+   <div class="sp-box"><h2>要留意</h2><ul><li>只改善危疾定義，唔會加病種；賠償金額照舊單計</li><li>只限每份舊單第一次嚴重危疾及通波仔索償</li><li>新計劃唔賠嘅情況（例如等候期內、不保事項），舊單都唔會升級</li><li>新計劃要一直生效；新計劃終止，呢個安排亦終止</li></ul></div>
+   <div class="sp-dl">遞交申請限期：2026年12月31日　・　批核限期：2027年3月31日</div>
+   ${f?f.outerHTML:''}${cp?cp.outerHTML:''}<p class="sp-fine">只供講解參考，一切以保單條款為準。</p>`;
+  return true;
+}
+function printSummary(){if(!buildSummary())return;document.body.classList.add('sum-print');setTimeout(()=>window.print(),80);}
+window.addEventListener('afterprint',()=>document.body.classList.remove('sum-print'));
+$('#btnSum').onclick=printSummary;
+FIELDS.map(f=>'#'+f).forEach(s=>$(s).addEventListener('input',render));
+[oldSel,newSel,$('#sex'),$('#smk')].forEach(s=>s.addEventListener('change',render));
 newSel.addEventListener('change',()=>{const cur=store.get('spick','');const id=newSel.value==='MBC2'&&cur==='MBC2P'?'MBC2P':newSel.value;setPick(id);});
-['#cur','#sum','#prem','#yrs'].forEach(s=>$(s).addEventListener('input',()=>store.set('autoPrem','0')));
 
 /* ================= PLANS (新計劃比較) ================= */
 const R=window.CI_RATES||{};
@@ -1490,7 +1506,7 @@ function renderPlans(){
   const ageMax=x=>{const t=R[x.id]&&R[x.id][cur]&&R[x.id][cur][term];return t?t.max:'—';};
   const ROWS=[
     ['保費'],
-    ['每年保費',x=>[fx(x.pr.annual,cur),x.pr.fee?`保費率 ${x.pr.rate.toFixed(2)}／千 ＋ 固定 ${fx(x.pr.fee,cur)}`:`每月約 ${fx(x.pr.annual/12,cur)}`],T.prem],
+    ['每年保費',x=>[fx(x.pr.annual,cur),x.pr.fee?`保費率 ${x.pr.rate.toFixed(2)}／千 ＋ 固定 ${fx(x.pr.fee,cur)}`:`每月約 ${fx(x.pr.annual/12,cur)}${incPct(x.pr.annual,cur)}`],T.prem],
     ['總保費（約）',x=>[fx(x.pr.annual*yrs,cur),`${yrs}年，投保時保費率保證不變`],null],
     ['舊單定義升級',x=>[x.up?`${x.up} 項`:'—',x.up?'舊單可用新定義索償':'兩份定義已一致'],T.up,'g-up'],
     ['投保及核保'],
@@ -1520,7 +1536,7 @@ function renderPlans(){
   ];
   const lbl=r=>`${r[0]}${r[3]?` <a class="gq" href="#${r[3]}" aria-label="${r[0]}解釋">?</a>`:''}`;
   const pickBtn=x=>x.id===store.get('spick','')?`<button class="ph-pick on" data-pick="${x.id}" title="再撳一次去舊單定義比較">✓ 已揀</button><button class="ph-link" data-go2="tool">睇條文對比 ›</button>`:`<button class="ph-pick" data-pick="${x.id}">揀呢個方案</button>`;
-  const head=x=>`${x.id===store.get('spick','')?'<span class="crown">✓ 客人揀咗</span>':''}${topIds.includes(x.id)?`<span class="most">👍 最多（${score[x.id]}項）</span>`:''}<div class="ph-name">${nameHTML(x.name)}</div><span class="ph-up${x.up?'':' zero'}">${x.up?`改善舊單 ${x.up} 項定義`:'舊單定義已一致'}</span><div class="ph-prem">${fx(x.pr.annual,cur)}<small>每年・每月約 ${fx(x.pr.annual/12,cur)}</small></div>`;
+  const head=x=>`${x.id===store.get('spick','')?'<span class="crown">✓ 客人揀咗</span>':''}${topIds.includes(x.id)?`<span class="most">👍 最多（${score[x.id]}項）</span>`:''}<div class="ph-name">${nameHTML(x.name)}</div><span class="ph-up${x.up?'':' zero'}">${x.up?`改善舊單 ${x.up} 項定義`:'舊單定義已一致'}</span><div class="ph-prem">${fx(x.pr.annual,cur)}<small>每年・每月約 ${fx(x.pr.annual/12,cur)}${incPct(x.pr.annual,cur)}</small></div>`;
   const W=$('#plans .wrap').clientWidth||window.innerWidth;
   const tableMode = W>=960 || (W>=700&&ok.length<=3);
   if(tableMode){
@@ -1556,6 +1572,8 @@ function renderPlans(){
   });
 }
 ['#pAge','#pSum'].forEach(s=>$(s).addEventListener('input',renderPlans));
+$('#pInc').value=store.get('pInc','');
+$('#pInc').addEventListener('input',()=>{store.set('pInc',$('#pInc').value);renderPlans();renderPick();});
 ['#pOldSel','#pSex','#pSmk','#pTerm'].forEach(s=>$(s).addEventListener('change',renderPlans));
 /* 轉貨幣時，保額跟住換算（港元 8 : 1 美元，同快捷掣一致），唔會變成 US$500,000 */
 let lastCur=null;
@@ -1570,15 +1588,11 @@ let rzT; window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(
 /* ---------- 客人揀嘅新計劃：全網站同一個 ---------- */
 function setPick(id){
   const x=P2.find(p=>p.id===id); if(!x) return;
-  store.set('spick',x.id); store.set('pickName',x.name); store.set('autoPrem','1'); newSel.value=x.def; render();
-}
-function syncPrem(){
-  const id=store.get('spick',''); if(!id||store.get('autoPrem','0')!=='1') return;
-  const x=P2.find(p=>p.id===id), I=pickInputs(); if(!x||isNaN(I.age)) return;
-  const pr=annualPrem(x,I.cur,I.term,I.age,I.sex,I.smk,I.sum); if(pr.err) return;
-  $('#cur').value=I.cur; $('#sum').value=I.sum; $('#prem').value=pr.annual.toFixed(2); $('#yrs').value=I.term==='A65'?Math.max(65-I.age,1):+I.term;
+  store.set('spick',x.id); store.set('pickName',x.name); newSel.value=x.def; render();
 }
 /* ---------- 簡報最後一頁：由客人即場揀新計劃 ---------- */
+/* 保費佔月入（月入只存喺呢部裝置，唔放入分享連結） */
+function incPct(annual,cur){const inc=+store.get('pInc','')||0;if(!inc||!annual)return '';const hk=cur==='USD'?annual*7.8:annual;return `・佔月入 ${(hk/12/inc*100).toFixed(1)}%`;}
 function pickInputs(){return {cur:store.get('pCur','HKD'),sum:+store.get('pSum','500000')||500000,term:store.get('pTerm','25'),age:parseInt($('#age').value,10),sex:$('#sex').value||'男',smk:$('#smk').value||'非吸煙'};}
 /* 推廣期倒數（遞交截止 2026-12-31） */
 const DEADLINE=new Date(2026,11,31,23,59,59);
@@ -1595,18 +1609,20 @@ function renderCover(){
 }
 function openSetup(){
   const I=pickInputs();
-  $('#mBody').innerHTML=`<div class="setup-m"><h3>客戶資料</h3><p class="sm">簡報第 2、3、6、11 頁會跟住呢度顯示。</p>
+  $('#mBody').innerHTML=`<div class="setup-m"><h3>客戶資料</h3><p class="sm">簡報第 2、3、6、11 頁會跟住呢度顯示；稱呼只會喺呢部裝置顯示，唔會放入分享連結。</p>
    <div class="fg"><label class="full">客戶舊單<select id="mOld">${oldSel.innerHTML}</select></label>
    <label>性別<select id="mSex"><option ${I.sex==='男'?'selected':''}>男</option><option ${I.sex==='女'?'selected':''}>女</option></select></label>
    <label>吸煙<select id="mSmk"><option ${I.smk==='非吸煙'?'selected':''}>非吸煙</option><option ${I.smk==='吸煙'?'selected':''}>吸煙</option></select></label>
-   <label class="full">年齡<input id="mAge" type="number" inputmode="numeric" min="0" max="80" value="${esc($('#age').value)}"></label></div>
+   <label>年齡<input id="mAge" type="number" inputmode="numeric" min="0" max="80" value="${esc($('#age').value)}"></label>
+   <label>客戶稱呼（可選）<input id="mName" placeholder="例如：陳先生" autocomplete="off" value="${esc($('#client').value)}"></label></div>
    <button type="button" class="btn pri done" id="mDone">完成</button></div>`;
   $('#mOld').value=oldSel.value;
   $('#mOld').onchange=()=>{oldSel.value=$('#mOld').value;store.set('oldSet','1');store.set('spick','');render();};
   $('#mSex').onchange=()=>{$('#sex').value=$('#mSex').value;render();};
   $('#mSmk').onchange=()=>{$('#smk').value=$('#mSmk').value;render();};
   $('#mAge').onchange=()=>{$('#age').value=$('#mAge').value;render();};
-  $('#mDone').onclick=()=>{$('#age').value=$('#mAge').value;store.set('oldSet','1');render();$('#mClose').click();};
+  $('#mName').oninput=()=>{$('#client').value=$('#mName').value;render();};
+  $('#mDone').onclick=()=>{$('#age').value=$('#mAge').value;$('#client').value=$('#mName').value;store.set('oldSet','1');render();$('#mClose').click();};
   $('#modal').hidden=false;
 }
 $('#cvSet').onclick=openSetup;
@@ -1625,7 +1641,7 @@ function renderPick(){
   } else {
     const n=plan(chosen.def), keys=keyImps(o,n), std=stdBetter(n), pr=chosen.pr;
     const yrs=I.term==='A65'?Math.max(65-(I.age||0),1):+I.term;
-    let cp=0; if($('#cpn').checked&&new Date()<=COUPON_END&&pr){const r=CPN[I.cur].find(([t])=>pr.annual>=t);cp=r?r[1]:0;}
+    const cp=0;
     const hl=[`<b>${chosen.up}</b> 種危疾條文有分別，舊單索償時取較有利嗰個`].concat(keys.slice(0,3).map(k=>`${k.t}：${esc(k.a)} → <b>${esc(k.b)}</b>`));
     if(std.length) hl.push(`${std.slice(0,3).map(s=>s.t).join('、')}等定義仲寬鬆過業界標準`);
     box.innerHTML=`<h2 class="pk-h">${name?esc(name)+'嘅':'你嘅'}升級方案</h2>${ctl}<div class="pk-switch"><span>轉計劃：</span>${list.map(x=>`<button type="button" data-spick="${x.id}" class="${x.id===chosen.id?'on':''}">${esc(({IG:'宏健守護',IS:'宏伴護航',MBCPRO:'活耀人生PRO',MPC:'守護無間',MBC2:'活耀人生2',MBC2P:'活耀人生2加強版'})[x.id])}</button>`).join('')}<button type="button" class="pk-all" id="pkBack">睇晒全部計劃</button></div>
@@ -1633,8 +1649,8 @@ function renderPick(){
         <div class="pair"><div class="pc"><span>你手上嘅計劃</span><b>${esc(short(o.name))}</b></div><svg class="ar" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="pc new"><span>你揀嘅新計劃</span><b>${esc(chosen.name)}</b></div></div>
         <ul class="hl-list">${hl.map(x=>`<li><span>${x}</span></li>`).join('')}</ul>
       </div>
-      <div class="money">${pr?`<div class="lbl">每年保費（保額 ${fx(I.sum,I.cur)}，${TERM_LBL[I.term]}）</div><div class="big">${fx(pr.annual,I.cur)}</div><div class="lbl">每月約 ${fx(pr.annual/12,I.cur)}・每日約 ${fx(pr.annual/365,I.cur)}</div><div class="rows"><div><span>總保費（約）</span><b>${fx(pr.annual*yrs,I.cur)}</b></div>${cp?`<div><span>保費優惠券扣減</span><b>－${fx(cp,I.cur)}</b></div><div><span>首年實際支出</span><b>${fx(pr.annual-cp,I.cur)}</b></div>`:''}</div>`:'<div class="lbl">輸入年齡就會顯示保費</div>'}
-        <div class="pk-dl">保費按保費率表計算，最終以建議書為準<br>遞交申請限期 <b>2026年12月31日</b>・批核限期 <b>2027年3月31日</b></div><div class="pk-btns"><button class="pk-go" data-go="plans">同其他計劃比較</button><button class="pk-go" data-go="tool">逐項睇條文</button></div></div>
+      <div class="money">${pr?`<div class="lbl">每年保費（保額 ${fx(I.sum,I.cur)}，${TERM_LBL[I.term]}）</div><div class="big">${fx(pr.annual,I.cur)}</div><div class="lbl">每月約 ${fx(pr.annual/12,I.cur)}・每日約 ${fx(pr.annual/365,I.cur)}${incPct(pr.annual,I.cur)}</div><div class="rows"><div><span>總保費（約）</span><b>${fx(pr.annual*yrs,I.cur)}</b></div>${cp?`<div><span>保費優惠券扣減</span><b>－${fx(cp,I.cur)}</b></div><div><span>首年實際支出</span><b>${fx(pr.annual-cp,I.cur)}</b></div>`:''}</div>`:'<div class="lbl">輸入年齡就會顯示保費</div>'}
+        <div class="pk-dl">保費按保費率表計算，最終以建議書為準<br>遞交申請限期 <b>2026年12月31日</b>・批核限期 <b>2027年3月31日</b></div><div class="pk-btns three"><button type="button" class="pk-go pk-1p" id="pkSum">一頁總結 PDF</button><button class="pk-go" data-go="tool">睇定義比較</button><button class="pk-go" data-go="plans">比較其他計劃</button></div></div>
       </div>`;
   }
   // wire
@@ -1648,6 +1664,7 @@ function renderPick(){
     setPick(b.dataset.spick); if($('#deck').classList.contains('mob'))$('#vp').scrollTop=0;
   });
   const back=$('#pkBack'); if(back) back.onclick=()=>{store.set('spick','');render();};
+  const ps=$('#pkSum'); if(ps) ps.onclick=printSummary;
   $$('[data-go]').forEach(b=>b.onclick=()=>setMode(b.dataset.go));
 }
 /* ---------- modes ---------- */
