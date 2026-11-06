@@ -387,7 +387,7 @@ table.stdt{width:100%;border-collapse:separate;border-spacing:0;font-size:16px;b
 /* ================= PLANS ================= */
 #plans .wrap{max-width:calc(1320px + 2 * var(--mk-gutter))}
 #plans{background:var(--surface);min-height:calc(100dvh - var(--bar))}
-.pin{display:grid;grid-template-columns:1.4fr .6fr .7fr .8fr 2.2fr;gap:14px;align-items:end}
+.pin{display:grid;grid-template-columns:1.4fr .6fr .7fr .8fr 2.2fr;gap:14px;align-items:start}
 .pin label,.f label{white-space:nowrap}
 .chipset{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
 .chipset button{border:1px solid #CFD8D5;background:#fff;border-radius:999px;padding:4px 12px;font-size:13.5px;cursor:pointer;font-family:var(--num);font-weight:700;color:var(--ink-2)}
@@ -395,7 +395,17 @@ table.stdt{width:100%;border-collapse:separate;border-spacing:0;font-size:16px;b
 .excl{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;font-size:14px;color:var(--ink-2)}
 .excl span{background:#fff;border:1px dashed #C5CFCC;border-radius:10px;padding:6px 12px}
 .excl b{color:var(--ink)}
-.cmp-wrap{border-radius:16px;border:1px solid var(--line);background:#fff;overflow:hidden}
+.cmp-wrap{border-radius:16px;border:1px solid var(--line);background:#fff;overflow:clip}
+/* 捲落去時，計劃名同保費鎖喺頂 */
+.cmp-mini{position:sticky;top:var(--bar);height:0;z-index:6}
+.cmp-mini table{width:100%;border-collapse:collapse;table-layout:fixed;background:#fff;box-shadow:0 6px 14px rgba(14,94,87,.12);border-bottom:2px solid var(--line);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s,visibility 0s .2s}
+.cmp-mini.on table{opacity:1;visibility:visible;transform:none;transition:opacity .2s,transform .2s}
+.cmp-mini td{padding:8px 12px;font-size:13.5px;line-height:1.35;vertical-align:middle;border-left:1px solid var(--line)}
+.cmp-mini td:first-child{border-left:0;color:var(--muted);font-size:12.5px;background:#FAFBFB}
+.cmp-mini td b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13.5px;line-height:1.3}
+.cmp-mini td span{font-family:var(--num);font-weight:700;color:var(--g-ink)}
+.cmp-mini td.best-col{background:var(--g-50)}
+@media print{.cmp-mini{display:none!important}}
 table.cmp{border-collapse:separate;border-spacing:0;width:100%;table-layout:fixed}
 .cmp th,.cmp td{padding:12px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left;font-size:14.5px;line-height:1.5;overflow-wrap:anywhere}
 .cmp tbody th{background:#FAFBFB;font-weight:700;color:var(--ink-2);font-size:13.5px}
@@ -493,6 +503,15 @@ details.more .grid4{margin-top:12px}
 .verdict.ok p b{border-bottom:2px solid rgba(255,255,255,.6)}
 
 .ov{display:grid;grid-template-columns:1.6fr 1fr;gap:20px}
+.ov.one{grid-template-columns:1fr}
+.grp-h{display:flex;align-items:baseline;gap:10px;margin:4px 0 8px;font-weight:700;color:var(--ink)}
+.grp-h small,.grp-more>summary small{font-weight:500;color:var(--muted);font-size:13px}
+.grp-more{margin-top:14px}
+.grp-more>summary{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px 16px;border:1px dashed #CFD8D5;border-radius:12px;background:#fff;font-weight:700}
+.grp-more>summary::-webkit-details-marker{display:none}
+.grp-more>summary .chev{margin-left:auto;transition:transform .2s}
+.grp-more[open]>summary{margin-bottom:8px}
+.grp-more[open]>summary .chev{transform:rotate(90deg)}
 .bar{display:flex;height:46px;border-radius:10px;overflow:hidden;margin:14px 0 12px;background:var(--surface)}
 .bar div{display:flex;align-items:center;padding:0 12px;font-family:var(--num);font-weight:800;color:#fff;font-size:17px;white-space:nowrap;min-width:fit-content}
 .bar .b1{background:var(--g)} .bar .b2{background:#C7D2CF;color:var(--ink)} .bar .b3{background:#8FA4C9}
@@ -1193,11 +1212,11 @@ function renderResult(C){
   else if(diffR.length===0) plain=`兩份計劃嘅危疾定義<b>已經一樣</b>，所以呢個計劃對${esc(short(o.name))}嘅定義幫助有限。新計劃本身嘅保障，可以按需要另外考慮。`;
   else plain=`${esc(short(o.name))}保障 <b>${covered}</b> 種嚴重危疾／通波仔。參加計劃後，其中 <b>${diffR.length}</b> 種嘅條文同新計劃唔同，索償時會用較有利嗰個；${sameR.length?`另外 ${sameR.length} 種兩邊定義一樣，冇影響。`:''}`;
   h+=`<div class="box"><h2>一眼睇晒</h2>
-   <div class="ov"><div>
+   <div class="ov${noneR.length?'':' one'}"><div>
      <div class="bar" role="img" aria-label="現行計劃保障嘅危疾分佈">${diffR.length?`<div class="b1" style="flex:${diffR.length}">${diffR.length}</div>`:''}${sameR.length?`<div class="b2" style="flex:${sameR.length}">${sameR.length}</div>`:''}${engR.length?`<div class="b3" style="flex:${engR.length}">${engR.length}</div>`:''}</div>
      <div class="legend">${diffR.length?`<span><i style="background:var(--g)"></i>條文有分別，參加後受惠</span>`:''}${sameR.length?`<span><i style="background:#C7D2CF"></i>定義一樣</span>`:''}${engR.length?`<span><i style="background:#8FA4C9"></i>只有英文條款</span>`:''}</div>
    </div>
-   <div class="extra"><b>${noneR.length}</b><p>種危疾新計劃有保、但你張舊單冇保。參加後<b>唔會</b>加落舊單，不過新計劃本身會保。</p></div></div>
+   ${noneR.length?`<div class="extra"><b>${noneR.length}</b><p>種危疾新計劃有保、但你張舊單冇保。參加後<b>唔會</b>加落舊單，不過新計劃本身會保。</p></div>`:''}</div>
    <div class="plain">${plain}</div></div>`;
   // keys
   if(keys.length&&el.ok){
@@ -1227,8 +1246,13 @@ function renderList(C){
   const sel=diffR.filter(r=>!q||r.c.name.includes(q)).sort((a,b)=>(keySet.has(b.i)-keySet.has(a.i)));
   const L=$('#list');
   if(!sel.length){L.innerHTML=`<div class="empty">搵唔到「${esc(q)}」，試吓其他字眼，例如「心臟」或「癌」。</div>`;return;}
-  L.innerHTML=sel.map(r=>{const k=keys.find(k=>k.i===r.i);return `<details class="row" data-i="${r.i}"><summary><span class="nm">${esc(r.c.name)}</span>${k?`<span class="gist">${esc(k.a)} → ${esc(k.b)}</span><span class="tag better">較寬鬆</span>`:'<span class="tag rev">條文有分別</span>'}${C.stdSet.has(r.i)?'<span class="tag std">優於業界標準</span>':''}<svg class="chev" width="18" height="18" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></summary><div class="dbox"></div></details>`;}).join('');
-  $$('#list details').forEach(d=>d.addEventListener('toggle',()=>{if(d.open)fill(d,C);}));
+  const row=r=>{const k=keys.find(k=>k.i===r.i);return `<details class="row" data-i="${r.i}"><summary><span class="nm">${esc(r.c.name)}</span>${k?`<span class="gist">${esc(k.a)} → ${esc(k.b)}</span><span class="tag better">較寬鬆</span>`:'<span class="tag rev">條文有分別</span>'}${C.stdSet.has(r.i)?'<span class="tag std">優於業界標準</span>':''}<svg class="chev" width="18" height="18" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></summary><div class="dbox"></div></details>`;};
+  const A=sel.filter(r=>keySet.has(r.i)), B=sel.filter(r=>!keySet.has(r.i));
+  if(q||!A.length||!B.length) L.innerHTML=sel.map(row).join('');
+  else L.innerHTML=`<div class="grp-h">重點放寬（${A.length}）<small>有一句講明改咗咩</small></div>${A.map(row).join('')}
+    <details class="grp-more"${store.get('moreOpen','')==='1'?' open':''}><summary><span>其他條文有分別（${B.length}）</span><small>撳開逐項睇兩邊條文</small><svg class="chev" width="18" height="18" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></summary>${B.map(row).join('')}</details>`;
+  const gm=L.querySelector('.grp-more'); if(gm) gm.addEventListener('toggle',()=>store.set('moreOpen',gm.open?'1':''));
+  $$('#list details.row').forEach(d=>d.addEventListener('toggle',()=>{if(d.open)fill(d,C);}));
 }
 function fill(d,C){
   const box=d.querySelector('.dbox');if(box.dataset.done)return;box.dataset.done=1;
@@ -1314,7 +1338,7 @@ $('#btnWa').onclick=async()=>{
   catch(e){const ta=document.createElement('textarea');ta.value=m;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('已複製，可以直接貼落WhatsApp');}catch(_){toast('複製唔到，請再試一次');}ta.remove();}
 };
 function doPrint(full){
-  if(full){query='';render();const C=ctx();$$('#list details').forEach(d=>{d.open=true;fill(d,C);});}
+  if(full){query='';render();const C=ctx();$$('#list details.grp-more').forEach(d=>d.open=true);$$('#list details.row').forEach(d=>{d.open=true;fill(d,C);});}
   document.body.classList.toggle('brief',!full);
   setTimeout(()=>window.print(),80);
 }
@@ -1501,7 +1525,8 @@ function renderPlans(){
   const tableMode = W>=960 || (W>=700&&ok.length<=3);
   if(tableMode){
     const pickId=store.get('spick','');const cls=id=>id===pickId?' class="best-col"':'';
-    h+=`<div class="cmp-wrap"><table class="cmp"><colgroup><col style="width:${W>=1100?132:112}px">${ok.map(()=>'<col>').join('')}</colgroup><thead><tr><th><span class="who-cell">${esc(age)}歲・${esc(sex)}<br>${esc(smk)}</span><span class="sm">保額 ${fx(sum,cur)}<br>繳費 ${TERM_LBL[term]}</span></th>${ok.map(x=>`<th${cls(x.id)}>${head(x)}${pickBtn(x)}</th>`).join('')}</tr></thead><tbody>`;
+    const cg=`<colgroup><col style="width:${W>=1100?132:112}px">${ok.map(()=>'<col>').join('')}</colgroup>`;
+    h+=`<div class="cmp-wrap"><div class="cmp-mini" aria-hidden="true"><table>${cg}<tr><td>${esc(age)}歲・${esc(sex)}<br>保額 ${fx(sum,cur)}</td>${ok.map(x=>`<td${cls(x.id)}><b>${esc(x.name)}</b><span>${fx(x.pr.annual,cur)}</span> / 年</td>`).join('')}</tr></table></div><table class="cmp">${cg}<thead><tr><th><span class="who-cell">${esc(age)}歲・${esc(sex)}<br>${esc(smk)}</span><span class="sm">保額 ${fx(sum,cur)}<br>繳費 ${TERM_LBL[term]}</span></th>${ok.map(x=>`<th${cls(x.id)}>${head(x)}${pickBtn(x)}</th>`).join('')}</tr></thead><tbody>`;
     ROWS.filter(r=>r.length===1||ok.some(x=>r[1](x)[0]!=='—')).forEach(r=>{
       if(r.length===1){h+=`<tr class="grp"><th>${r[0]}</th>${ok.map(x=>`<td${cls(x.id)}></td>`).join('')}</tr>`;return;}
       h+=`<tr><th scope="row">${lbl(r)}</th>${ok.map(x=>{const [v,s]=r[1](x);return `<td${cls(x.id)}><span class="v">${v}</span>${th(r[2],x.id)}${s?`<span class="sm">${s}</span>`:''}</td>`;}).join('')}</tr>`;
@@ -1516,6 +1541,13 @@ function renderPlans(){
   h+=`<div class="legend2"><span>👍 該項較好（並列時一齊有）</span><span><i style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--g-50);border:1px solid var(--g-200);vertical-align:-1px;margin-right:6px"></i>綠底＝客人揀咗嘅計劃（👍最多唔代表一定最啱，要睇客戶需要同預算）</span></div>`;
   h+=`<div class="box gloss" id="gloss"><h2>名詞解釋</h2><p class="sub">用字跟產品單張。表入面標住「?」嘅項目，撳一下就會跳嚟呢度。</p><dl>${GLOSS.map(([id,t,d])=>`<div id="${id}"><dt>${t}</dt><dd>${d}</dd></div>`).join('')}</dl></div>`;
   out.innerHTML=h;
+  const th0=out.querySelector('.cmp thead'), mini=out.querySelector('.cmp-mini');
+  if(th0&&mini&&'IntersectionObserver' in window){
+    if(window._cmpObs) window._cmpObs.disconnect();
+    const barH=()=>$('.mk-header').getBoundingClientRect().height;
+    window._cmpObs=new IntersectionObserver(([e])=>mini.classList.toggle('on',!e.isIntersecting&&e.boundingClientRect.top<barH()),{rootMargin:`-${Math.round(barH())}px 0px 0px 0px`});
+    window._cmpObs.observe(th0);
+  }
   $$('[data-tog]').forEach(c=>c.onchange=()=>{c.checked?hidden.delete(c.dataset.tog):hidden.add(c.dataset.tog);store.set('pHide',[...hidden].join(','));renderPlans();});
   $$('[data-go2]').forEach(b=>b.onclick=()=>setMode(b.dataset.go2));
   $$('[data-pick]').forEach(b=>b.onclick=()=>{
