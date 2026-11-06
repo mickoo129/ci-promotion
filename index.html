@@ -241,6 +241,9 @@ mark.n{background:var(--g-100);color:var(--g-deep);padding:0 3px;border-radius:3
 #deck.mob .tl .dot{top:114px}#deck.mob .tl .dot.you,#deck.mob .tl .dot.now{top:107px}
 #deck.mob .tl .yr{top:146px;font-size:11px}
 #deck.mob .tl .flag{bottom:112px}#deck.mob .tl .flag b{font-size:14px}#deck.mob .tl .flag span{font-size:11px}
+/* 手機：舊單標籤喺線上面、「最新定義」喺線下面靠右，計劃名長都唔會撞 */
+#deck.mob .tl{height:220px}
+#deck.mob .tl .flag.now{bottom:auto;top:168px;left:auto!important;right:0;transform:none;text-align:right}
 #deck.mob .gap-badge{font-size:16px;padding:12px 16px}#deck.mob .gap-badge b{font-size:32px}
 #deck.mob .pair{flex-direction:column}#deck.mob .pair .ar{transform:rotate(90deg);align-self:center}
 #deck.mob .money .big{font-size:40px}
@@ -423,7 +426,7 @@ th.best-col,td.best-col{background:var(--g-50)}
 .final-note{margin:14px 2px 0;font-size:15px;color:var(--ink);background:#FFF8E6;border-radius:10px;padding:10px 14px}
 .site-foot{text-align:center;font-size:13px;color:var(--muted);padding:28px 16px 8px}
 .site-foot .mk-copy{margin:0}
-.tool-foot{max-width:calc(1320px + 2 * var(--mk-gutter));margin:0 auto;padding-bottom:110px}
+.tool-foot{max-width:calc(1320px + 2 * var(--mk-gutter));margin:0 auto;padding-bottom:28px}
 #tool .wrap{padding-bottom:0}
 .dk-copy{font-size:12px;color:var(--muted);white-space:nowrap}
 @media (max-width:560px){.dk-copy{display:none}}
@@ -526,9 +529,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
 .coupon{margin-top:12px;font-size:14px;color:var(--ink-2)}
 .fine{font-size:13px;color:var(--muted);line-height:1.7}
 
-.actions{position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-top:1px solid var(--line);padding:12px var(--mk-gutter) calc(12px + env(safe-area-inset-bottom))}
-.actions .in{max-width:1320px;margin:0 auto;display:flex;gap:10px;align-items:center}
-.actions .sum{font-size:14px;color:var(--ink-2);margin-right:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 .btn{height:44px;border-radius:10px;padding:0 18px;font-weight:700;cursor:pointer;border:1px solid #CFD8D5;background:#fff;white-space:nowrap}
 .btn.pri{background:var(--g);border-color:var(--g);color:#fff}
 .btn.ghost{border-color:var(--g);color:var(--g-ink)}
@@ -541,7 +542,6 @@ details.row[open] summary .chev{transform:rotate(90deg)}
   .ov{grid-template-columns:1fr} .extra{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:14px}
   .dcols{grid-template-columns:1fr}
   .who{display:none}
-  .actions .sum{display:none}
 }
 @media (max-width:560px){
   :root{--bar:94px}
@@ -549,7 +549,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
   .logo span{overflow:hidden;text-overflow:ellipsis}
   .logo .mk-logo{width:30px;height:30px}
   
-  .actions .in{flex-wrap:nowrap;gap:6px} .btn{flex:1;padding:0 8px;font-size:14px} .lgx{display:none}
+  .actions .btn{flex:1;padding:0 10px}
   .vs-pick{grid-template-columns:1fr}.vs-pick .ar{display:none}
   .dnav select{display:none}
 }
@@ -684,8 +684,8 @@ details.row[open] summary .chev{transform:rotate(90deg)}
 /* ===== MKPA 統一標準 完 ===== */
 /* ===== 分頁底色（MKPA 分類色盤，按次序）：講解簡報 1、新計劃比較 2、舊單定義比較 3 ===== */
 body{--pc:var(--mk-cat-1);--pc-soft:var(--mk-cat-1-soft)}
-body[data-mode="plans"]{--pc:var(--mk-cat-2);--pc-soft:var(--mk-cat-2-soft)}
-body[data-mode="tool"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
+body[data-mode="tool"]{--pc:var(--mk-cat-2);--pc-soft:var(--mk-cat-2-soft)}
+body[data-mode="plans"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
 #deck,#plans,#tool{background:var(--pc-soft);--surface:var(--pc-soft)}
 .topbar{box-shadow:inset 0 -4px 0 var(--pc)}
 @media print{#deck,#plans,#tool{background:#fff!important;--surface:#F6F9F8}.topbar{box-shadow:none}}
@@ -730,8 +730,8 @@ body[data-mode="tool"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
   </div>
   <nav class="tabs mk-tabs" role="tablist" aria-label="模式">
     <button role="tab" class="mk-tab mk-cat-1" id="tabDeck" aria-selected="true">講解簡報</button>
-    <button role="tab" class="mk-tab mk-cat-2" id="tabPlans" aria-selected="false">新計劃比較</button>
-    <button role="tab" class="mk-tab mk-cat-3" id="tabTool" aria-selected="false">舊單定義比較</button>
+    <button role="tab" class="mk-tab mk-cat-2" id="tabTool" aria-selected="false">舊單定義比較</button>
+    <button role="tab" class="mk-tab mk-cat-3" id="tabPlans" aria-selected="false">新計劃比較</button>
   </nav>
   <div class="who" id="who"></div>
   <div class="mk-actions">
@@ -994,12 +994,10 @@ body[data-mode="tool"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
   </div>
  </div>
  <footer class="site-foot tool-foot"><p class="mk-home-link"><a href="https://mkpa.netlify.app/" target="_blank" rel="noopener">MKPA 工具箱：睇其他實用工具 ↗</a></p><p class="mk-copy">© <span class="mk-year">2026</span> Michael Koo Protection Alliance (MKPA). 版權所有。</p></footer>
- <div class="actions"><div class="in">
-   <span class="sum" id="actSum"></span>
-   <button class="btn pri" id="btnWa"><span class="lgx">複製</span>WhatsApp<span class="lgx">訊息</span></button>
-   <button class="btn ghost" id="btnPrint">列印 / 存 PDF</button>
-   <button class="btn" id="btnPrintFull"><span class="lgx">列印</span>連條文</button>
- </div></div>
+ <div class="actions" id="toolActs">
+   <button class="btn pri" id="btnWa">複製 WhatsApp 訊息</button>
+   <button class="btn ghost" id="btnPrintFull">列印連條文</button>
+ </div>
 </div>
 <div class="toast" id="toast" hidden></div>
 <div class="modal" id="modal" hidden role="dialog" aria-modal="true"><div class="mbox"><button class="mx-close" id="mClose" aria-label="關閉">✕</button><div id="mBody"></div></div></div>
@@ -1148,11 +1146,11 @@ function render(){
   $$('.adv').forEach(e=>e.textContent='MKPA · 危疾定義更新計劃');
   $('#cvFor').textContent=C.name?`為 ${C.name} 準備`:'2026年7月1日至12月31日';
   renderPremium(); renderSlides(C); renderResult(C);
-  $('#actSum').textContent=`${short(o.name)} → ${short(n.name)}`;
 }
 
 function personLine(){const a=$('#age').value,s=$('#sex').value,k=$('#smk').value;return [a?a+'歲':'',s,k].filter(Boolean).join('・');}
 
+const TOOL_ACTS=document.getElementById('toolActs');
 function renderResult(C){
   const {o,n,el,rows,keys,keySet,diffR,sameR,noneR,engR,name}=C;
   const who=name||'客戶';
@@ -1198,6 +1196,7 @@ function renderResult(C){
   if(noneR.length) h+=`<div class="box"><h2>新計劃有、舊單冇嘅危疾（${noneR.length}）</h2><p class="why">呢個計劃只會改善舊單<b>本身已保</b>嘅病嘅定義，唔會新增病種。以下呢啲病，只有新計劃會保。</p><div class="chips extra-c">${noneR.map(r=>`<span>${esc(r.c.name)}</span>`).join('')}</div></div>`;
   h+=`<p class="fine">只比較嚴重危疾及「因冠狀動脈疾病進行血管成形術」（即計劃適用範圍）。資料來源：危疾定義更新計劃單張（MKTPP119C 07/2026）、ManuTouch危疾定義比較表、IFP NewsFlash（2026年7月14日）。本頁只供講解參考，一切以保單條款為準。</p>`;
   $('#result').innerHTML=h;
+  const sb=[...$$('#result .box')].find(b=>b.querySelector('.ov')); (sb||$('#result')).append(TOOL_ACTS);
   if(diffR.length){ renderList(C); const q=$('#q'); q.oninput=()=>{query=q.value;renderList(C);}; }
 }
 function renderList(C){
@@ -1296,7 +1295,6 @@ function doPrint(full){
   document.body.classList.toggle('brief',!full);
   setTimeout(()=>window.print(),80);
 }
-$('#btnPrint').onclick=()=>doPrint(false);
 $('#btnPrintFull').onclick=()=>doPrint(true);
 [...FIELDS.map(f=>'#'+f),'#cpn'].forEach(s=>$(s).addEventListener('input',render));
 [oldSel,newSel,$('#cur'),$('#sex'),$('#smk')].forEach(s=>s.addEventListener('change',render));
