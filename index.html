@@ -852,7 +852,7 @@ body[data-mode="tool"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
         <table class="stdt">
           <thead><tr><th>危疾</th><th>業界標準（HKFI）</th><th>宏利新計劃</th></tr></thead>
           <tbody>
-            <tr><td>心臟病</td><td>肌鈣蛋白 T &gt; 1.0</td><td>肌鈣蛋白 T &gt; 0.6</td></tr>
+            <tr><td>心臟病</td><td>肌鈣蛋白 T &gt; 1.0；I &gt; 0.5</td><td>肌鈣蛋白 T &gt; 0.6；I &gt; 0.5</td></tr>
             <tr><td>心肌病</td><td>只限4種原發性；第4級；持續180日</td><td>任何病因；第3級或以上；冇時間要求</td></tr>
             <tr><td>中風<br><button class="more" data-xl="中風">睇清單</button></td><td>7項不保情況，包括「靜默中風」、偏頭痛、意外或感染引致嘅腦損傷</td><td>3項不保情況</td></tr>
             <tr><td>末期肺病</td><td>要驗動脈血氧，兼要靜止時呼吸困難</td><td>兩樣都唔使</td></tr>
@@ -976,10 +976,10 @@ body[data-mode="tool"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
     <h2><span class="stepn">2</span>新計劃保費預算（可選）</h2>
     <p class="sub">請按建議書輸入，網站會幫你計每月、每日同首年實際支出，並顯示喺簡報最後一頁「你的方案」。</p>
     <div class="grid4">
-      <div class="f"><label for="cur">貨幣</label><select id="cur"><option value="USD">美元 US$</option><option value="HKD">港元 HK$</option></select></div>
-      <div class="f"><label for="sum">保額／名義金額</label><input id="sum" type="number" min="0" inputmode="decimal" placeholder="100000"></div>
-      <div class="f"><label for="prem">年繳保費（建議書）</label><input id="prem" type="number" min="0" inputmode="decimal" placeholder="4824"></div>
-      <div class="f"><label for="yrs">繳費年期</label><input id="yrs" type="number" min="1" max="100" inputmode="numeric" placeholder="25"></div>
+      <div class="f"><label for="cur">貨幣</label><select id="cur"><option value="HKD">港元 HK$</option><option value="USD">美元 US$</option></select></div>
+      <div class="f"><label for="sum">保額／名義金額</label><input id="sum" type="number" min="0" inputmode="decimal" placeholder="例如 500000"></div>
+      <div class="f"><label for="prem">年繳保費（建議書）</label><input id="prem" type="number" min="0" inputmode="decimal" placeholder="按建議書輸入"></div>
+      <div class="f"><label for="yrs">繳費年期</label><input id="yrs" type="number" min="1" max="100" inputmode="numeric" placeholder="例如 25"></div>
       <div class="f"><label for="inc">客戶月入（港元，可選）</label><input id="inc" type="number" min="0" inputmode="decimal" placeholder="50000"></div>
       <div class="f"><label for="disc">首年其他折扣 %（可選）</label><input id="disc" type="number" min="0" max="100" inputmode="decimal" placeholder="0"></div>
       <div class="f" style="grid-column:span 2"><label>&nbsp;</label><label class="chk" style="font-weight:500"><input type="checkbox" id="cpn"> 客戶係特選客戶，有個人專屬保費優惠券</label><div class="hint">優惠券推廣期至2026年10月26日，扣減額按首年年度化保費自動計算。</div></div>
@@ -1075,7 +1075,7 @@ const HK_LIST={中風:["短暫性腦缺血發作或延長性可逆性缺血性�
 function exclItems(t){const part=(t.split(/定義不包括下列各項：|定義不包括下列各項:|定義不包括：/)[1]||'');return part.split(/\([a-z]\)/).map(s=>s.replace(/[；;。\s]*(及|以及)?[；;。\s]*$/,'').trim()).filter(Boolean);}
 const STD=[
  {ci:'癌症',t:'癌症',std:'15項不保情況',mine:t=>{const n=((t.split('定義不包括')[1]||'').match(/\([a-z]\)/g)||[]).length;return n&&n<15?`${n}項不保情況`:null;}},
- {ci:'突發性心臟病',t:'突發性心臟病',std:'肌鈣蛋白 T > 1.0；要有典型缺血性胸痛',mine:t=>{const m=t.match(/肌鈣蛋白\s*T\s*>\s*([\d.]+)/);return m&&+m[1]<1?`肌鈣蛋白 T > ${m[1]}；有胸痛病歷即可`:null;}},
+ {ci:'突發性心臟病',t:'突發性心臟病',std:'肌鈣蛋白 T > 1.0、I > 0.5；要有典型缺血性胸痛',mine:t=>{const m=t.match(/肌鈣蛋白\s*T\s*>\s*([\d.]+)/),mi=t.match(/肌鈣蛋白\s*I\s*>\s*([\d.]+)/);return m&&+m[1]<1?`肌鈣蛋白 T > ${m[1]}${mi?'、I > '+mi[1]:''}；有胸痛病歷即可`:null;}},
  {ci:'中風',t:'中風',std:'7項不保情況，包括冇明顯症狀嘅「靜默中風」',mine:t=>/沒有明確相關的臨床症狀/.test(t)?null:'3項不保情況，靜默中風唔再排除'},
  {ci:'心肌病',t:'心肌病',std:'只限4種原發性心肌病；要達第4級；持續最少180日',mine:t=>/任何病因/.test(t)&&/第三級/.test(t)?'任何病因；第3級或以上；冇持續時間要求':null},
  {ci:'末期肺病',t:'末期肺病',std:'要驗動脈血氧（PaO2 ≤ 55mmHg），兼要靜止時呼吸困難',mine:t=>/PaO2|分氧壓/.test(t)?null:'兩樣都唔使'},
@@ -1110,7 +1110,7 @@ function renderPremium(){
     <div><span>${r.pct!==null?'佔月入':'年繳保費'}</span><b>${r.pct!==null?r.pct.toFixed(1)+'%':fx(r.p,r.c)}</b></div>
     <div><span>首年實際支出</span><b>${fx(r.first,r.c)}</b></div></div>
     <p class="coupon">${r.cpnOn?(r.live?(r.cp?`保費優惠券可扣減首期保費 <b>${fx(r.cp,r.c)}</b>。`:'年繳保費未達優惠券最低要求，冇扣減。'):'保費優惠券推廣期已於2026年10月26日結束，冇計扣減。'):''}${r.disc?` 已計首年折扣 ${r.disc}%。`:''}${r.total?` 總保費約 ${fx(r.total,r.c)}（${r.y}年，未計折扣）。`:''}${r.c==='USD'&&r.pct!==null?' 以1美元＝7.8港元計。':''}</p>
-    <p class="fine">以建議書為準。優惠券只適用於特選客戶，請先喺ManuTouch確認；保費徵費按扣減前保費計算。</p>`;
+    <p class="fine">以建議書為準。${r.live?'優惠券只適用於特選客戶，請先喺ManuTouch確認；':''}保費徵費按扣減前保費計算。</p>`;
 }
 
 /* ---------- selects & state ---------- */
@@ -1120,7 +1120,11 @@ oldSel.innerHTML=groups.map(([g,ids])=>`<optgroup label="${g}">${ids.map(id=>`<o
 newSel.innerHTML=NEW_IDS.map(id=>`<option value="${id}">${esc(plan(id).name)}</option>`).join('');
 const FIELDS=['client','age','sex','smk','cur','sum','prem','yrs','inc','disc'];
 FIELDS.forEach(f=>{const v=store.get(f,null);if(v!==null)$('#'+f).value=v;});
+if(store.get('cur',null)===null) $('#cur').value=store.get('pCur','HKD');
+/* 年齡：三個分頁共用，預設 40 歲（同新計劃比較一致） */
+if(!$('#age').value) $('#age').value=store.get('pAge','40')||'40';
 $('#cpn').checked=store.get('cpn','0')==='1';
+if(new Date()>COUPON_END){$('#cpn').checked=false;store.set('cpn','0');$('#cpn').closest('.f').style.display='none';}
 oldSel.value=store.get('old','MTC')||'MTC'; if(!oldSel.value) oldSel.value='MTC';
 newSel.value=store.get('new','IG')||'IG'; if(!newSel.value) newSel.value='IG';
 let query='';
@@ -1530,7 +1534,7 @@ function renderPick(){
   const list=P2.map(p=>{const el=eligible(p.def,o.id);if(!el.ok)return null;const pr=isNaN(I.age)?null:annualPrem(p,I.cur,I.term,I.age,I.sex,I.smk,I.sum);if(pr&&pr.err)return null;const n=plan(p.def);const up=D.cis.filter((c,i)=>status(o.cells[i],n.cells[i])==='diff').length;return {...p,pr,up};}).filter(Boolean);
   const chosen=list.find(x=>x.id===sel);
   const oldOpts=oldSel.innerHTML;
-  const ctl=`<div class="pk-ctl"><label>客戶舊單<select id="sOld">${oldOpts}</select></label><label>性別<select id="sSex"><option ${I.sex==='男'?'selected':''}>男</option><option ${I.sex==='女'?'selected':''}>女</option></select></label><label>吸煙<select id="sSmk"><option ${I.smk==='非吸煙'?'selected':''}>非吸煙</option><option ${I.smk==='吸煙'?'selected':''}>吸煙</option></select></label><label>年齡<input id="sAge" type="number" inputmode="numeric" min="0" max="65" value="${isNaN(I.age)?'':I.age}" placeholder="例如 40"></label><span class="pk-sum">保額${(I.cur==='HKD'?[[100000,'10萬'],[500000,'50萬'],[1000000,'100萬']]:[[12500,'US$1.25萬'],[62500,'US$6.25萬'],[125000,'US$12.5萬']]).map(([v,l])=>`<button type="button" data-ssum="${v}" class="${I.sum===v?'on':''}">${l}</button>`).join('')}<span class="pk-term">繳費<select id="sTerm">${['10','20','25','A65'].map(t=>`<option value="${t}" ${I.term===t?'selected':''}>${TERM_LBL[t]}</option>`).join('')}</select></span></span></div>`;
+  const ctl=`<div class="pk-ctl"><label>客戶舊單<select id="sOld">${oldOpts}</select></label><label>性別<select id="sSex"><option ${I.sex==='男'?'selected':''}>男</option><option ${I.sex==='女'?'selected':''}>女</option></select></label><label>吸煙<select id="sSmk"><option ${I.smk==='非吸煙'?'selected':''}>非吸煙</option><option ${I.smk==='吸煙'?'selected':''}>吸煙</option></select></label><label>年齡<input id="sAge" type="number" inputmode="numeric" min="0" max="65" value="${isNaN(I.age)?'':I.age}" placeholder="40"></label><span class="pk-sum">保額${(I.cur==='HKD'?[[100000,'10萬'],[500000,'50萬'],[1000000,'100萬']]:[[12500,'US$1.25萬'],[62500,'US$6.25萬'],[125000,'US$12.5萬']]).map(([v,l])=>`<button type="button" data-ssum="${v}" class="${I.sum===v?'on':''}">${l}</button>`).join('')}<span class="pk-term">繳費<select id="sTerm">${['10','20','25','A65'].map(t=>`<option value="${t}" ${I.term===t?'selected':''}>${TERM_LBL[t]}</option>`).join('')}</select></span></span></div>`;
   if(!chosen){
     box.innerHTML=`<h2 class="pk-h">${name?esc(name)+'，':''}你張<span class="nb">《${esc(short(o.name))}》</span>可以配以下新計劃</h2>${ctl}
       ${list.length?`<div class="pk-grid">${list.map(x=>`<button class="pk-card" data-spick="${x.id}"><span class="pk-name">${nameHTML(x.name)}</span><span class="pk-prem">${x.pr?fx(x.pr.annual,I.cur)+'<small> / 年</small>':'<small>輸入年齡顯示保費</small>'}</span><span class="pk-up">${x.up?`改善舊單 ${x.up} 項定義`:'舊單定義已一致'}</span><span class="pk-tags">${x.tags.map(t=>`<i>${esc(t)}</i>`).join('')}</span></button>`).join('')}</div><p class="pk-tip">撳任何一個計劃，睇吓你嘅升級方案。</p>`:`<p class="pk-tip">呢個年齡或者繳費年期冇合資格計劃，試吓改繳費年期。</p>`}`;
@@ -1618,6 +1622,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#modal').hidden
   const CJK=/[　-鿿＀-￯]/;
   function fix(el){
     if(el.dataset.nw) return; el.dataset.nw='1';
+    const dp=getComputedStyle(el).display; if(dp.includes('flex')||dp.includes('grid')) return;
     const w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null);let last=null,n;
     while((n=w.nextNode())){if(n.nodeValue.trim())last=n;}
     if(!last||last.parentElement.closest('.nowrap-tail,mark,ins,del,button,select,option')) return;
