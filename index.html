@@ -468,6 +468,7 @@ th.best-col,td.best-col{background:var(--g-50)}
 .rank .rn small,.rank .rp small{display:block;font-weight:500;font-size:12.5px;color:var(--muted)}
 .rank .rp{text-align:right;font-family:var(--num);font-weight:800;font-size:20px;white-space:nowrap}
 .pcards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rank .rp small{white-space:nowrap}
 .pcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;scroll-margin-top:calc(var(--bar) + 12px)}
 .pcard.best{border:2px solid var(--g)}
 .pcard .pc-head{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:6px}
@@ -993,7 +994,7 @@ body[data-mode="plans"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
 <!-- ======================= PLANS ======================= -->
 <div id="plans" hidden>
  <div class="wrap">
-  <div class="t-head"><h1>新計劃比較</h1><p class="t-period">宏利危疾定義更新計劃・2026年7月1日至12月31日</p><p>輸入客戶年齡同保額，即刻睇到可以參加今次計劃嘅新計劃、每年保費同保障分別。👍 代表嗰一項較好。</p></div>
+  <div class="t-head"><h1>新計劃比較</h1><p class="t-period">宏利危疾定義更新計劃・2026年7月1日至12月31日</p><p>輸入客戶年齡同保額，即刻睇到可以參加今次計劃嘅新計劃、每月保費同保障分別。👍 代表嗰一項較好。</p></div>
   <div class="box">
     <div class="pin">
       <div class="f"><label for="pOldSel">客戶而家持有嘅計劃</label><select id="pOldSel"></select></div>
@@ -1008,7 +1009,7 @@ body[data-mode="plans"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
   </div>
   <div id="plansOut"></div>
   <p class="final-note">以上保費按保費率表計算，只供參考；<b>最終保費以建議書為準</b>。</p>
-  <p class="fine" style="margin-top:6px">保費按各計劃保費率表（年繳，每1,000名義金額）計算：宏健守護及宏伴護航（HK 04/25）、活耀人生危疾保PRO（HK 07/23）、守護無間危疾保（HK 07/22）、活耀人生危疾保2系列（HK 07/20）。只計基本計劃，未計附加保障、通脹加保、保費徵費、ManulifeMOVE或其他折扣；年齡按保費率表「AGE」一欄，請用建議書上嘅投保年齡核對。月繳保費會略高於年繳÷12。保障內容摘自各計劃產品單張（2026年4月／7月版本）。一切以建議書及保單條款為準。</p>
+  <p class="fine" style="margin-top:6px">保費按各計劃保費率表（年繳，每1,000名義金額）計算：宏健守護及宏伴護航（HK 04/25）、活耀人生危疾保PRO（HK 07/23）、守護無間危疾保（HK 07/22）、活耀人生危疾保2系列（HK 07/20）。只計基本計劃，未計附加保障、通脹加保、保費徵費、ManulifeMOVE或其他折扣；年齡按保費率表「AGE」一欄，請用建議書上嘅投保年齡核對。月繳保費 = 年繳保費 × 0.09（半年繳 × 0.52、季繳 × 0.265）。保障內容摘自各計劃產品單張（2026年4月／7月版本）。一切以建議書及保單條款為準。</p>
   <div class="mk-ecard">
     <div class="mk-ecard-txt"><b>想進一步了解或有疑問？</b><span>歡迎查看我的電子名片，可直接 WhatsApp、加 IG 或儲存聯絡資料。</span></div>
     <a class="mk-ecard-btn" href="https://api.portfoplus.com/api/v1/adviser/5e41564ab3b1bc00153394db?m=link&amp;r=adviser" target="_blank" rel="noopener">查看電子名片 <span aria-hidden="true">→</span></a>
@@ -1326,7 +1327,7 @@ $('#btnWa').onclick=async()=>{
     if(keys.length) m+=`幾個重點：\n${keys.slice(0,4).map(k=>`✅ ${k.t}：${k.a} → ${k.b}`).join('\n')}\n\n`;
     if(diffR.length) m+=`兩份計劃合共有 ${diffR.length} 種危疾嘅條文有分別。\n\n`;
     if(C.std.length) m+=`另外，${short(n.name)}嘅危疾定義，部分仲寬鬆過香港保險業聯會嘅業界標準（例如${C.std.slice(0,2).map(s=>s.t).join('、')}）。業界標準只適用於新產品，唔會改到你手上嘅舊單，參加呢個計劃先可以令舊單受惠。\n\n`;
-    if(pr&&!pr.err) m+=`以保額 ${fx(I.sum,I.cur)} 計，${short(n.name)}每年保費約 ${fx(pr.annual,I.cur)}（每月約 ${fx(pr.annual/12,I.cur)}），最終以建議書為準。\n\n`;
+    if(pr&&!pr.err) m+=`以保額 ${fx(I.sum,I.cur)} 計，${short(n.name)}月繳每月約 ${fx(monthly(pr.annual),I.cur)}（年繳每年約 ${fx(pr.annual,I.cur)}），最終以建議書為準。\n\n`;
   } else m+=`醫學進步咗，新危疾計劃嘅定義亦寬鬆咗唔少。投保指定新計劃之後，舊單索償都可以跟新定義。\n\n`;
   m+=`想約個時間同你逐項睇清楚，你邊日方便？`;
   m+=`\n\n想了解更多，可以睇吓我嘅電子名片：\nhttps://api.portfoplus.com/api/v1/adviser/5e41564ab3b1bc00153394db?m=link&r=adviser`;
@@ -1361,7 +1362,7 @@ function buildSummary(){
    <div class="sp-pair"><div><span>你手上嘅計劃</span><b>${esc(o.name)}</b><small>條款版本 ${esc(o.ver)}</small></div><div class="ar">→</div><div class="new"><span>建議新計劃</span><b>${esc(nm)}</b><small>條款版本 ${esc(n.ver)}</small></div></div>
    <p class="sp-lead">只要喺 2026 年 12 月 31 日前為同一受保人投保新計劃，舊單日後第一次嚴重危疾（或通波仔）索償時，就可以同新計劃嘅定義比較，用較有利嗰個。</p>
    <div class="sp-grid"><div class="sp-box"><h2>參加後嘅分別</h2><ul>${li}</ul>${std.length?`<p class="sm">${std.slice(0,3).map(s=>esc(s.t)).join('、')}等定義，仲寬鬆過香港保險業聯會（HKFI）嘅業界標準。</p>`:''}</div>
-    <div class="sp-box"><h2>新計劃保費（參考）</h2>${ok?`<div class="big">${fx(pr.annual,I.cur)}<small style="font-size:14px;color:var(--muted)"> / 年</small></div><div class="rows"><div><span>每月約</span><b>${fx(pr.annual/12,I.cur)}</b></div><div><span>保額</span><b>${fx(I.sum,I.cur)}</b></div><div><span>繳費年期</span><b>${TERM_LBL[I.term]}</b></div><div><span>總保費（約）</span><b>${fx(pr.annual*yrs,I.cur)}</b></div></div>`:'<p class="sm">輸入年齡後顯示保費。</p>'}<p class="sp-fine">按保費率表計算，只供參考；最終保費以建議書為準。</p></div></div>
+    <div class="sp-box"><h2>新計劃保費（參考）</h2>${ok?`<div class="big">${fx(monthly(pr.annual),I.cur)}<small style="font-size:14px;color:var(--muted)"> / 月（月繳）</small></div><div class="rows"><div><span>揀年繳：每年</span><b>${fx(pr.annual,I.cur)}</b></div><div><span>保額</span><b>${fx(I.sum,I.cur)}</b></div><div><span>繳費年期</span><b>${TERM_LBL[I.term]}</b></div><div><span>總保費（年繳計，約）</span><b>${fx(pr.annual*yrs,I.cur)}</b></div></div>`:'<p class="sm">輸入年齡後顯示保費。</p>'}<p class="sp-fine">按保費率表計算，只供參考；最終保費以建議書為準。</p></div></div>
    <div class="sp-box"><h2>要留意</h2><ul><li>只改善危疾定義，唔會加病種；賠償金額照舊單計</li><li>只限每份舊單第一次嚴重危疾及通波仔索償</li><li>新計劃唔賠嘅情況（例如等候期內、不保事項），舊單都唔會升級</li><li>新計劃要一直生效；新計劃終止，呢個安排亦終止</li></ul></div>
    <div class="sp-dl">遞交申請限期：2026年12月31日　・　批核限期：2027年3月31日</div>
    ${f?f.outerHTML:''}${cp?cp.outerHTML:''}<p class="sp-fine">只供講解參考，一切以保單條款為準。</p>`;
@@ -1516,8 +1517,8 @@ function renderPlans(){
   const ageMax=x=>{const t=R[x.id]&&R[x.id][cur]&&R[x.id][cur][term];return t?t.max:'—';};
   const ROWS=[
     ['保費'],
-    ['每年保費',x=>[fx(x.pr.annual,cur),x.pr.fee?`保費率 ${x.pr.rate.toFixed(2)}／千 ＋ 固定 ${fx(x.pr.fee,cur)}`:`每月約 ${fx(x.pr.annual/12,cur)}${incPct(x.pr.annual,cur)}`],T.prem],
-    ['總保費（約）',x=>[fx(x.pr.annual*yrs,cur),`${yrs}年，投保時保費率保證不變`],null],
+    ['每月保費',x=>[fx(monthly(x.pr.annual),cur),`月繳・年繳 ${fx(x.pr.annual,cur)}${incPct(x.pr.annual,cur)}`],T.prem],
+    ['總保費（約）',x=>[fx(x.pr.annual*yrs,cur),`年繳 ${yrs} 年計；投保時保費率保證不變`],null],
     ['舊單定義升級',x=>[x.up?`${x.up} 項`:'—',x.up?'舊單可用新定義索償':'兩份定義已一致'],T.up,'g-up'],
     ['投保及核保'],
     ['投保年齡',x=>[`15日至${ageMax(x)}歲`,`${TERM_LBL[term]}繳費`],null],
@@ -1546,13 +1547,13 @@ function renderPlans(){
   ];
   const lbl=r=>`${r[0]}${r[3]?` <a class="gq" href="#${r[3]}" aria-label="${r[0]}解釋">?</a>`:''}`;
   const pickBtn=x=>x.id===store.get('spick','')?`<button class="ph-pick on" data-pick="${x.id}" title="再撳一次去舊單定義比較">✓ 已揀</button><button class="ph-link" data-go2="tool">睇條文對比 ›</button>`:`<button class="ph-pick" data-pick="${x.id}">揀呢個方案</button>`;
-  const head=x=>`${x.id===store.get('spick','')?'<span class="crown">✓ 客人揀咗</span>':''}${topIds.includes(x.id)?`<span class="most">👍 最多（${score[x.id]}項）</span>`:''}<div class="ph-name">${nameHTML(x.name)}</div><span class="ph-up${x.up?'':' zero'}">${x.up?`改善舊單 ${x.up} 項定義`:'舊單定義已一致'}</span><div class="ph-prem">${fx(x.pr.annual,cur)}<small>每年・每月約 ${fx(x.pr.annual/12,cur)}${incPct(x.pr.annual,cur)}</small></div>`;
+  const head=x=>`${x.id===store.get('spick','')?'<span class="crown">✓ 客人揀咗</span>':''}${topIds.includes(x.id)?`<span class="most">👍 最多（${score[x.id]}項）</span>`:''}<div class="ph-name">${nameHTML(x.name)}</div><span class="ph-up${x.up?'':' zero'}">${x.up?`改善舊單 ${x.up} 項定義`:'舊單定義已一致'}</span><div class="ph-prem">${fx(monthly(x.pr.annual),cur)}<small>每月・年繳 ${fx(x.pr.annual,cur)}${incTxt(x.pr.annual,cur)?'<br>'+incTxt(x.pr.annual,cur):''}</small></div>`;
   const W=$('#plans .wrap').clientWidth||window.innerWidth;
   const tableMode = W>=960 || (W>=700&&ok.length<=3);
   if(tableMode){
     const pickId=store.get('spick','');const cls=id=>id===pickId?' class="best-col"':'';
     const cg=`<colgroup><col style="width:${W>=1100?132:112}px">${ok.map(()=>'<col>').join('')}</colgroup>`;
-    h+=`<div class="cmp-wrap"><div class="cmp-mini" aria-hidden="true"><table>${cg}<tr><td>${esc(age)}歲・${esc(sex)}<br>保額 ${fx(sum,cur)}</td>${ok.map(x=>`<td${cls(x.id)}><b>${esc(x.name)}</b><span>${fx(x.pr.annual,cur)}</span> / 年</td>`).join('')}</tr></table></div><table class="cmp">${cg}<thead><tr><th><span class="who-cell">${esc(age)}歲・${esc(sex)}<br>${esc(smk)}</span><span class="sm">保額 ${fx(sum,cur)}<br>繳費 ${TERM_LBL[term]}</span></th>${ok.map(x=>`<th${cls(x.id)}>${head(x)}${pickBtn(x)}</th>`).join('')}</tr></thead><tbody>`;
+    h+=`<div class="cmp-wrap"><div class="cmp-mini" aria-hidden="true"><table>${cg}<tr><td>${esc(age)}歲・${esc(sex)}<br>保額 ${fx(sum,cur)}</td>${ok.map(x=>`<td${cls(x.id)}><b>${esc(x.name)}</b><span>${fx(monthly(x.pr.annual),cur)}</span> / 月</td>`).join('')}</tr></table></div><table class="cmp">${cg}<thead><tr><th><span class="who-cell">${esc(age)}歲・${esc(sex)}<br>${esc(smk)}</span><span class="sm">保額 ${fx(sum,cur)}<br>繳費 ${TERM_LBL[term]}</span></th>${ok.map(x=>`<th${cls(x.id)}>${head(x)}${pickBtn(x)}</th>`).join('')}</tr></thead><tbody>`;
     ROWS.filter(r=>r.length===1||ok.some(x=>r[1](x)[0]!=='—')).forEach(r=>{
       if(r.length===1){h+=`<tr class="grp"><th>${r[0]}</th>${ok.map(x=>`<td${cls(x.id)}></td>`).join('')}</tr>`;return;}
       h+=`<tr><th scope="row">${lbl(r)}</th>${ok.map(x=>{const [v,s]=r[1](x);return `<td${cls(x.id)}><span class="v">${v}</span>${th(r[2],x.id)}${s?`<span class="sm">${s}</span>`:''}</td>`;}).join('')}</tr>`;
@@ -1561,7 +1562,7 @@ function renderPlans(){
   } else {
     // compact premium ranking + one card per plan (no sideways scrolling)
     const byPrem=[...ok].sort((a,b)=>a.pr.annual-b.pr.annual);
-    h+=`<div class="rank box"><h2 style="font-size:17px;margin:0 0 4px">保費一覽</h2><p class="sub" style="margin:0 0 8px">${esc(age)}歲・${esc(sex)}・${esc(smk)}，保額 ${fx(sum,cur)}，繳費 ${TERM_LBL[term]}</p>${byPrem.map(x=>`<a class="rk${x.id===store.get('spick','')?' best':''}" href="#card-${x.id}"><span class="rn">${nameHTML(x.name)}${score[x.id]?`<small>👍 ${score[x.id]}項・改善舊單 ${x.up} 項定義</small>`:`<small>改善舊單 ${x.up} 項定義</small>`}</span><span class="rp">${fx(x.pr.annual,cur)}${th(T.prem,x.id)}<small>每月約 ${fx(x.pr.annual/12,cur)}</small></span></a>`).join('')}</div>`;
+    h+=`<div class="rank box"><h2 style="font-size:17px;margin:0 0 4px">保費一覽</h2><p class="sub" style="margin:0 0 8px">${esc(age)}歲・${esc(sex)}・${esc(smk)}，保額 ${fx(sum,cur)}，繳費 ${TERM_LBL[term]}</p>${byPrem.map(x=>`<a class="rk${x.id===store.get('spick','')?' best':''}" href="#card-${x.id}"><span class="rn">${nameHTML(x.name)}${score[x.id]?`<small>👍 ${score[x.id]}項・改善舊單 ${x.up} 項定義</small>`:`<small>改善舊單 ${x.up} 項定義</small>`}</span><span class="rp">${fx(monthly(x.pr.annual),cur)}${th(T.prem,x.id)}<small>每月・年繳 ${fx(x.pr.annual,cur)}</small></span></a>`).join('')}</div>`;
     h+=`<div class="pcards">${byPrem.map(x=>`<section class="pcard${x.id===store.get('spick','')?' best':''}" id="card-${x.id}"><div class="pc-head">${head(x)}</div><dl>${ROWS.filter(r=>r.length>1&&r[0]!=='每年保費'&&r[1](x)[0]!=='—').map(r=>{const [v,s]=r[1](x);return `<div><dt>${lbl(r)}</dt><dd><b>${v}</b>${th(r[2],x.id)}${s?`<small>${s}</small>`:''}</dd></div>`;}).join('')}</dl>${pickBtn(x)}</section>`).join('')}</div>`;
   }
   h+=`<div class="legend2"><span>👍 該項較好（並列時一齊有）</span><span><i style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--g-50);border:1px solid var(--g-200);vertical-align:-1px;margin-right:6px"></i>綠底＝客人揀咗嘅計劃（👍最多唔代表一定最啱，要睇客戶需要同預算）</span></div>`;
@@ -1602,7 +1603,11 @@ function setPick(id){
 }
 /* ---------- 簡報最後一頁：由客人即場揀新計劃 ---------- */
 /* 保費佔月入（月入只存喺呢部裝置，唔放入分享連結） */
-function incPct(annual,cur){const inc=+store.get('pInc','')||0;if(!inc||!annual)return '';const hk=cur==='USD'?annual*7.8:annual;return `・佔月入 ${(hk/12/inc*100).toFixed(1)}%`;}
+/* 月繳保費 = 年繳保費 × 0.09（宏利香港保費調整因子；半年繳 0.52、季繳 0.265） */
+const MODAL={M:0.09,Q:0.265,H:0.52};
+const monthly=a=>a*MODAL.M;
+function incTxt(annual,cur){const inc=+store.get('pInc','')||0;if(!inc||!annual)return '';const hk=cur==='USD'?monthly(annual)*7.8:monthly(annual);return `佔月入 ${(hk/inc*100).toFixed(1)}%`;}
+function incPct(annual,cur){const t=incTxt(annual,cur);return t?'・'+t:'';}
 function pickInputs(){return {cur:store.get('pCur','HKD'),sum:+store.get('pSum','500000')||500000,term:store.get('pTerm','25'),age:parseInt($('#age').value,10),sex:$('#sex').value||'男',smk:$('#smk').value||'非吸煙'};}
 /* 推廣期倒數（遞交截止 2026-12-31） */
 const DEADLINE=new Date(2026,11,31,23,59,59);
@@ -1648,7 +1653,7 @@ function renderPick(){
   const ctl=`<div class="pk-ctl"><label>客戶舊單<select id="sOld">${oldOpts}</select></label><label>性別<select id="sSex"><option ${I.sex==='男'?'selected':''}>男</option><option ${I.sex==='女'?'selected':''}>女</option></select></label><label>吸煙<select id="sSmk"><option ${I.smk==='非吸煙'?'selected':''}>非吸煙</option><option ${I.smk==='吸煙'?'selected':''}>吸煙</option></select></label><label>年齡<input id="sAge" type="number" inputmode="numeric" min="0" max="65" value="${isNaN(I.age)?'':I.age}" placeholder="40"></label><span class="pk-sum">保額${(I.cur==='HKD'?[[100000,'10萬'],[500000,'50萬'],[1000000,'100萬']]:[[12500,'US$1.25萬'],[62500,'US$6.25萬'],[125000,'US$12.5萬']]).map(([v,l])=>`<button type="button" data-ssum="${v}" class="${I.sum===v?'on':''}">${l}</button>`).join('')}<span class="pk-term">繳費<select id="sTerm">${['10','20','25','A65'].map(t=>`<option value="${t}" ${I.term===t?'selected':''}>${TERM_LBL[t]}</option>`).join('')}</select></span></span></div>`;
   if(!chosen){
     box.innerHTML=`<h2 class="pk-h">${name?esc(name)+'，':''}你張<span class="nb">《${esc(short(o.name))}》</span>可以配以下新計劃</h2>${ctl}
-      ${list.length?`<div class="pk-grid">${list.map(x=>`<button class="pk-card" data-spick="${x.id}"><span class="pk-name">${nameHTML(x.name)}</span><span class="pk-prem">${x.pr?fx(x.pr.annual,I.cur)+'<small> / 年</small>':'<small>輸入年齡顯示保費</small>'}</span><span class="pk-up">${x.up?`改善舊單 ${x.up} 項定義`:'舊單定義已一致'}</span><span class="pk-tags">${x.tags.map(t=>`<i>${esc(t)}</i>`).join('')}</span></button>`).join('')}</div><p class="pk-tip">撳任何一個計劃，睇吓你嘅升級方案。</p>`:`<p class="pk-tip">呢個年齡或者繳費年期冇合資格計劃，試吓改繳費年期。</p>`}`;
+      ${list.length?`<div class="pk-grid">${list.map(x=>`<button class="pk-card" data-spick="${x.id}"><span class="pk-name">${nameHTML(x.name)}</span><span class="pk-prem">${x.pr?fx(monthly(x.pr.annual),I.cur)+'<small> / 月</small>':'<small>輸入年齡顯示保費</small>'}</span><span class="pk-up">${x.up?`改善舊單 ${x.up} 項定義`:'舊單定義已一致'}</span><span class="pk-tags">${x.tags.map(t=>`<i>${esc(t)}</i>`).join('')}</span></button>`).join('')}</div><p class="pk-tip">撳任何一個計劃，睇吓你嘅升級方案。</p>`:`<p class="pk-tip">呢個年齡或者繳費年期冇合資格計劃，試吓改繳費年期。</p>`}`;
   } else {
     const n=plan(chosen.def), keys=keyImps(o,n), std=stdBetter(n), pr=chosen.pr;
     const yrs=I.term==='A65'?Math.max(65-(I.age||0),1):+I.term;
@@ -1660,7 +1665,7 @@ function renderPick(){
         <div class="pair"><div class="pc"><span>你手上嘅計劃</span><b>${esc(short(o.name))}</b></div><svg class="ar" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="pc new"><span>你揀嘅新計劃</span><b>${esc(chosen.name)}</b></div></div>
         <ul class="hl-list">${hl.map(x=>`<li><span>${x}</span></li>`).join('')}</ul>
       </div>
-      <div class="money">${pr?`<div class="lbl">每年保費（保額 ${fx(I.sum,I.cur)}，${TERM_LBL[I.term]}）</div><div class="big">${fx(pr.annual,I.cur)}</div><div class="lbl">每月約 ${fx(pr.annual/12,I.cur)}・每日約 ${fx(pr.annual/365,I.cur)}${incPct(pr.annual,I.cur)}</div><div class="rows"><div><span>總保費（約）</span><b>${fx(pr.annual*yrs,I.cur)}</b></div>${cp?`<div><span>保費優惠券扣減</span><b>－${fx(cp,I.cur)}</b></div><div><span>首年實際支出</span><b>${fx(pr.annual-cp,I.cur)}</b></div>`:''}</div>`:'<div class="lbl">輸入年齡就會顯示保費</div>'}
+      <div class="money">${pr?`<div class="lbl">每月保費（月繳；保額 ${fx(I.sum,I.cur)}，${TERM_LBL[I.term]}）</div><div class="big">${fx(monthly(pr.annual),I.cur)}</div><div class="lbl">揀年繳：每年 ${fx(pr.annual,I.cur)}${incPct(pr.annual,I.cur)}</div><div class="rows"><div><span>總保費（年繳計，約）</span><b>${fx(pr.annual*yrs,I.cur)}</b></div>${cp?`<div><span>保費優惠券扣減</span><b>－${fx(cp,I.cur)}</b></div><div><span>首年實際支出</span><b>${fx(pr.annual-cp,I.cur)}</b></div>`:''}</div>`:'<div class="lbl">輸入年齡就會顯示保費</div>'}
         <div class="pk-dl">保費按保費率表計算，最終以建議書為準<br>遞交申請限期 <b>2026年12月31日</b>・批核限期 <b>2027年3月31日</b></div><div class="pk-btns three"><button type="button" class="pk-go pk-1p" id="pkSum">一頁總結 PDF</button><button class="pk-go" data-go="tool">睇定義比較</button><button class="pk-go" data-go="plans">比較其他計劃</button></div></div>
       </div>`;
   }
