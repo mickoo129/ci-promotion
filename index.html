@@ -693,6 +693,7 @@ details.row[open] summary .chev{transform:rotate(90deg)}
 .mk-print-btn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--mk-brand);background:var(--mk-surface);color:var(--mk-brand-ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
 .mk-print-btn:hover{background:var(--mk-brand-soft)}
 .mk-print-head{display:none}
+.mk-print-head .ph-for{font-weight:500;margin-left:10px}
 /* MKPA 工具箱連結（頁尾，電子名片同版權行之間；開新分頁；列印唔印） */
 .mk-home-link{margin:16px 0 0;font-family:var(--mk-sans);font-size:14px;line-height:1.5}
 .mk-home-link a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
@@ -794,7 +795,7 @@ body[data-mode="plans"]{--pc:var(--mk-cat-3);--pc-soft:var(--mk-cat-3-soft)}
 </style>
 </head>
 <body>
-<div class="mk-print-head"><b>MKPA · 危疾定義更新計劃</b><span>列印日期：<span class="mk-print-date"></span></span></div>
+<div class="mk-print-head"><b>MKPA · 危疾定義更新計劃<span class="ph-for" id="phFor"></span></b><span>列印日期：<span class="mk-print-date"></span></span></div>
 <header class="topbar mk-header mk-bar">
   <div class="logo">
     <img class="mk-logo" src="favicon.svg" alt="" width="38" height="38">
@@ -1332,7 +1333,16 @@ $('#btnWa').onclick=async()=>{
   try{await navigator.clipboard.writeText(m);toast('已複製，可以直接貼落WhatsApp');}
   catch(e){const ta=document.createElement('textarea');ta.value=m;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('已複製，可以直接貼落WhatsApp');}catch(_){toast('複製唔到，請再試一次');}ta.remove();}
 };
+/* 主畫面 app 模式／app 內置瀏覽器唔支援列印：彈標準提示；「複製連結」帶埋而家嘅設定（唔包括客戶稱呼） */
+function patchPrintHelp(){const b=document.querySelector('.mk-printhelp-copy');if(!b)return;b.onclick=function(){const u=ciShareUrl(),ok=()=>{b.textContent='已複製';};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(u).then(ok,()=>prompt('複製呢條連結：',u));else prompt('複製呢條連結：',u);};}
+function printBlocked(){
+  if(!(window.mkPrintBlocked&&window.mkPrintBlocked())) return false;
+  if(window.mkPrintHelp){window.mkPrintHelp();patchPrintHelp();}
+  return true;
+}
+window.addEventListener('click',e=>{const t=e.target&&e.target.closest&&e.target.closest('.mk-print-btn');if(t&&window.mkPrintBlocked&&window.mkPrintBlocked())setTimeout(patchPrintHelp,0);},true);
 function doPrint(full){
+  if(printBlocked()) return;
   if(full){query='';render();const C=ctx();$$('#list details.grp-more').forEach(d=>d.open=true);$$('#list details.row').forEach(d=>{d.open=true;fill(d,C);});}
   document.body.classList.toggle('brief',!full);
   setTimeout(()=>window.print(),80);
@@ -1347,7 +1357,7 @@ function buildSummary(){
   const yrs=I.term==='A65'?Math.max(65-(I.age||0),1):+I.term, nm=x?x.name:n.name;
   const li=[`<li><b>${diffR.length}</b> 種危疾條文同新計劃唔同，索償時取較有利嗰個</li>`].concat(keys.slice(0,5).map(k=>`<li>${esc(k.t)}：${esc(k.a)} → <b>${esc(k.b)}</b></li>`)).join('');
   const f=$('#plans .mk-ecard'), cp=$('#plans .mk-copy');
-  $('#sumPage').innerHTML=`<div class="sp-head"><h1>你嘅危疾定義升級方案</h1><p>${name?'為 '+esc(name)+' 準備<br>':''}${esc(personLine())}</p></div>
+  $('#sumPage').innerHTML=`<div class="sp-head"><h1>${name?esc(name)+'嘅':'你嘅'}危疾定義升級方案</h1><p>${esc([isNaN(I.age)?'':I.age+'歲',I.sex,I.smk].filter(Boolean).join('・'))}</p></div>
    <div class="sp-pair"><div><span>你手上嘅計劃</span><b>${esc(o.name)}</b><small>條款版本 ${esc(o.ver)}</small></div><div class="ar">→</div><div class="new"><span>建議新計劃</span><b>${esc(nm)}</b><small>條款版本 ${esc(n.ver)}</small></div></div>
    <p class="sp-lead">只要喺 2026 年 12 月 31 日前為同一受保人投保新計劃，舊單日後第一次嚴重危疾（或通波仔）索償時，就可以同新計劃嘅定義比較，用較有利嗰個。</p>
    <div class="sp-grid"><div class="sp-box"><h2>參加後嘅分別</h2><ul>${li}</ul>${std.length?`<p class="sm">${std.slice(0,3).map(s=>esc(s.t)).join('、')}等定義，仲寬鬆過香港保險業聯會（HKFI）嘅業界標準。</p>`:''}</div>
@@ -1357,7 +1367,7 @@ function buildSummary(){
    ${f?f.outerHTML:''}${cp?cp.outerHTML:''}<p class="sp-fine">只供講解參考，一切以保單條款為準。</p>`;
   return true;
 }
-function printSummary(){if(!buildSummary())return;document.body.classList.add('sum-print');setTimeout(()=>window.print(),80);}
+function printSummary(){if(printBlocked())return;if(!buildSummary())return;document.body.classList.add('sum-print');setTimeout(()=>window.print(),80);}
 window.addEventListener('afterprint',()=>document.body.classList.remove('sum-print'));
 $('#btnSum').onclick=printSummary;
 FIELDS.map(f=>'#'+f).forEach(s=>$(s).addEventListener('input',render));
@@ -1598,6 +1608,7 @@ function pickInputs(){return {cur:store.get('pCur','HKD'),sum:+store.get('pSum',
 const DEADLINE=new Date(2026,11,31,23,59,59);
 function daysLeft(){return Math.ceil((DEADLINE-new Date())/864e5);}
 function renderCover(){
+  const nm=$('#client').value.trim(), pf=$('#phFor'); if(pf) pf.textContent=nm?`為 ${nm} 準備`:'';
   const d=daysLeft(), L=$('#cvLeft');
   if(L){L.hidden=!(d>0); L.textContent=d>0?`仲有 ${d} 日截止遞交`:'';}
   const K=$('#pkDl'); if(K){K.hidden=!(d>0); K.textContent=d>0?`12月31日截止遞交・仲有 ${d} 日`:'';}
