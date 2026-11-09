@@ -1329,7 +1329,7 @@ $('#btnWa').onclick=async()=>{
     if(C.std.length) m+=`另外，${short(n.name)}嘅危疾定義，部分仲寬鬆過香港保險業聯會嘅業界標準（例如${C.std.slice(0,2).map(s=>s.t).join('、')}）。業界標準只適用於新產品，唔會改到你手上嘅舊單，參加呢個計劃先可以令舊單受惠。\n\n`;
     if(pr&&!pr.err) m+=`以保額 ${fx(I.sum,I.cur)} 計，${short(n.name)}月繳每月約 ${fx(monthly(pr.annual),I.cur)}（年繳每年約 ${fx(pr.annual,I.cur)}），最終以建議書為準。\n\n`;
   } else m+=`醫學進步咗，新危疾計劃嘅定義亦寬鬆咗唔少。投保指定新計劃之後，舊單索償都可以跟新定義。\n\n`;
-  m+=`想約個時間同你逐項睇清楚，你邊日方便？`;
+  m+=`想約個時間同你逐項睇清楚，請問你邊日方便？`;
   m+=`\n\n想了解更多，可以睇吓我嘅電子名片：\nhttps://api.portfoplus.com/api/v1/adviser/5e41564ab3b1bc00153394db?m=link&r=adviser`;
   try{await navigator.clipboard.writeText(m);toast('已複製，可以直接貼落WhatsApp');}
   catch(e){const ta=document.createElement('textarea');ta.value=m;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('已複製，可以直接貼落WhatsApp');}catch(_){toast('複製唔到，請再試一次');}ta.remove();}
