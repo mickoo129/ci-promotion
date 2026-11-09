@@ -1321,16 +1321,16 @@ function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeou
 $('#btnWa').onclick=async()=>{
   const C=ctx(),{o,n,el,keys,diffR,name}=C;
   const px=P2.find(p=>p.id===store.get('spick','')), I=pickInputs(), pr=px&&px.def===n.id&&!isNaN(I.age)?annualPrem(px,I.cur,I.term,I.age,I.sex,I.smk,I.sum):null;
-  let m=`${name?name+'，您好！':'您好！'}想和您分享宏利的「危疾定義更新計劃」。\n\n`;
+  let m=`${name?name+'你好！':'你好！'}想同你分享宏利嘅「危疾定義更新計劃」。\n\n`;
   if(el.ok){
-    m+=`您現時持有的【${short(o.name)}】，只要在2026年12月31日前為同一受保人投保【${short(n.name)}】，舊單日後索償時，便可以採用新計劃較寬鬆的危疾定義。\n\n`;
+    m+=`你而家持有嘅【${short(o.name)}】，只要喺2026年12月31日前為同一受保人投保【${short(n.name)}】，舊單日後索償時，就可以用新計劃較寬鬆嘅危疾定義。\n\n`;
     if(keys.length) m+=`幾個重點：\n${keys.slice(0,4).map(k=>`✅ ${k.t}：${k.a} → ${k.b}`).join('\n')}\n\n`;
-    if(diffR.length) m+=`兩份計劃合共有 ${diffR.length} 種危疾的條文有分別。\n\n`;
-    if(C.std.length) m+=`另外，${short(n.name)}的危疾定義，部分比香港保險業聯會的業界標準更寬鬆（例如${C.std.slice(0,2).map(s=>s.t).join('、')}）。業界標準只適用於新產品，不會改變您手上的舊單，參加這個計劃才可以令舊單受惠。\n\n`;
+    if(diffR.length) m+=`兩份計劃合共有 ${diffR.length} 種危疾嘅條文有分別。\n\n`;
+    if(C.std.length) m+=`另外，${short(n.name)}嘅危疾定義，部分仲寬鬆過香港保險業聯會嘅業界標準（例如${C.std.slice(0,2).map(s=>s.t).join('、')}）。業界標準只適用於新產品，唔會改到你手上嘅舊單，參加呢個計劃先可以令舊單受惠。\n\n`;
     if(pr&&!pr.err) m+=`以保額 ${fx(I.sum,I.cur)} 計，${short(n.name)}月繳每月約 ${fx(monthly(pr.annual),I.cur)}（年繳每年約 ${fx(pr.annual,I.cur)}），最終以建議書為準。\n\n`;
-  } else m+=`隨著醫學進步，新危疾計劃的定義亦寬鬆了不少。投保指定新計劃後，舊單索償亦可以按新定義處理。\n\n`;
-  m+=`想約個時間和您逐項看清楚，請問哪天方便？`;
-  m+=`\n\n想了解更多，歡迎查看我的電子名片：\nhttps://api.portfoplus.com/api/v1/adviser/5e41564ab3b1bc00153394db?m=link&r=adviser`;
+  } else m+=`醫學進步咗，新危疾計劃嘅定義亦寬鬆咗唔少。投保指定新計劃之後，舊單索償都可以跟新定義。\n\n`;
+  m+=`想約個時間同你逐項睇清楚，你邊日方便？`;
+  m+=`\n\n想了解更多，可以睇吓我嘅電子名片：\nhttps://api.portfoplus.com/api/v1/adviser/5e41564ab3b1bc00153394db?m=link&r=adviser`;
   try{await navigator.clipboard.writeText(m);toast('已複製，可以直接貼落WhatsApp');}
   catch(e){const ta=document.createElement('textarea');ta.value=m;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('已複製，可以直接貼落WhatsApp');}catch(_){toast('複製唔到，請再試一次');}ta.remove();}
 };
